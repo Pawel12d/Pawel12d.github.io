@@ -14,12 +14,14 @@ local GamesList = {
 for i,v in pairs(GamesList) do
 	if tonumber(i) == tonumber(CurrentGame) then
 		print("Game Detected:",v)
-		local CurrentGameName = v
+		CurrentGameName = v
 		break
 	end
 end
 
 if CurrentGameName then
 	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
+else
+	print("Current Game Not Supported!")
 end
 print("Loaded!")
