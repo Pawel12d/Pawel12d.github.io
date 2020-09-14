@@ -1,12 +1,21 @@
 print("Loading...")
 
 --[[
-http://hexhub.xyz/scripts/loader.lua -- Loader
-http://hexhub.xyz/scripts/games.lua -- Games List
+loadstring(game:HttpGet(('http://hexhub.xyz/scripts/loader.lua'),true))() -- Loader
+loadstring(game:HttpGet(('http://hexhub.xyz/scripts/games.lua'),true))() -- Games List
 --]]
 
 local CurrentGame = game.PlaceId
 
-loadstring(game:HttpGet(('http://hexhub.xyz/scripts/games.lua'),true))()
+local GamesList = {
+	"286090429" = "arsenal.lua"
+}
 
-print(unpack(GamesList))
+for i,v in pairs(GamesList) do
+	if i == CurrentGame then
+		print(i,v)
+		return
+	end
+end
+
+print("Loaded!")
