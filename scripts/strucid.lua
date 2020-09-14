@@ -1,0 +1,1 @@
+print("Strucid Script Loaded! (a)")

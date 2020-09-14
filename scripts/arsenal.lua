@@ -1,1 +1,1 @@
-print("Arsenal Detected! (a)")
+print("Arsenal Script Loaded! (a)")
