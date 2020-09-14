@@ -1,6 +1,6 @@
 print("Loading...")
 
--- loadstring(game:HttpGet(('http://hexhub.xyz/scripts/loader.php'),true))()
+-- loadstring(game:HttpGet(('http://hexhub.xyz/scripts/loader.lua'),true))()
 
 local CurrentGame = game.PlaceId
 
