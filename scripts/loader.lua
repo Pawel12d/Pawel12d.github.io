@@ -1,4 +1,4 @@
-print("Loading...")
+print("Loading")
 
 --[[
 loadstring(game:HttpGet(('http://hexhub.xyz/scripts/loader.lua'),true))() -- Loader
