@@ -4,7 +4,7 @@ print("Loading")
 loadstring(game:HttpGet(('http://hexhub.xyz/scripts/loader.lua'),true))() -- Loader
 --]]
 
-local CurrentGame = game.PlaceId
+local CurrentGame = game.GameId
 
 local GamesList = {
 	["286090429"] = "arsenal",
@@ -20,8 +20,10 @@ for i,v in pairs(GamesList) do
 end
 
 if CurrentGameName then
+	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 else
 	print("Current Game Not Supported!")
 end
+
 print("Loaded!")

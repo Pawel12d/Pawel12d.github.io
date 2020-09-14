@@ -199,7 +199,7 @@ do
 	
 end
 
--- classes
+-- Classes
 
 local library = {} -- main
 local page = {}
@@ -2168,5 +2168,4 @@ do
 	end
 end
 
-print("dino was here :\)")
 return library
