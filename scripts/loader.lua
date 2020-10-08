@@ -9,7 +9,7 @@ local CurrentGame = game.GameId
 local GamesList = {
 	["286090429"] = "arsenal",
 	["606849621"] = "jailbreak",
-	["155615604"] = "prisonlife"
+	["73885730"] = "prisonlife"
 }
 
 for i,v in pairs(GamesList) do
