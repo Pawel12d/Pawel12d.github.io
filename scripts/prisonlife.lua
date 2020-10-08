@@ -1,4 +1,5 @@
-print("Lumber Tycoon 2 Script Loaded! (a)")
+print("Prison Life Script Loaded! (a)")
+loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
 
