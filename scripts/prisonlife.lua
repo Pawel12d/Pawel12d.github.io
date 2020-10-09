@@ -136,8 +136,8 @@ MainTabCategoryFun:AddButton("Push-Ups", function()
 end)
 
 MainTabCategoryFun:AddToggle("Push-Ups", function(val)
-    pcall(function()
 	if val == true then
+		pcall(function()
 		local Animation = Instance.new("Animation")
 		Animation.AnimationId = "http://www.roblox.com/asset/?id=175676962"
 		Animation.Parent = nil
@@ -145,10 +145,10 @@ MainTabCategoryFun:AddToggle("Push-Ups", function(val)
 		LoadAnim:Play()
 		LoadAnim:AdjustSpeed(1)
 		LoadAnim.Parent = nil
+		end)
 	else
 		if LoadAnim then LoadAnim:Stop() end
 	end
-	end)
 end)
 
 MainTabCategoryFun:AddLabel("Notifications (Client)")
