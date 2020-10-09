@@ -88,101 +88,99 @@ local Signals = setmetatable({}, {
 	end
 })
 	
-	setmetatable(HEXHUB_LOADER, {
-		__metatable = 'no',
-		__index = function(...)return rawget(...) or nil end,
-		__call = function(t, name, ...)
-			name = tostring(name)
-			if rawget(HEXHUB_LOADER, name) then
-				if Signals[HEXHUB_LOADER.lastCalled] == nil or Signals[HEXHUB_LOADER.lastCalled] == true then
-					Signals[name] = false
-					pcall(HEXHUB_LOADER[name], ...)
-					Signals[name] = true
-					HEXHUB_LOADER.lastCalled = name
-				end
+setmetatable(HEXHUB_LOADER, {
+	__metatable = 'no',
+	__index = function(...)return rawget(...) or nil end,
+	__call = function(t, name, ...)
+		name = tostring(name)
+		if rawget(HEXHUB_LOADER, name) then
+			if Signals[HEXHUB_LOADER.lastCalled] == nil or Signals[HEXHUB_LOADER.lastCalled] == true then
+				Signals[name] = false
+				pcall(HEXHUB_LOADER[name], ...)
+				Signals[name] = true
+				HEXHUB_LOADER.lastCalled = name
 			end
-			return
-		end,
-	})
+		end
+		return
+	end,
+})
 	
-	function HEXHUB_LOADER.open(status, delay_)
-		local done = false
-		delay_ = (delay_ or 0.33)
-		delay(delay_, function()
-			HEXHUB_LOADER_GUI.main:TweenSize(UDim2.new(0.132, 0, 0.121, 0), 'Out', 'Quint', 0.6, false, function()
-				for i = 1.2, 0, -0.02 do
-					HEXHUB_LOADER_GUI.main.Frame.hexhub.TextTransparency = i
-					HEXHUB_LOADER_GUI.main.Frame.beauty.BackgroundTransparency = i
-					game:GetService('RunService').Heartbeat:Wait()
-				end
-				HEXHUB_LOADER_GUI.main.Frame.hexhub:TweenPosition(UDim2.new(0.025, 0, 0, 0), 'Out', 'Quad', 0.31, false, function()
-					HEXHUB_LOADER_GUI.main.Frame.beauty:TweenSize(UDim2.new(1, 0, 0.012, 0), 'Out', 'Quint', 0.40, false, function()
-						delay(0.27, function()
-							for i = 1.2, 0, -0.02 do
-								HEXHUB_LOADER_GUI.main.Frame.status.Text = (tostring(status) or 'initializing')
-								HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
-								game:GetService('RunService').Heartbeat:Wait()
-							end
-							done = true
-						end)
+function HEXHUB_LOADER.open(status, delay_)
+	local done = false
+	delay_ = (delay_ or 0.33)
+	delay(delay_, function()
+		HEXHUB_LOADER_GUI.main:TweenSize(UDim2.new(0.132, 0, 0.121, 0), 'Out', 'Quint', 0.6, false, function()
+			for i = 1.2, 0, -0.02 do
+				HEXHUB_LOADER_GUI.main.Frame.hexhub.TextTransparency = i
+				HEXHUB_LOADER_GUI.main.Frame.beauty.BackgroundTransparency = i
+				game:GetService('RunService').Heartbeat:Wait()
+			end
+			HEXHUB_LOADER_GUI.main.Frame.hexhub:TweenPosition(UDim2.new(0.025, 0, 0, 0), 'Out', 'Quad', 0.31, false, function()
+				HEXHUB_LOADER_GUI.main.Frame.beauty:TweenSize(UDim2.new(1, 0, 0.012, 0), 'Out', 'Quint', 0.40, false, function()
+					delay(0.27, function()
+						for i = 1.2, 0, -0.02 do
+							HEXHUB_LOADER_GUI.main.Frame.status.Text = (tostring(status) or 'initializing')
+							HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
+							game:GetService('RunService').Heartbeat:Wait()
+						end
+						done = true
 					end)
 				end)
 			end)
 		end)
-		local time = tick()
-		repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
-	end
+	end)
+	local time = tick()
+	repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
+end
 	
-	function HEXHUB_LOADER.close(delay_, callback)
-		local done = false
-		delay_ = (delay_ or 0.33)
-		wait(delay_)
-		for i = 0, 1.2, 0.02 do
-			HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
-			HEXHUB_LOADER_GUI.main.Frame.beauty.BackgroundTransparency = i
-			HEXHUB_LOADER_GUI.main.Frame.hexhub.TextTransparency = i
-			game:GetService('RunService').Heartbeat:Wait()
-		end
-		HEXHUB_LOADER_GUI.main:TweenSize(UDim2.new(0, 0,0.121, 0), 'Out', 'Quint', 0.6, false, function()
-			if typeof(callback) == 'function' then
-				pcall(callback)
-			else
-				warn('Callback is not a function')
-			end
-			done = true
-		end)
-		local time = tick()
-		repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
-		HEXHUB_LOADER_GUI:Remove()
+function HEXHUB_LOADER.close(delay_, callback)
+	local done = false
+	delay_ = (delay_ or 0.33)
+	wait(delay_)
+	for i = 0, 1.2, 0.02 do
+		HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
+		HEXHUB_LOADER_GUI.main.Frame.beauty.BackgroundTransparency = i
+		HEXHUB_LOADER_GUI.main.Frame.hexhub.TextTransparency = i
+		game:GetService('RunService').Heartbeat:Wait()
 	end
-	
-	function HEXHUB_LOADER.showStatus(status, delay_, callback)
-		local done = false
-		delay_ = (delay_ or 0.33)
-		for i = 0, 1.2, 0.02 do
-			HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
-			game:GetService('RunService').Heartbeat:Wait()
-		end
-		HEXHUB_LOADER_GUI.main.Frame.status.Text = (tostring(status) or 'initializing')
-		for i = 1.2, 0, -0.02 do
-			HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
-			game:GetService('RunService').Heartbeat:Wait()
-		end
+	HEXHUB_LOADER_GUI.main:TweenSize(UDim2.new(0, 0,0.121, 0), 'Out', 'Quint', 0.6, false, function()
 		if typeof(callback) == 'function' then
 			pcall(callback)
 		else
 			warn('Callback is not a function')
 		end
-		wait(delay_)
 		done = true
-		
-		local time = tick()
-		repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
+	end)
+	local time = tick()
+	repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
+	HEXHUB_LOADER_GUI:Remove()
+end
+	
+function HEXHUB_LOADER.showStatus(status, delay_, callback)
+	local done = false
+	delay_ = (delay_ or 0.33)
+	for i = 0, 1.2, 0.02 do
+		HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
+		game:GetService('RunService').Heartbeat:Wait()
 	end
-
+	HEXHUB_LOADER_GUI.main.Frame.status.Text = (tostring(status) or 'initializing')
+	for i = 1.2, 0, -0.02 do
+		HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
+		game:GetService('RunService').Heartbeat:Wait()
+	end
+	if typeof(callback) == 'function' then
+		pcall(callback)
+	else
+		warn('Callback is not a function')
+	end
+	wait(delay_)
+	done = true
+	
+	local time = tick()
+	repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
+end
 
 HEXHUB_LOADER('open', 'Initializing', 0.5)
-
 
 local CurrentGame = game.GameId
 
