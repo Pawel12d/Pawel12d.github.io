@@ -206,6 +206,7 @@ end
 HEXHUB_LOADER('showStatus', CurrentGameDisplayName, 0.25)
 
 if CurrentGameName and CurrentGameDisplayName then
+	repeat wait() until not HEXHUB_LOADER_GUI
 	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 else
 	print("Current Game Not Supported!")
