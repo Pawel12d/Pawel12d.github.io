@@ -16,10 +16,10 @@ local function ChangeTeam(team)
 end
 
 local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
-
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
 
 local MainTab = MainWindow:CreateTab("Main Cheats")
+local SettingsTab = MainWindow:CreateTab("Settings")
 
 local MainTabGiveCategoryItems = MainTab:AddCategory("Give Items")
 
@@ -109,8 +109,6 @@ MainTabGiveCategoryItems:AddButton("Inf Stamina", function()
 	end
 	end)
 end)
-
-local SettingsTab = MainWindow:CreateTab("Settings")
 
 local SettingsTabCategoryMain = SettingsTab:AddCategory("Main")
 
