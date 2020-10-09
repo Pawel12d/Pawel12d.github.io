@@ -13,7 +13,7 @@ end
 
 local function ChangeTeam(team)
 	if game:GetService("Teams"):FindFirstChild(team) then
-		if team ~= "Criminals" then
+		if team ~= "Criminals" then -- switching Guards (while having guard items) -> Criminals makes player respawn
 			workspace.Remote.TeamEvent:FireServer(tostring(game:GetService("Teams")[team].TeamColor))
 		else
 			--[[
@@ -78,6 +78,7 @@ end)
 MainTabGiveCategoryItems:AddButton("Food", function()
     pcall(function()
 	workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver.Breakfast.ITEMPICKUP)
+	workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver.Lunch.ITEMPICKUP)
 	workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver.Dinner.ITEMPICKUP)
 	end)
 end)
@@ -142,7 +143,12 @@ MainTabCategoryMiscellaneous:AddButton("Inf Stamina", function()
 end)
 
 MainTabCategoryMiscellaneous:AddToggle("No Punch Cooldown", function(val)
-	while val == true do
+	if val == true then
+		ok = true
+	else
+		ok = false
+	end
+	while ok do
 		wait(0.01)
 		pcall(function()
 		getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting = false
@@ -174,6 +180,7 @@ MainTabCategoryFun:AddButton("Spawn Hats", function()
 			v.Parent = workspace
 		end
 	end
+	wait(0.1)
 	game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer)
 	wait(0.1)
 	repeat wait() until game.Players.LocalPlayer.Character
@@ -184,6 +191,53 @@ end)
 
 MainTabCategoryFun:AddLabel("Notifications (Client)")
 
+local MainTabCategoryAura = MainTab:AddCategory("Aura")
+
+MainTabCategoryAura:AddToggle("Enabled", function(val)
+	if val == true then
+		ok = true
+	else
+		ok = false
+	end
+	while ok do
+		wait(0.01)
+		pcall(function()
+			for i,v in pairs(game.Players:GetChildren()) do
+				if v ~= game.Players.LocalPlayer and v.Character and v.Character.Humanoid and v.Character.Humanoid.Health>0 then
+					if AuraTarget == "All" or (AuraTarget == "Enemies" and v.Team ~= game.Players.LocalPlayer.Team) or (AuraTarget == "Teammates" and v.Team == game.Players.LocalPlayer.Team) then
+						if (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude < 20 then
+							if AuraMode == "Kill" then
+								game.ReplicatedStorage.meleeEvent:FireServer(v)
+								print("killing", v.Name)
+							elseif AuraMode == "Taze" then
+								local args = {{
+									["RayObject"] = Ray.new(), 
+									["Distance"] = 1, 
+									["Cframe"] = CFrame.new(), 
+									["Hit"] = v.Character.HumanoidRootPart
+								}}
+								-- will the socialist above ever shut up? ^
+								game:GetService("ReplicatedStorage").ShootEvent:FireServer(args, game.Players.LocalPlayer.Backpack.Taser)
+								print("tazing", v.Name)
+							elseif AuraMode == "Arrest" then
+								game.Workspace.Remote.arrest:InvokeServer(v.Character.HumanoidRootPart)
+								print("arresting", v.Name)
+							end
+						end
+					end
+				end
+			end
+		end)
+	end
+end)
+
+MainTabCategoryAura:AddDropdown("Target", {"All","Enemies","Teammates"}, function(val)
+	pcall(function() AuraTarget = val end)
+end)
+
+MainTabCategoryAura:AddDropdown("Mode", {"Kill","Taze","Arrest"}, function(val)
+	pcall(function() AuraMode = val end)
+end)
 
 local SettingsTabCategoryMain = SettingsTab:AddCategory("Main")
 
