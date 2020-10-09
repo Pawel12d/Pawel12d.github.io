@@ -120,6 +120,25 @@ MainTabCategoryMiscellaneous:AddToggle("No Punch Cooldown", function(val)
 	end
 end)
 
+local MainTabCategoryFun = MainTab:AddCategory("Fun")
+
+MainTabCategoryFun:AddLabel("Animations")
+
+MainTabCategoryFun:AddButton("Push-Ups", function()
+    pcall(function()
+	local Animation = Instance.new("Animation")
+	Animation.AnimationId = "http://www.roblox.com/asset/?id=175676962"
+	Animation.Parent = nil
+	local LoadAnim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Animation)
+	LoadAnim:Play()
+	LoadAnim:AdjustSpeed(1)
+	LoadAnim.Parent = nil
+	end)
+end)
+
+MainTabCategoryFun:AddLabel("Notifications (Client)")
+
+
 local SettingsTabCategoryMain = SettingsTab:AddCategory("Main")
 
 SettingsTabCategoryMain:AddButton("Rejoin Server", function()
