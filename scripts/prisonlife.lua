@@ -46,7 +46,10 @@ MainTabGiveItemsCategory:AddButton("Hammer", function()
 end)
 
 MainTabGiveItemsCategory:AddButton("Food", function()
-    pcall(function() workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver.Dinner.ITEMPICKUP) end)
+    pcall(function()
+	workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver.Breakfast.ITEMPICKUP)
+	workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver.Dinner.ITEMPICKUP)
+	end)
 end)
 
 local SettingsTab = MainWindow:CreateTab("Settings")
