@@ -1484,3 +1484,5 @@ library.colors = {
 	tabbutton = Color3.fromRGB(30, 30, 30), -- (40, 40, 40)
 	tabselected = Color3.fromRGB(50, 50, 50) -- (50, 50, 50)
 }
+
+return library
