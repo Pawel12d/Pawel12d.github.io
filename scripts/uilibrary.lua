@@ -1,4 +1,3 @@
-local LaunchTick = tick()
 local TweenService, RunService, UserInputService,gui,dragging,dragInput,dragStart,startPos,cpt,cpf,cppicking,cppickingVal,cppickingAlpha,cphue,cpsat,cpval,focused,highest,focusedBox = game:GetService("TweenService"),game:GetService("RunService"), game:GetService("UserInputService")
 local cpalpha = 0
 
@@ -1486,3 +1485,46 @@ library.colors = {
 }
 
 return library
+
+--[[
+local LaunchTick = tick()
+local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
+
+local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
+
+local MainTab = MainWindow:CreateTab("Main Cheats")
+
+local MainLocalTab = MainTab:AddCategory("Give Items")
+
+MainLocalTab:AddButton("M4A1", function()
+    workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M4A1"].ITEMPICKUP)
+end)
+
+MainLocalTab:AddLabel("Label")
+
+MainLocalTab:AddToggle("Toggle", function(val)
+	print(val)
+end)
+
+MainLocalTab:AddTextBox("TextBox", "Current Input Text", function(val)
+	print(val)
+end)
+
+MainLocalTab:AddSlider("Slider", 1000, 50, function(val)
+    print(val)
+end)
+
+MainLocalTab:AddDropdown("Dropdown", {"1", "2", "3"}, function(val)
+	print(val)
+end)
+
+MainLocalTab:AddKeybind("KeyBind", Enum.KeyCode.B, function(val)
+	print(val)
+end)
+
+MainLocalTab:AddCP("ColorPicker", Color3.fromRGB(255, 255, 255), function(val)
+	print(val)
+end)
+
+MainWindow.close = false
+--]]
