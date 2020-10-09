@@ -112,7 +112,7 @@ end)
 
 local SettingsTab = MainWindow:CreateTab("Settings")
 
-local SettingsTabCategoryMain = MainTab:AddCategory("Main")
+local SettingsTabCategoryMain = SettingsTab:AddCategory("Main")
 
 SettingsTabCategoryMain:AddButton("Rejoin Server", function()
     pcall(function() game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer) end)
