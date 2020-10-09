@@ -68,19 +68,34 @@ end)
 
 local MainTabCategoryGunMods = MainTab:AddCategory("Gun Mods")
 
-MainTabCategoryGunMods:AddButton("Mod Inventory", function()
+MainTabCategoryGunMods:AddButton("Mod Weapons", function()
     pcall(function()
 	for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 		if v:IsA("Tool") and v:FindFirstChild("GunStates") then
 			local GunConfiguration = require(v.GunStates)
+			-- GunConfiguration.Damage = 100
 			GunConfiguration.MaxAmmo = math.huge
 			GunConfiguration.CurrentAmmo = math.huge
 			GunConfiguration.StoredAmmo = math.huge
-			GunConfiguration.FireRate = 0.001
+			GunConfiguration.FireRate = 0.01
 			GunConfiguration.AutoFire = true
-			GunConfiguration.Range = 9999
+			GunConfiguration.Range = math.huge
+			GunConfiguration.Spread = 0
 			GunConfiguration.ReloadTime = 0
 			GunConfiguration.Bullets = 1
+		end
+	end
+	end)
+end)
+
+MainTabCategoryGunMods:AddButton("Mod Food", function()
+    pcall(function()
+	for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+		if v:IsA("Tool") and v:FindFirstChild("LocalScript") and getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).drink then
+			print(v.Name, getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).drink)
+			getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).drink = math.huge
+			getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).deb = false
+			print(v.Name, getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).drink)
 		end
 	end
 	end)

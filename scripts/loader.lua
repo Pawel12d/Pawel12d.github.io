@@ -9,18 +9,18 @@ Islands
 
 print("Loading")
 
-local hexhub_loader_anim1 = Instance.new("ScreenGui")
+local HEXHUB_LOADER_GUI = Instance.new("ScreenGui")
 local main = Instance.new("Frame")
 local Frame = Instance.new("Frame")
 local beauty = Instance.new("TextLabel")
 local hexhub = Instance.new("TextLabel")
 local status = Instance.new("TextLabel")
 
-hexhub_loader_anim1.Name = "hexhub_loader_anim1"
-hexhub_loader_anim1.Parent = game:WaitForChild("CoreGui")
+HEXHUB_LOADER_GUI.Name = "HEXHUB_LOADER_GUI"
+HEXHUB_LOADER_GUI.Parent = game:WaitForChild("CoreGui")
 
 main.Name = "main"
-main.Parent = hexhub_loader_anim1
+main.Parent = HEXHUB_LOADER_GUI
 main.AnchorPoint = Vector2.new(0.5, 0.5)
 main.BackgroundColor3 = Color3.new(0.176471, 0.188235, 0.215686)
 main.BorderSizePixel = 0
@@ -79,85 +79,48 @@ status.TextTransparency = 1
 status.TextWrapped = true
 status.TextYAlignment = Enum.TextYAlignment.Top
 
-local function JLLEH_fake_script() -- hexhub_loader_anim1.LocalScript 
-	local script = Instance.new('LocalScript', hexhub_loader_anim1)
+repeat wait() until game:IsLoaded()
 
-	repeat wait() until game:IsLoaded()
-	--[[
-	local function print(...)
-		if #(...) > 1 then
-			local str = ''
-			for _,v in next, ({...}) do
-				if str ~= '' then str = str .. ' ' .. v end
-				if str == '' then str = str .. v end
-			end
-			return rconsoleinfo(str)
-		end
-		return rconsoleinfo(...)
+local HEXHUB_LOADER = {}
+local Signals = setmetatable({}, {
+	__index = function(...)
+		return rawget(...) or nil
 	end
-	local function warn(...)
-		if #(...) > 1 then
-			local str = ''
-			for _,v in next, ({...}) do
-				if str ~= '' then str = str .. ' ' .. tostring(v) end
-				if str == '' then str = str .. tostring(v) end
-			end
-			return rconsolewarn(str)
-		end
-		return rconsolewarn(...)
-	end
-	local function info(...)
-		if #(...) > 1 then
-			local str = ''
-			for _,v in next, ({...}) do
-				if str ~= '' then str = str .. ' ' .. tostring(v) end
-				if str == '' then str = str .. tostring(v) end
-			end
-			return rconsoleinfo(str)
-		end
-		return rconsoleinfo(...)
-	end
-	--]]
-	local self = {}
-	local Signals = setmetatable({}, {
-		__index = function(...)
-			return rawget(...) or nil
-		end
-	})
+})
 	
-	setmetatable(self, {
+	setmetatable(HEXHUB_LOADER, {
 		__metatable = 'no',
 		__index = function(...)return rawget(...) or nil end,
 		__call = function(t, name, ...)
 			name = tostring(name)
-			if rawget(self, name) then
-				if Signals[self.lastCalled] == nil or Signals[self.lastCalled] == true then
+			if rawget(HEXHUB_LOADER, name) then
+				if Signals[HEXHUB_LOADER.lastCalled] == nil or Signals[HEXHUB_LOADER.lastCalled] == true then
 					Signals[name] = false
-					pcall(self[name], ...)
+					pcall(HEXHUB_LOADER[name], ...)
 					Signals[name] = true
-					self.lastCalled = name
+					HEXHUB_LOADER.lastCalled = name
 				end
 			end
 			return
 		end,
 	})
 	
-	function self.open(status, delay_)
+	function HEXHUB_LOADER.open(status, delay_)
 		local done = false
 		delay_ = (delay_ or 0.33)
 		delay(delay_, function()
-			script.Parent.main:TweenSize(UDim2.new(0.132, 0, 0.121, 0), 'Out', 'Quint', 0.6, false, function()
+			HEXHUB_LOADER_GUI.main:TweenSize(UDim2.new(0.132, 0, 0.121, 0), 'Out', 'Quint', 0.6, false, function()
 				for i = 1.2, 0, -0.02 do
-					script.Parent.main.Frame.hexhub.TextTransparency = i
-					script.Parent.main.Frame.beauty.BackgroundTransparency = i
+					HEXHUB_LOADER_GUI.main.Frame.hexhub.TextTransparency = i
+					HEXHUB_LOADER_GUI.main.Frame.beauty.BackgroundTransparency = i
 					game:GetService('RunService').Heartbeat:Wait()
 				end
-				script.Parent.main.Frame.hexhub:TweenPosition(UDim2.new(0.025, 0, 0, 0), 'Out', 'Quad', 0.31, false, function()
-					script.Parent.main.Frame.beauty:TweenSize(UDim2.new(1, 0, 0.012, 0), 'Out', 'Quint', 0.40, false, function()
+				HEXHUB_LOADER_GUI.main.Frame.hexhub:TweenPosition(UDim2.new(0.025, 0, 0, 0), 'Out', 'Quad', 0.31, false, function()
+					HEXHUB_LOADER_GUI.main.Frame.beauty:TweenSize(UDim2.new(1, 0, 0.012, 0), 'Out', 'Quint', 0.40, false, function()
 						delay(0.27, function()
 							for i = 1.2, 0, -0.02 do
-								script.Parent.main.Frame.status.Text = (tostring(status) or 'initializing')
-								script.Parent.main.Frame.status.TextTransparency = i
+								HEXHUB_LOADER_GUI.main.Frame.status.Text = (tostring(status) or 'initializing')
+								HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
 								game:GetService('RunService').Heartbeat:Wait()
 							end
 							done = true
@@ -170,17 +133,17 @@ local function JLLEH_fake_script() -- hexhub_loader_anim1.LocalScript
 		repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
 	end
 	
-	function self.close(delay_, callback)
+	function HEXHUB_LOADER.close(delay_, callback)
 		local done = false
 		delay_ = (delay_ or 0.33)
 		wait(delay_)
 		for i = 0, 1.2, 0.02 do
-			script.Parent.main.Frame.status.TextTransparency = i
-			script.Parent.main.Frame.beauty.BackgroundTransparency = i
-			script.Parent.main.Frame.hexhub.TextTransparency = i
+			HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
+			HEXHUB_LOADER_GUI.main.Frame.beauty.BackgroundTransparency = i
+			HEXHUB_LOADER_GUI.main.Frame.hexhub.TextTransparency = i
 			game:GetService('RunService').Heartbeat:Wait()
 		end
-		script.Parent.main:TweenSize(UDim2.new(0, 0,0.121, 0), 'Out', 'Quint', 0.6, false, function()
+		HEXHUB_LOADER_GUI.main:TweenSize(UDim2.new(0, 0,0.121, 0), 'Out', 'Quint', 0.6, false, function()
 			if typeof(callback) == 'function' then
 				pcall(callback)
 			else
@@ -190,19 +153,19 @@ local function JLLEH_fake_script() -- hexhub_loader_anim1.LocalScript
 		end)
 		local time = tick()
 		repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
-		hexhub_loader_anim1:Remove()
+		HEXHUB_LOADER_GUI:Remove()
 	end
 	
-	function self.showStatus(status, delay_, callback)
+	function HEXHUB_LOADER.showStatus(status, delay_, callback)
 		local done = false
 		delay_ = (delay_ or 0.33)
 		for i = 0, 1.2, 0.02 do
-			script.Parent.main.Frame.status.TextTransparency = i
+			HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
 			game:GetService('RunService').Heartbeat:Wait()
 		end
-		script.Parent.main.Frame.status.Text = (tostring(status) or 'initializing')
+		HEXHUB_LOADER_GUI.main.Frame.status.Text = (tostring(status) or 'initializing')
 		for i = 1.2, 0, -0.02 do
-			script.Parent.main.Frame.status.TextTransparency = i
+			HEXHUB_LOADER_GUI.main.Frame.status.TextTransparency = i
 			game:GetService('RunService').Heartbeat:Wait()
 		end
 		if typeof(callback) == 'function' then
@@ -216,10 +179,9 @@ local function JLLEH_fake_script() -- hexhub_loader_anim1.LocalScript
 		local time = tick()
 		repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
 	end
-end
-coroutine.wrap(JLLEH_fake_script)()
 
-self('open', 'Initializing', 1)
+
+HEXHUB_LOADER('open', 'Initializing', 0.5)
 
 
 local CurrentGame = game.GameId
@@ -230,25 +192,25 @@ local GamesList = {
 	["73885730"] = {"prisonlife", "Prison Life"}
 }
 
-self('showStatus', 'Scanning', 0.5)
+HEXHUB_LOADER('showStatus', 'Scanning', 0.25)
 
 for i,v in pairs(GamesList) do
 	if tonumber(i) == tonumber(CurrentGame) then
-		print("Game Detected:",v)
+		print("Game Detected:", v[2])
 		CurrentGameName = v[1]
 		CurrentGameDisplayName = v[2]
 		break
 	end
 end
 
-self('showStatus', CurrentGameDisplayName, 0.5)
+HEXHUB_LOADER('showStatus', CurrentGameDisplayName, 0.25)
 
 if CurrentGameName and CurrentGameDisplayName then
-	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
+	-- loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 else
 	print("Current Game Not Supported!")
 end
 
-self('showStatus', 'Ready!', 0.5)
+HEXHUB_LOADER('showStatus', 'Ready!', 0.15)
 
-self('close')
+HEXHUB_LOADER('close')
