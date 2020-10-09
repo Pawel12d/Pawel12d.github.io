@@ -111,7 +111,7 @@ MainTabCategoryMiscellaneous:AddButton("Inf Stamina", function()
 end)
 
 MainTabCategoryMiscellaneous:AddToggle("No Punch Cooldown", function(val)
-	a = val
+	if val == true then a = true else a = false end
 	while a do
 		wait(0.01)
 		pcall(function()
@@ -133,6 +133,22 @@ MainTabCategoryFun:AddButton("Push-Ups", function()
 	LoadAnim:Play()
 	LoadAnim:AdjustSpeed(1)
 	LoadAnim.Parent = nil
+	end)
+end)
+
+MainTabCategoryMiscellaneous:AddToggle("Push-Ups", function(val)
+    pcall(function()
+	if val == true then
+		local Animation = Instance.new("Animation")
+		Animation.AnimationId = "http://www.roblox.com/asset/?id=175676962"
+		Animation.Parent = nil
+		local LoadAnim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Animation)
+		LoadAnim:Play()
+		LoadAnim:AdjustSpeed(1)
+		LoadAnim.Parent = nil
+	else
+		if LoadAnim then LoadAnim:Stop() end
+	end
 	end)
 end)
 
