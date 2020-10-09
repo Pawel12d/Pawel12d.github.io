@@ -88,15 +88,15 @@ end)
 
 local MainTabCategoryMiscellaneous = MainTab:AddCategory("Miscellaneous")
 
-MainTabGiveCategoryItems:AddDropdown("Dropdown", {"Inmates","Criminals","Guards","Neutral"}, function(val)
+MainTabCategoryMiscellaneous:AddDropdown("Switch Team", {"Inmates","Criminals","Guards","Neutral"}, function(val)
 	ChangeTeam(val)
 end)
 
-MainTabGiveCategoryItems:AddButton("Respawn", function()
+MainTabCategoryMiscellaneous:AddButton("Respawn", function()
     pcall(function() game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer) end)
 end)
 
-MainTabGiveCategoryItems:AddButton("Inf Stamina", function()
+MainTabCategoryMiscellaneous:AddButton("Inf Stamina", function()
     pcall(function()
 	for i,v in pairs(getreg()) do 
 		if type(v) == "function" and getfenv(v).script == game.Players.LocalPlayer.Character.ClientInputHandler then 
