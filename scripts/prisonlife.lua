@@ -178,7 +178,7 @@ MainTabCategoryFun:AddButton("Spawn Hats", function()
 			v.Parent = workspace
 		end
 	end
-	wait(0.1)
+	wait(0.2)
 	game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer)
 	wait(0.1)
 	repeat wait() until game.Players.LocalPlayer.Character
