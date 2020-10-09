@@ -6,7 +6,6 @@ Add:
 Islands
 --]]
 
-
 print("Loading")
 
 local HEXHUB_LOADER_GUI = Instance.new("ScreenGui")
@@ -82,6 +81,7 @@ status.TextYAlignment = Enum.TextYAlignment.Top
 repeat wait() until game:IsLoaded()
 
 local HEXHUB_LOADER = {}
+
 local Signals = setmetatable({}, {
 	__index = function(...)
 		return rawget(...) or nil
@@ -206,7 +206,7 @@ end
 HEXHUB_LOADER('showStatus', CurrentGameDisplayName, 0.25)
 
 if CurrentGameName and CurrentGameDisplayName then
-	-- loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
+	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 else
 	print("Current Game Not Supported!")
 end

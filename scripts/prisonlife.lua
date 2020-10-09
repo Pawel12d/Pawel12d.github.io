@@ -5,10 +5,10 @@ local LaunchTick = tick()
 local function ChangeTeam(team)
 	if game:GetService("Teams"):FindFirstChild(team) then
 		if team ~= "Criminals" then
-			game.Workspace.Remote.TeamEvent:FireServer(game:GetService("Teams")[team].TeamColor)
+			workspace.Remote.TeamEvent:FireServer(game:GetService("Teams")[team].TeamColor)
 		else
 			local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace["Criminals Spawn"].SpawnLocation.CFrame -- Criminals
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Criminals Spawn"].SpawnLocation.CFrame -- Criminals
 			wait(0.1)
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
 		end
@@ -156,6 +156,7 @@ MainTabCategoryFun:AddToggle("Push-Ups", function(val)
 		local Animation = Instance.new("Animation")
 		Animation.AnimationId = "http://www.roblox.com/asset/?id=175676962"
 		Animation.Parent = nil
+		
 		local LoadAnim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Animation)
 		LoadAnim:Play()
 		LoadAnim:AdjustSpeed(1)
