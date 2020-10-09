@@ -80,7 +80,7 @@ MainTabCategoryGunMods:AddButton("Mod Inventory", function()
 			GunConfiguration.AutoFire = true
 			GunConfiguration.Range = 9999
 			GunConfiguration.ReloadTime = 0
-			GunConfiguration.Bullets = 5
+			GunConfiguration.Bullets = 1
 		end
 	end
 	end)
@@ -102,12 +102,22 @@ MainTabCategoryMiscellaneous:AddButton("Inf Stamina", function()
 		if type(v) == "function" and getfenv(v).script == game.Players.LocalPlayer.Character.ClientInputHandler then 
 			for i2,v2 in pairs(getupvalues(v)) do 
 				if type(v2) == "number" then 
-					debug.setupvalue(v, i2, 13)
+					debug.setupvalue(v, i2, 999999)
 				end
 			end
 		end
 	end
 	end)
+end)
+
+MainTabCategoryMiscellaneous:AddToggle("No Punch Cooldown", function(val)
+	a = val
+	while a do
+		wait(0.01)
+		pcall(function()
+		getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting = false
+		end)
+	end
 end)
 
 local SettingsTabCategoryMain = SettingsTab:AddCategory("Main")
