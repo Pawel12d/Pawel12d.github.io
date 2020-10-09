@@ -27,24 +27,9 @@ local function ChangeTeam(team)
 	end
 end
 
---[[
-local function ChangeTeam(team) -- "Inmates","Criminals","Guards","Neutral"
-	if game:GetService("Teams"):FindFirstChild(team) then
-		if team == "Inmates" then
-			game.Workspace.Remote.TeamEvent:FireServer("Medium stone grey")
-		elseif team == "Criminals" then
-			local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Criminals Spawn"].SpawnLocation.CFrame -- Criminals
-			wait(0.1)
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
-		elseif team == "Guards" then
-			game.Workspace.Remote.TeamEvent:FireServer("Medium stone grey")
-		elseif team == "Neutral" then
-			game.Workspace.Remote.TeamEvent:FireServer("Medium stone grey")
-		end
-	end
-end
---]]
+local PrisonLifeWaypoints = {
+	["Test"] = CFrame.new(0, 500, 0)
+}
 
 local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
