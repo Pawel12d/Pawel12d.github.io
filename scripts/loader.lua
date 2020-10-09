@@ -6,7 +6,8 @@ Add:
 Islands
 --]]
 
-pcall(funciton()
+
+print("Loading")
 
 local hexhub_loader_anim1 = Instance.new("ScreenGui")
 local main = Instance.new("Frame")
@@ -81,11 +82,6 @@ status.TextYAlignment = Enum.TextYAlignment.Top
 local function JLLEH_fake_script() -- hexhub_loader_anim1.LocalScript 
 	local script = Instance.new('LocalScript', hexhub_loader_anim1)
 
-	-- JD (Jednostki dynamiczne)
-	
-	--[[ SZEROKOŚĆ MAIN: {0.132, 0},{0.12, 0}
-		
-	]]
 	repeat wait() until game:IsLoaded()
 	--[[
 	local function print(...)
@@ -256,5 +252,3 @@ end
 self('showStatus', 'Ready!', 0.5)
 
 self('close')
-
-end)
