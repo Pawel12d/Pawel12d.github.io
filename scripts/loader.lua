@@ -55,9 +55,9 @@ hexhub.BackgroundTransparency = 1
 hexhub.Position = UDim2.new(0.35800001, 0, 0.360000014, 0)
 hexhub.Size = UDim2.new(0.343859673, 0, 0.278287351, 0)
 hexhub.Font = Enum.Font.Code
-hexhub.Text = "hex hub"
+hexhub.Text = "Hex Hub" -- "hex hub"
 hexhub.TextColor3 = Color3.new(0.862745, 0.317647, 0.321569)
-hexhub.TextSize = 16
+hexhub.TextSize = 18 -- 16
 hexhub.TextStrokeTransparency = 0.87000000476837
 hexhub.TextTransparency = 1
 hexhub.TextWrapped = true
@@ -70,9 +70,9 @@ status.BackgroundTransparency = 1
 status.Position = UDim2.new(0.0297169536, 0, 0.359268516, 0)
 status.Size = UDim2.new(0.94247216, 0, 0.600000024, 0)
 status.Font = Enum.Font.Code
-status.Text = "initializing"
+status.Text = ".." -- "initializing"
 status.TextColor3 = Color3.new(0.870588, 0.870588, 0.870588)
-status.TextSize = 14
+status.TextSize = 16 -- 14
 status.TextStrokeTransparency = 0.87000000476837
 status.TextTransparency = 1
 status.TextWrapped = true
@@ -201,15 +201,14 @@ for i,v in pairs(GamesList) do
 	end
 end
 
-HEXHUB_LOADER('showStatus', CurrentGameDisplayName, 0.25)
+HEXHUB_LOADER('showStatus', CurrentGameDisplayName, 0.1)
+
+HEXHUB_LOADER('showStatus', 'Ready!', 0.1)
+
+HEXHUB_LOADER('close')
 
 if CurrentGameName and CurrentGameDisplayName then
-	repeat wait() until not HEXHUB_LOADER_GUI
 	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 else
 	print("Current Game Not Supported!")
 end
-
-HEXHUB_LOADER('showStatus', 'Ready!', 0.15)
-
-HEXHUB_LOADER('close')
