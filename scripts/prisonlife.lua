@@ -111,8 +111,7 @@ MainTabCategoryMiscellaneous:AddButton("Inf Stamina", function()
 end)
 
 MainTabCategoryMiscellaneous:AddToggle("No Punch Cooldown", function(val)
-	if val == true then a = true else a = false end
-	while a do
+	while val == true do
 		wait(0.01)
 		pcall(function()
 		getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting = false
@@ -136,7 +135,7 @@ MainTabCategoryFun:AddButton("Push-Ups", function()
 	end)
 end)
 
-MainTabCategoryMiscellaneous:AddToggle("Push-Ups", function(val)
+MainTabCategoryFun:AddToggle("Push-Ups", function(val)
     pcall(function()
 	if val == true then
 		local Animation = Instance.new("Animation")
