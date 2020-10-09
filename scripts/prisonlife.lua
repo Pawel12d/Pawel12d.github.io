@@ -2,18 +2,49 @@ print("Prison Life Script Loaded! (a)")
 
 local LaunchTick = tick()
 
+function FireTouchTransmitter(target, sender)
+	if target and target:IsA("TouchTransmitter") then
+		local asdf = sender or game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+		firetouchinterest(asdf, target.Parent, 0)
+		wait()
+		firetouchinterest(asdf, target.Parent, 1)
+	end
+end
+
 local function ChangeTeam(team)
 	if game:GetService("Teams"):FindFirstChild(team) then
 		if team ~= "Criminals" then
-			workspace.Remote.TeamEvent:FireServer(game:GetService("Teams")[team].TeamColor)
+			workspace.Remote.TeamEvent:FireServer(tostring(game:GetService("Teams")[team].TeamColor))
 		else
+			--[[
+			local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Criminals Spawn"].SpawnLocation.CFrame -- Criminals
+			wait(0.1)
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldp
+			--]]
+			FireTouchTransmitter(workspace["Criminals Spawn"].SpawnLocation.TouchInterest)
+		end
+	end
+end
+
+--[[
+local function ChangeTeam(team) -- "Inmates","Criminals","Guards","Neutral"
+	if game:GetService("Teams"):FindFirstChild(team) then
+		if team == "Inmates" then
+			game.Workspace.Remote.TeamEvent:FireServer("Medium stone grey")
+		elseif team == "Criminals" then
 			local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Criminals Spawn"].SpawnLocation.CFrame -- Criminals
 			wait(0.1)
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
+		elseif team == "Guards" then
+			game.Workspace.Remote.TeamEvent:FireServer("Medium stone grey")
+		elseif team == "Neutral" then
+			game.Workspace.Remote.TeamEvent:FireServer("Medium stone grey")
 		end
 	end
 end
+--]]
 
 local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
@@ -104,7 +135,7 @@ end)
 local MainTabCategoryMiscellaneous = MainTab:AddCategory("Miscellaneous")
 
 MainTabCategoryMiscellaneous:AddDropdown("Switch Team", {"Inmates","Criminals","Guards","Neutral"}, function(val)
-	ChangeTeam(val)
+	pcall(function() ChangeTeam(val) end)
 end)
 
 MainTabCategoryMiscellaneous:AddButton("Respawn", function()
@@ -136,9 +167,9 @@ end)
 
 local MainTabCategoryFun = MainTab:AddCategory("Fun")
 
-MainTabCategoryFun:AddLabel("Animations")
+MainTabCategoryFun:AddLabel("Main")
 
-MainTabCategoryFun:AddButton("Push-Ups", function()
+MainTabCategoryFun:AddButton("Push-Ups Animation", function()
     pcall(function()
 	local Animation = Instance.new("Animation")
 	Animation.AnimationId = "http://www.roblox.com/asset/?id=175676962"
@@ -150,21 +181,20 @@ MainTabCategoryFun:AddButton("Push-Ups", function()
 	end)
 end)
 
-MainTabCategoryFun:AddToggle("Push-Ups", function(val)
-	if val == true then
-		pcall(function()
-		local Animation = Instance.new("Animation")
-		Animation.AnimationId = "http://www.roblox.com/asset/?id=175676962"
-		Animation.Parent = nil
-		
-		local LoadAnim = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(Animation)
-		LoadAnim:Play()
-		LoadAnim:AdjustSpeed(1)
-		LoadAnim.Parent = nil
-		end)
-	else
-		if LoadAnim then LoadAnim:Stop() end
+MainTabCategoryFun:AddButton("Spawn Hats", function()
+	pcall(function()
+	local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+		if v:IsA("Accessory") then
+			v.Parent = workspace
+		end
 	end
+	game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer)
+	wait(0.1)
+	repeat wait() until game.Players.LocalPlayer.Character
+	repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
+	end)
 end)
 
 MainTabCategoryFun:AddLabel("Notifications (Client)")
