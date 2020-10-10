@@ -197,7 +197,7 @@ MainTabCategoryFun:AddButton("Lifting the weight", function()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(768.998718, 98.1000595, cool, -4.37113883e-08, -1, 4.37113883e-08, -4.37113918e-08, -4.37113847e-08, -1, 1, -4.37113918e-08, -4.37113883e-08)
 	print("done1")
-	repeat wait() until game.Players.LocalPlayer.Character.Humanoid.Sit == false -- game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space)
+	repeat wait() until (game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) and game:GetService("UserInputService"):GetFocusedTextBox() == nil)
 	print("done2")
 	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 	LoadAnim:Stop()
