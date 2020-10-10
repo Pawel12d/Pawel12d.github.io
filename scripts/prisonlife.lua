@@ -16,17 +16,11 @@ local function ChangeTeam(team)
 		if team ~= "Criminals" then -- switching Guards (while having guard items) -> Criminals makes player respawn
 			workspace.Remote.TeamEvent:FireServer(tostring(game:GetService("Teams")[team].TeamColor))
 		else
-			--[[
-			local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Criminals Spawn"].SpawnLocation.CFrame -- Criminals
-			wait(0.1)
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldp
-			--]]
 			FireTouchTransmitter(workspace["Criminals Spawn"].SpawnLocation.TouchInterest)
 		end
 	end
 end
-
+--[[
 local function Get_Player_Vehicle(plr)
 	for i,v in pairs(workspace.CarContainer:GetChildren()) do
 		if v:FindFirstChild("Body") and v.Body:FindFirstChild("VehicleSeat") and v.Body.VehicleSeat:FindFirstChild("SeatWeld") then
@@ -43,7 +37,7 @@ end
 if Get_Player_Vehicle(game.Players.LocalPlayer) ~= false then
 	Get_Player_Vehicle(game.Players.LocalPlayer):SetPrimaryPartCFrame(CFrame.new(game.Players.dogefun908.Character.HumanoidRootPart.Position + Vector3.new(0, 10, 0)))
 end
---[[
+
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.dogefun908.Character.HumanoidRootPart.Position + Vector3.new(0, 10, 0))
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
@@ -221,7 +215,67 @@ MainTabCategoryFun:AddButton("Spawn Hats", function()
 	end)
 end)
 
+MainTabCategoryFun:AddButton("Destroy Toilets", function()
+	pcall(function()
+	workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.single["Hammer"].ITEMPICKUP)
+	for i,v in pairs(game.Workspace["Prison_Cellblock"]["Cells_A"]:GetChildren()) do
+		spawn(function()
+		for i=1,25 do
+			if v:FindFirstChild("Toilet") then
+				game.ReplicatedStorage.meleeEvent:FireServer(v.Toilet, game.Players.LocalPlayer.Backpack.Hammer)
+				wait()
+			end
+		end
+		end)
+	end
+	for i,v in pairs(game.Workspace["Prison_Cellblock"]["Cells_B"]:GetChildren()) do
+		spawn(function()
+		for i=1,25 do
+			if v:FindFirstChild("Toilet") then
+				game.ReplicatedStorage.meleeEvent:FireServer(v.Toilet, game.Players.LocalPlayer.Backpack.Hammer)
+				wait()
+			end
+		end
+		end)
+	end
+	end)
+end)
+
 MainTabCategoryFun:AddLabel("Notifications (Client)")
+
+MainTabCategoryFun:AddButton("Send Notification", function()
+	pcall(function()
+	if NotificationType == "Tooltip" then
+		require(game.ReplicatedStorage.Modules_client.TooltipModule).update(NotificationText or "Text")
+	elseif NotificationType == "Warn" then
+		local WarningNotify = game.ReplicatedStorage.gooeys.WarnGui:Clone()
+		WarningNotify.Parent = game.Players.LocalPlayer.PlayerGui
+		WarningNotify.Frame.title.Text = NotificationTitle or "Title"
+		WarningNotify.Frame.desc.Text = NotificationText or "Text"
+		WarningNotify.Frame.LocalScript.Disabled = false
+	elseif NotificationType == "Prompt" then
+		local PromptNotify = game.ReplicatedStorage.gooeys.promptGui:Clone()
+		PromptNotify.Parent = game.Players.LocalPlayer.PlayerGui
+		PromptNotify.Frame.Frame.title.Text = NotificationTitle or "Title"
+		PromptNotify.Frame.Frame.body.Text = NotificationText or "Text"
+		PromptNotify.Frame.Frame.TextButton.Text = "Close"
+		PromptNotify.Frame.Frame.TextButton.MouseButton1Down:Connect(function() PromptNotify:Remove() end)
+		PromptNotify.Frame.Position = UDim2.new({0, 0}, {0, 0})
+	end
+	end)
+end)
+
+MainTabCategoryFun:AddDropdown("Notification Type", {"Tooltip","Warn","Prompt"}, function(val)
+	pcall(function() NotificationType = val end)
+end)
+
+MainTabCategoryFun:AddTextBox("Notification Title", "Title", function(val)
+	pcall(function() NotificationTitle = val end)
+end)
+
+MainTabCategoryFun:AddTextBox("Notification Text", "Text", function(val)
+	pcall(function() NotificationText = val end)
+end)
 
 local MainTabCategoryAura = MainTab:AddCategory("Aura")
 
