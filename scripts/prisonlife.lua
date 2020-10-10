@@ -27,6 +27,27 @@ local function ChangeTeam(team)
 	end
 end
 
+local function Get_Player_Vehicle(plr)
+	for i,v in pairs(workspace.CarContainer:GetChildren()) do
+		if v:FindFirstChild("Body") and v.Body:FindFirstChild("VehicleSeat") and v.Body.VehicleSeat:FindFirstChild("SeatWeld") then
+			if game.Players:GetPlayerFromCharacter(v.Body.VehicleSeat.SeatWeld.Part1.Parent) then
+				if game.Players:GetPlayerFromCharacter(v.Body.VehicleSeat.SeatWeld.Part1.Parent).Name == plr.Name then
+					return v
+				end
+			end
+		end
+	end
+	return false
+end
+
+if Get_Player_Vehicle(game.Players.LocalPlayer) ~= false then
+	Get_Player_Vehicle(game.Players.LocalPlayer):SetPrimaryPartCFrame(CFrame.new(game.Players.dogefun908.Character.HumanoidRootPart.Position + Vector3.new(0, 10, 0)))
+end
+--[[
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.dogefun908.Character.HumanoidRootPart.Position + Vector3.new(0, 10, 0))
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+--]]
 local PrisonLifeWaypoints = {
 	["Test"] = CFrame.new(0, 500, 0)
 }
@@ -106,15 +127,16 @@ end)
 MainTabCategoryGunMods:AddButton("Mod Food", function()
     pcall(function()
 	for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-		if v:IsA("Tool") and v:FindFirstChild("LocalScript") and getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).drink then
-			print(v.Name, getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).drink)
-			getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).drink = math.huge
-			getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).deb = false
-			print(v.Name, getsenv(game.Players.LocalPlayer.Backpack.Dinner.LocalScript).drink)
+		if v:IsA("Tool") and v:FindFirstChild("LocalScript") and getsenv(v.LocalScript).drink then
+			print(v.Name, getsenv(v.LocalScript).drink)
+			getsenv(v.LocalScript).drink = math.huge
+			getsenv(v.LocalScript).deb = false
+			print(v.Name, getsenv(v.LocalScript).drink)
 		end
 	end
 	end)
 end)
+
 
 local MainTabCategoryMiscellaneous = MainTab:AddCategory("Miscellaneous")
 
@@ -158,7 +180,7 @@ local MainTabCategoryFun = MainTab:AddCategory("Fun")
 
 MainTabCategoryFun:AddLabel("Main")
 
-MainTabCategoryFun:AddButton("Push-Ups Animation", function()
+MainTabCategoryFun:AddButton("Lifting the weight", function()
     pcall(function()
 	local Animation = Instance.new("Animation")
 	Animation.AnimationId = "http://www.roblox.com/asset/?id=175676962"
@@ -167,6 +189,18 @@ MainTabCategoryFun:AddButton("Push-Ups Animation", function()
 	LoadAnim:Play()
 	LoadAnim:AdjustSpeed(1)
 	LoadAnim.Parent = nil
+	
+	local a = math.random(1,2)
+	if a == 1 then cool = 2552.93018 else cool = 2536.93018 end
+	
+	game.Players.LocalPlayer.Character.Humanoid.Sit = true
+	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(768.998718, 98.1000595, cool, -4.37113883e-08, -1, 4.37113883e-08, -4.37113918e-08, -4.37113847e-08, -1, 1, -4.37113918e-08, -4.37113883e-08)
+	print("done1")
+	repeat wait() until game.Players.LocalPlayer.Character.Humanoid.Sit == false -- game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space)
+	print("done2")
+	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+	LoadAnim:Stop()
 	end)
 end)
 
@@ -206,7 +240,6 @@ MainTabCategoryAura:AddToggle("Enabled", function(val)
 						if (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude < 20 then
 							if AuraMode == "Kill" then
 								game.ReplicatedStorage.meleeEvent:FireServer(v)
-								print("killing", v.Name)
 							elseif AuraMode == "Taze" then
 								local args = {{
 									["RayObject"] = Ray.new(), 
@@ -216,10 +249,8 @@ MainTabCategoryAura:AddToggle("Enabled", function(val)
 								}}
 								-- will the socialist above ever shut up? ^
 								game:GetService("ReplicatedStorage").ShootEvent:FireServer(args, game.Players.LocalPlayer.Backpack.Taser)
-								print("tazing", v.Name)
 							elseif AuraMode == "Arrest" then
 								game.Workspace.Remote.arrest:InvokeServer(v.Character.HumanoidRootPart)
-								print("arresting", v.Name)
 							end
 						end
 					end
@@ -235,6 +266,12 @@ end)
 
 MainTabCategoryAura:AddDropdown("Mode", {"Kill","Taze","Arrest"}, function(val)
 	pcall(function() AuraMode = val end)
+end)
+
+local MainTabCategoryPlayers = MainTab:AddCategory("Players")
+-- {"All","Enemies","Teammates"}
+MainTabCategoryPlayers:AddDropdown("Target", {"test"}, function(val)
+	pcall(function() PlayersTarget = val end)
 end)
 
 local SettingsTabCategoryMain = SettingsTab:AddCategory("Main")
