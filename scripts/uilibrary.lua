@@ -1527,4 +1527,7 @@ MainLocalTab:AddCP("ColorPicker", Color3.fromRGB(255, 255, 255), function(val)
 end)
 
 MainWindow.close = false
+
+Issues:
+Category title bar shows over dropdown frame
 --]]

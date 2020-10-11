@@ -196,6 +196,7 @@ local CurrentGame = game.GameId
 
 local GamesList = {
 	["286090429"] = {"arsenal", "Arsenal"},
+	["555555555"] = {"counterblox", "Counter Blox"},
 	["606849621"] = {"jailbreak", "Jailbreak"},
 	["73885730"] = {"prisonlife", "Prison Life"}
 }
@@ -211,7 +212,26 @@ for i,v in pairs(GamesList) do
 	end
 end
 
-HEXHUB_LOADER('showStatus', CurrentGameDisplayName, 0.05)
+HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0.05)
+
+HEXHUB_LOADER('showStatus', 'Loading Settings', 0.01)
+
+if isfile("hexhub.cfg") then
+	print("cfg found")
+else
+	print("cfg not found")
+	writefile("hexhub.cfg", 
+[[
+{
+["arsenal"] = {},
+["counterblox"] = {
+	["UnlockInventorySkins"] = {"AK47_Precision"}
+},
+}
+]])
+end
+
+getgenv().HexHubCFG = readfile("hexhub.cfg")
 
 HEXHUB_LOADER('showStatus', 'Ready!', 0.05)
 
