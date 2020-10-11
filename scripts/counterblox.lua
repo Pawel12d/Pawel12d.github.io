@@ -1,3 +1,3 @@
 print("Counter Blox Script Loaded!")
 
-print(getgenv().HexHubCFG)
+print(unpack(getgenv().HexHubCFG))

@@ -231,7 +231,7 @@ else
 ]])
 end
 
-getgenv().HexHubCFG = readfile("hexhub.cfg")
+getgenv().HexHubCFG = readfile(game:GetService("HttpService"):JSONDecode("hexhub.cfg"))
 
 HEXHUB_LOADER('showStatus', 'Ready!', 0.05)
 
