@@ -1,3 +1,3 @@
 print("Counter Blox Script Loaded!")
-
-print(unpack(getgenv().HexHubCFG))
+local cfgnigga = game:GetService("HttpService"):JSONDecode(tostring(getgenv().HexHubCFG))
+print(unpack(cfgnigga))
