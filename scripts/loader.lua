@@ -196,7 +196,7 @@ local CurrentGame = game.GameId
 
 local GamesList = {
 	["286090429"] = {"arsenal", "Arsenal"},
-	["555555555"] = {"counterblox", "Counter Blox"},
+	["115797356"] = {"counterblox", "Counter Blox"},
 	["606849621"] = {"jailbreak", "Jailbreak"},
 	["73885730"] = {"prisonlife", "Prison Life"}
 }
