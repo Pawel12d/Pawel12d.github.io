@@ -1000,8 +1000,10 @@ function library:CreateWindow(ctitle, csize, cpos)
 						slider.sliderbox.Position = UDim2.new(slider.value/maxVal,0,0.5,0)
 						slider.sliderfill.Size = UDim2.new(slider.value/maxVal,0,1,0)
 					else
-						slider.sliderbox:TweenPosition(UDim2.new(slider.value/maxVal,0,0.5,0), "Out", "Quad", 0.1, true)
-						slider.sliderfill:TweenSize(UDim2.new(slider.value/maxVal,0,1,0), "Out", "Quad", 0.1, true)
+						-- slider.sliderbox:TweenPosition(UDim2.new(slider.value/maxVal,0,0.5,0), "Out", "Quad", 0.1, true)
+						-- slider.sliderfill:TweenSize(UDim2.new(slider.value/maxVal,0,1,0), "Out", "Quad", 0.1, true)
+						slider.sliderbox:TweenPosition(UDim2.new(slider.value/maxVal,0,0.5,0), "Out", "Quint", 0.1, true)
+						slider.sliderfill:TweenSize(UDim2.new(slider.value/maxVal,0,1,0), "Out", "Quint", 0.1, true)
 					end
 					slider.visualize.Text = slider.value
 					_function(slider.value)

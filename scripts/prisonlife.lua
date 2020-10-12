@@ -269,6 +269,7 @@ end)
 
 MiscellaneousTabCategoryMain:AddToggle("No Punch Cooldown", function(val)
 	pcall(function()
+	--[[
 	if val == true then
 		ok = true
 	else
@@ -278,17 +279,30 @@ MiscellaneousTabCategoryMain:AddToggle("No Punch Cooldown", function(val)
 		wait(0.01)
 		getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting = false
 	end
+	--]]
+	if val == true then
+		npc = game:GetService("RunService").Stepped:connect(function()
+			if game.Players.LocalPlayer.Character then
+				if getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting == true then
+					getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting = false
+					print("test")
+				end
+			end
+		end)
+	else
+		if npc then npc:Disconnect() end
+	end
 	end)
 end)
 
 MiscellaneousTabCategoryMain:AddToggle("Inf Jump", function(val)
 	pcall(function()
 	if val == true then
-		a = game:GetService("UserInputService").JumpRequest:connect(function()
+		ij = game:GetService("UserInputService").JumpRequest:connect(function()
 			game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping") 
 		end)
 	else
-		if a then a:Disconnect() end
+		if ij then ij:Disconnect() end
 	end
 	end)
 end)
@@ -296,7 +310,7 @@ end)
 MiscellaneousTabCategoryMain:AddToggle("Noclip", function(val)
 	pcall(function()
 	if val == true then
-		a = game:GetService("RunService").Stepped:connect(function()
+		nc = game:GetService("RunService").Stepped:connect(function()
 			if game.Players.LocalPlayer.Character then
 				for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
 					if v:IsA("BasePart") and v.CanCollide == true then
@@ -306,7 +320,7 @@ MiscellaneousTabCategoryMain:AddToggle("Noclip", function(val)
 			end
 		end)
 	else
-		if a then a:Disconnect() end
+		if nc then nc:Disconnect() end
 	end
 	end)
 end)
@@ -394,7 +408,7 @@ local SettingsTabCategoryFakeLag = SettingsTab:AddCategory("Fake Latency")
 SettingsTabCategoryFakeLag:AddToggle("Enabled", function(val)
 	pcall(function()
 	if val == true then
-		a = game:GetService("RunService").Stepped:connect(function()
+		fl = game:GetService("RunService").Stepped:connect(function()
 			if FakeLatencyMode == "Static" then
 				settings().Network.IncomingReplicationLag = FakeLatency/1000
 			elseif FakeLatencyMode == "Adaptive" then
@@ -409,7 +423,7 @@ SettingsTabCategoryFakeLag:AddToggle("Enabled", function(val)
 			end
 		end)
 	else
-		if a then a:Disconnect() end
+		if fl then fl:Disconnect() end
 		settings().Network.IncomingReplicationLag = 0
 	end
 	end)
