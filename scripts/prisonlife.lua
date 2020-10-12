@@ -434,6 +434,10 @@ SettingsTabCategoryFakeLag:AddSlider("Miliseconds", 250, 1000, 500, function(val
     FakeLatency = val
 end)
 
+SettingsTabCategoryFakeLag:AddSlider("Testing", {0, 750, 333}, function(val)
+    print(val)
+end)
+
 SettingsTabCategoryFakeLag:AddDropdown("Mode", {"Static","Adaptive","Jumping"}, function(val)
 	pcall(function() FakeLatencyMode = val end)
 end)

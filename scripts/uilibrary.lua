@@ -1064,7 +1064,10 @@ function library:CreateWindow(ctitle, csize, cpos)
 				return slider
 			end
 			--]]
-			function LocalTab:AddSlider(text, minVal, maxVal, defVal, _function, float, incrementalMode)
+			function LocalTab:AddSlider(text, values, _function, float, incrementalMode)
+				minVal = values[1]
+				maxVal = values[2]
+				defVal = values[3]
 				if defVal then
 					if typeof(defVal) == "function" then
 						if _function then
@@ -1089,9 +1092,6 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end
 				if defVal > maxVal then
 					defVal = maxVal
-				end
-				if defVal < 0 then
-					defVal = 0
 				end
 				_function = _function or function() end
 				local slider = {value = defVal}
@@ -1167,11 +1167,11 @@ function library:CreateWindow(ctitle, csize, cpos)
 						slider.value = minVal
 					end
 					if incrementalMode then
-						slider.sliderbox.Position = UDim2.new((slider.value/maxVal)-minVal,0,0.5,0)
-						slider.sliderfill.Size = UDim2.new((slider.value/maxVal)-minVal,0,1,0)
+						slider.sliderbox.Position = UDim2.new(slider.value/maxVal,0,0.5,0)
+						slider.sliderfill.Size = UDim2.new(slider.value/maxVal,0,1,0)
 					else
-						slider.sliderbox:TweenPosition(UDim2.new((slider.value/maxVal)-minVal,0,0.5,0), "Out", "Quint", 0.3, true)
-						slider.sliderfill:TweenSize(UDim2.new((slider.value/maxVal)-minVal,0,1,0), "Out", "Quint", 0.3, true)
+						slider.sliderbox:TweenPosition(UDim2.new(slider.value/maxVal,0,0.5,0), "Out", "Quint", 0.3, true)
+						slider.sliderfill:TweenSize(UDim2.new(slider.value/maxVal,0,1,0), "Out", "Quint", 0.3, true)
 					end
 					slider.visualize.Text = slider.value
 					_function(slider.value)
@@ -1191,6 +1191,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				
 				local sliding
 				local modifying
+				
 				slider.button.InputBegan:connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						sliding = true
