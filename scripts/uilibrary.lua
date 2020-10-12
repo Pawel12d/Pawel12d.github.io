@@ -1065,9 +1065,9 @@ function library:CreateWindow(ctitle, csize, cpos)
 			end
 			--]]
 			function LocalTab:AddSlider(text, values, _function, float, incrementalMode)
-				minVal = tonumber(values[1])
-				maxVal = tonumber(values[2])
-				defVal = tonumber(values[3])
+				minVal = values.minVal
+				maxVal = values.maxVal
+				defVal = values.defVal
 				if defVal then
 					if typeof(defVal) == "function" then
 						if _function then

@@ -434,7 +434,7 @@ SettingsTabCategoryFakeLag:AddSlider("Miliseconds", 250, 1000, 500, function(val
     FakeLatency = val
 end)
 
-SettingsTabCategoryFakeLag:AddSlider("Testing", {0, 750, 333}, function(val)
+SettingsTabCategoryFakeLag:AddSlider("Testing", {minVal=0, maxVal=750, defVal=333}, function(val)
     print(val)
 end)
 
