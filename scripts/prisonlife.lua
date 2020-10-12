@@ -1,4 +1,4 @@
-print("Prison Life Script Loaded! (a)")
+print("Prison Life Script Loaded!")
 
 local LaunchTick = tick()
 
@@ -245,13 +245,21 @@ MiscellaneousTabCategoryMain:AddDropdown("Switch Team", {"Inmates","Criminals","
 	pcall(function() ChangeTeam(val) end)
 end)
 
-MiscellaneousTabCategoryMain:AddButton("Inf Stamina", function()
-    pcall(function()
-	for i,v in pairs(getreg()) do 
-		if type(v) == "function" and getfenv(v).script == game.Players.LocalPlayer.Character.ClientInputHandler then 
-			for i2,v2 in pairs(getupvalues(v)) do 
-				if type(v2) == "number" then 
-					debug.setupvalue(v, i2, 999999)
+MiscellaneousTabCategoryMain:AddToggle("Inf Stamina", function(val)
+	pcall(function()
+	if val == true then
+		ok = true
+	else
+		ok = false
+	end
+	while ok do
+		wait(0.5)
+		for i,v in pairs(getreg()) do 
+			if type(v) == "function" and getfenv(v).script == game.Players.LocalPlayer.Character.ClientInputHandler then 
+				for i2,v2 in pairs(getupvalues(v)) do 
+					if type(v2) == "number" then 
+						debug.setupvalue(v, i2, 999999)
+					end
 				end
 			end
 		end
@@ -260,15 +268,45 @@ MiscellaneousTabCategoryMain:AddButton("Inf Stamina", function()
 end)
 
 MiscellaneousTabCategoryMain:AddToggle("No Punch Cooldown", function(val)
+	pcall(function()
 	if val == true then
 		ok = true
 	else
 		ok = false
 	end
-	pcall(function()
 	while ok do
 		wait(0.01)
 		getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting = false
+	end
+	end)
+end)
+
+MiscellaneousTabCategoryMain:AddToggle("Inf Jump", function(val)
+	pcall(function()
+	if val == true then
+		a = game:GetService("UserInputService").JumpRequest:connect(function()
+			game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping") 
+		end)
+	else
+		if a then a:Disconnect() end
+	end
+	end)
+end)
+
+MiscellaneousTabCategoryMain:AddToggle("Noclip", function(val)
+	pcall(function()
+	if val == true then
+		a = game:GetService("RunService").Stepped:connect(function()
+			if game.Players.LocalPlayer.Character then
+				for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+					if v:IsA("BasePart") and v.CanCollide == true then
+						v.CanCollide = false
+					end
+				end
+			end
+		end)
+	else
+		if a then a:Disconnect() end
 	end
 	end)
 end)
@@ -277,7 +315,7 @@ local MiscellaneousTabCategoryTrolling = MiscellaneousTab:AddCategory("Trolling"
 
 MiscellaneousTabCategoryTrolling:AddLabel("Main")
 
-MiscellaneousTabCategoryTrolling:AddButton("Lifting the weight", function()
+MiscellaneousTabCategoryTrolling:AddButton("Lift the weight", function()
     pcall(function()
 	local Animation = Instance.new("Animation")
 	Animation.AnimationId = "http://www.roblox.com/asset/?id=175676962"
@@ -350,6 +388,41 @@ local SettingsTabCategoryMain = SettingsTab:AddCategory("Main")
 SettingsTabCategoryMain:AddButton("Rejoin Server", function()
     pcall(function() game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer) end)
 end)
+
+local SettingsTabCategoryFakeLag = SettingsTab:AddCategory("Fake Latency")
+
+SettingsTabCategoryFakeLag:AddToggle("Enabled", function(val)
+	pcall(function()
+	if val == true then
+		a = game:GetService("RunService").Stepped:connect(function()
+			if FakeLatencyMode == "Static" then
+				settings().Network.IncomingReplicationLag = FakeLatency/1000
+			elseif FakeLatencyMode == "Adaptive" then
+				
+			elseif FakeLatencyMode == "Jumping" then
+			b = math.random(1,2)
+			if b == 1 then
+				settings().Network.IncomingReplicationLag = FakeLatency/1000
+			else
+				settings().Network.IncomingReplicationLag = 0
+			end
+			end
+		end)
+	else
+		if a then a:Disconnect() end
+		settings().Network.IncomingReplicationLag = 0
+	end
+	end)
+end)
+
+SettingsTabCategoryFakeLag:AddSlider("Miliseconds", 1000, 0, function(val)
+    FakeLatency = val
+end)
+
+SettingsTabCategoryFakeLag:AddDropdown("Mode", {"Static","Adaptive","Jumping"}, function(val)
+	pcall(function() FakeLatencyMode = val end)
+end)
+
 
 MainWindow.close = false
 
