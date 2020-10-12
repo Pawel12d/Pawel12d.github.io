@@ -430,12 +430,10 @@ SettingsTabCategoryFakeLag:AddToggle("Enabled", function(val)
 end)
 
 -- SettingsTabCategoryFakeLag:AddSlider("Miliseconds", 1000, 512, function(val)
---SettingsTabCategoryFakeLag:AddSlider("Miliseconds", 250, 1000, 500, function(val)
---    FakeLatency = val
---end)
 
-SettingsTabCategoryFakeLag:AddSlider("Testing", {0, 750, 333}, function(val)
-    print(val)
+SettingsTabCategoryFakeLag:AddSlider("Testing", {0, 1000, 750}, function(val)
+    FakeLatency = val
+	print(val)
 end)
 
 SettingsTabCategoryFakeLag:AddDropdown("Mode", {"Static","Adaptive","Jumping"}, function(val)
