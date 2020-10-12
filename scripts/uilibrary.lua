@@ -581,7 +581,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				return button
 			end
 			
-			function LocalTab:AddToggle(text, _function)
+			function LocalTab:AddToggle(text, defVal, _function)
 				local toggle = {state = false}
 				_function = _function or function() end
 				checkRow()
@@ -639,6 +639,8 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 				
 				LocalTab.main.Size = UDim2.new(1,0,0,self.layout.AbsoluteContentSize.Y+16)
+				
+				toggle:SetToggle(defVal)
 				
 				return toggle
 			end

@@ -57,7 +57,7 @@ local SettingsTab = MainWindow:CreateTab("Settings")
 
 local LocalTabCategoryMovement = LocalTab:AddCategory("Movement")
 
-LocalTabCategoryMovement:AddToggle("Enabled", function(val)
+LocalTabCategoryMovement:AddToggle("Enabled", false, function(val)
 	pcall(function()
 	if val == true then
 		CoolMovement = true
@@ -105,7 +105,7 @@ end)
 
 local PlayersTabCategoryAura = PlayersTab:AddCategory("Aura")
 
-PlayersTabCategoryAura:AddToggle("Enabled", function(val)
+PlayersTabCategoryAura:AddToggle("Enabled", false, function(val)
 	if val == true then
 		ok = true
 	else
@@ -257,7 +257,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Switch Team", {"Inmates","Criminals","
 	pcall(function() ChangeTeam(val) end)
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("Inf Stamina", function(val)
+MiscellaneousTabCategoryMain:AddToggle("Inf Stamina", true, function(val)
 	pcall(function()
 	if val == true then
 		ok = true
@@ -279,7 +279,7 @@ MiscellaneousTabCategoryMain:AddToggle("Inf Stamina", function(val)
 	end)
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("No Punch Cooldown", function(val)
+MiscellaneousTabCategoryMain:AddToggle("No Punch Cooldown", false, function(val)
 	pcall(function()
 	if val == true then
 		npc = game:GetService("RunService").Stepped:connect(function()
@@ -295,7 +295,7 @@ MiscellaneousTabCategoryMain:AddToggle("No Punch Cooldown", function(val)
 	end)
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("Inf Jump", function(val)
+MiscellaneousTabCategoryMain:AddToggle("Inf Jump", false, function(val)
 	pcall(function()
 	if val == true then
 		ij = game:GetService("UserInputService").JumpRequest:connect(function()
@@ -307,7 +307,7 @@ MiscellaneousTabCategoryMain:AddToggle("Inf Jump", function(val)
 	end)
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("Noclip", function(val)
+MiscellaneousTabCategoryMain:AddToggle("Noclip", false, function(val)
 	pcall(function()
 	if val == true then
 		nc = game:GetService("RunService").Stepped:connect(function()
@@ -405,7 +405,7 @@ end)
 
 local SettingsTabCategoryFakeLag = SettingsTab:AddCategory("Fake Latency")
 
-SettingsTabCategoryFakeLag:AddToggle("Enabled", function(val)
+SettingsTabCategoryFakeLag:AddToggle("Enabled", false, function(val)
 	pcall(function()
 	if val == true then
 		fl = game:GetService("RunService").Stepped:connect(function()
