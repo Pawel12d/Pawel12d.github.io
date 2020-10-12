@@ -893,7 +893,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				
 				return dropdown
 			end
-			
+			--[[
 			function LocalTab:AddSlider(text, maxVal, defVal, _function, float, incrementalMode)
 				if defVal then
 					if typeof(defVal) == "function" then
@@ -1063,7 +1063,177 @@ function library:CreateWindow(ctitle, csize, cpos)
 				
 				return slider
 			end
+			--]]
+			function LocalTab:AddSlider(text, minVal, maxVal, defVal, _function, float, incrementalMode)
+				if defVal then
+					if typeof(defVal) == "function" then
+						if _function then
+							if typeof(_function) == "number" then
+								incrementalMode = float
+								float = _function
+							elseif typeof(_function) == "boolean" then
+								incrementalMode = _function
+								float = nil
+							end
+						end
+						_function = defVal
+						defVal = 0
+					else
+						if float then
+							if typeof(float) == "boolean" then
+								incrementalMode = float
+								float = nil
+							end
+						end
+					end
+				end
+				if defVal > maxVal then
+					defVal = maxVal
+				end
+				if defVal < 0 then
+					defVal = 0
+				end
+				_function = _function or function() end
+				local slider = {value = defVal}
+				checkRow()
+				LocalTab.main.Parent = tab.row
 				
+				slider.button = library:create("TextButton", {
+					LayoutOrder = self.order,
+					Size = UDim2.new(1,0,0,library.settings.textsize + 22),
+					BackgroundTransparency = 1,
+					Text = tostring(text),
+					TextColor3 = library.colors.text,
+					TextStrokeTransparency = library.settings.textstroke and 0 or 1,
+					Font = library.settings.font,
+					TextSize = library.settings.textsize,
+					TextXAlignment = Enum.TextXAlignment.Left,
+					TextYAlignment = Enum.TextYAlignment.Top,
+					Parent = self.content,
+				})
+				
+				slider.holder = library:create("Frame", {
+					Position = UDim2.new(0,0,0,18),
+					Size = UDim2.new(1,0,0,17),
+					BackgroundTransparency = 1,
+					Parent = slider.button,
+				})
+				
+				slider.visualize = library:create("TextBox", {
+					Position = UDim2.new(0,0,0.5,0),
+					Size = UDim2.new(1,0,0.5,0),
+					BackgroundTransparency = 1,
+					Text = tostring(slider.value),
+					TextColor3 = library.colors.text,
+					Font = library.settings.font,
+					TextSize = library.settings.textsize-2,
+					TextWrapped = true,
+					Parent = slider.holder,
+				})
+				
+				slider.sliderbar = library:create("Frame", {
+					AnchorPoint = Vector2.new(0.5,0.5),
+					Position = UDim2.new(0.5,0,0.2,0),
+					Size = UDim2.new(1,-6,0,4),
+					BackgroundColor3 = library.colors.tabholder,
+					BorderColor3 = library.colors.main,
+					Parent = slider.holder,
+				})
+				
+				slider.sliderfill = library:create("Frame", {
+					Size = UDim2.new(slider.value/maxVal,0,1,0),
+					BackgroundColor3 = library.colors.theme,
+					BorderSizePixel = 0,
+					Parent = slider.sliderbar,
+				})
+				
+				slider.sliderbox = library:create("Frame", {
+					AnchorPoint = Vector2.new(0.5,0.5),
+					Position = UDim2.new(slider.value/maxVal,0,0.5,0),
+					Size = UDim2.new(0,4,0,12),
+					BackgroundColor3 = library.colors.main,
+					BorderSizePixel = 0,
+					Parent = slider.sliderbar,
+				})
+				
+				self.order = self.order + 1
+				
+				local function updateValue()
+					slider.value = round(slider.value*maxVal, float)
+					if slider.value > maxVal then
+						slider.value = maxVal
+					end
+					if slider.value < minVal then
+						slider.value = minVal
+					end
+					if incrementalMode then
+						slider.sliderbox.Position = UDim2.new(slider.value/maxVal,0,0.5,0)
+						slider.sliderfill.Size = UDim2.new(slider.value/maxVal,0,1,0)
+					else
+						slider.sliderbox:TweenPosition(UDim2.new(slider.value/maxVal,0,0.5,0), "Out", "Quint", 0.3, true)
+						slider.sliderfill:TweenSize(UDim2.new(slider.value/maxVal,0,1,0), "Out", "Quint", 0.3, true)
+					end
+					slider.visualize.Text = slider.value
+					_function(slider.value)
+				end
+				
+				local function updateSlider(input)
+					local relativePos = input.Position.X- slider.sliderbar.AbsolutePosition.X
+					if input.Position.X < slider.sliderbar.AbsolutePosition.X then
+						relativePos = 0
+					end
+					if relativePos > slider.sliderbar.AbsoluteSize.X then
+						relativePos = slider.sliderbar.AbsoluteSize.X
+					end
+					slider.value = relativePos/slider.sliderbar.AbsoluteSize.X
+					updateValue()
+				end
+				
+				local sliding
+				local modifying
+				slider.button.InputBegan:connect(function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+						sliding = true
+						updateSlider(input)
+					end
+				end)
+
+				slider.visualize.FocusLost:connect(function()
+					slider.value = (tonumber(slider.visualize.Text) or 0) / maxVal
+					updateValue()
+				end)
+				
+				slider.button.InputEnded:connect(function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+						sliding = false
+					end
+				end)
+				
+				UserInputService.InputChanged:connect(function(input)
+					if modifying then
+						if input == Enum.KeyCode.Escape or input.KeyCode == Enum.KeyCode.Space then
+							slider.visualize:ReleaseFocus()
+						end
+					end
+					if input.UserInputType == Enum.UserInputType.MouseMovement then
+						if sliding then
+							updateSlider(input)
+						end
+					end
+				end)
+				
+				function slider:SetValue(num)
+					slider.value = num/maxVal
+					updateValue()
+				end
+				
+				LocalTab.main.Size = UDim2.new(1,0,0,self.layout.AbsoluteContentSize.Y+18)
+				
+				slider:SetValue(defVal)
+				
+				return slider
+			end
+			
 			function LocalTab:AddKeybind(text, key, _function, hold)
 				if key and typeof(key) == "function" then
 					hold = _function
