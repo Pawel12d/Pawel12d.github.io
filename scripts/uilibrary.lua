@@ -894,9 +894,9 @@ function library:CreateWindow(ctitle, csize, cpos)
 				return dropdown
 			end
 			
-			function LocalTab:AddSlider(text, maxVal, setVal, _function, float, incrementalMode)
-				if setVal then
-					if typeof(setVal) == "function" then
+			function LocalTab:AddSlider(text, maxVal, defVal, _function, float, incrementalMode)
+				if defVal then
+					if typeof(defVal) == "function" then
 						if _function then
 							if typeof(_function) == "number" then
 								incrementalMode = float
@@ -906,8 +906,8 @@ function library:CreateWindow(ctitle, csize, cpos)
 								float = nil
 							end
 						end
-						_function = setVal
-						setVal = 0
+						_function = defVal
+						defVal = 0
 					else
 						if float then
 							if typeof(float) == "boolean" then
@@ -917,14 +917,14 @@ function library:CreateWindow(ctitle, csize, cpos)
 						end
 					end
 				end
-				if setVal > maxVal then
-					setVal = maxVal
+				if defVal > maxVal then
+					defVal = maxVal
 				end
-				if setVal < 0 then
-					setVal = 0
+				if defVal < 0 then
+					defVal = 0
 				end
 				_function = _function or function() end
-				local slider = {value = setVal}
+				local slider = {value = defVal}
 				checkRow()
 				LocalTab.main.Parent = tab.row
 				
@@ -1059,7 +1059,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				
 				LocalTab.main.Size = UDim2.new(1,0,0,self.layout.AbsoluteContentSize.Y+18)
 				
-				slider:SetValue(25)
+				slider:SetValue(1000)
 				
 				return slider
 			end

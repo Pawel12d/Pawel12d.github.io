@@ -55,6 +55,18 @@ local ItemsTab = MainWindow:CreateTab("Items")
 local MiscellaneousTab = MainWindow:CreateTab("Miscellaneous")
 local SettingsTab = MainWindow:CreateTab("Settings")
 
+local LocalTabCategoryMovement = LocalTab:AddCategory("Movement")
+
+LocalTabCategoryMovement:AddToggle("Enabled", function(val)
+	pcall(function()
+	if val == true then
+		CoolMovement = true
+	else
+		CoolMovement = false
+	end
+	end)
+end)
+
 local LocalTabCategoryNotifications = LocalTab:AddCategory("Notifications")
 
 LocalTabCategoryNotifications:AddButton("Send Notification", function()
@@ -269,23 +281,11 @@ end)
 
 MiscellaneousTabCategoryMain:AddToggle("No Punch Cooldown", function(val)
 	pcall(function()
-	--[[
-	if val == true then
-		ok = true
-	else
-		ok = false
-	end
-	while ok do
-		wait(0.01)
-		getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting = false
-	end
-	--]]
 	if val == true then
 		npc = game:GetService("RunService").Stepped:connect(function()
 			if game.Players.LocalPlayer.Character then
 				if getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting == true then
 					getsenv(game.Players.LocalPlayer.Character.ClientInputHandler).cs.isFighting = false
-					print("test")
 				end
 			end
 		end)
@@ -429,7 +429,7 @@ SettingsTabCategoryFakeLag:AddToggle("Enabled", function(val)
 	end)
 end)
 
-SettingsTabCategoryFakeLag:AddSlider("Miliseconds", 1000, 0, function(val)
+SettingsTabCategoryFakeLag:AddSlider("Miliseconds", 1000, 512, function(val)
     FakeLatency = val
 end)
 
@@ -437,6 +437,24 @@ SettingsTabCategoryFakeLag:AddDropdown("Mode", {"Static","Adaptive","Jumping"}, 
 	pcall(function() FakeLatencyMode = val end)
 end)
 
+local mt = getrawmetatable(game)
+local oldNamecall = mt.__namecall
+
+setreadonly(mt, false)
+
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+	local callingscript = getcallingscript()
+    local args = {...}
+	
+    if method == "kick" then
+		print("detection1")
+        return wait(99e99)
+	elseif args[1] == game.Players.LocalPlayer.UserId then
+		
+    end
+    return oldNamecall(self, unpack(args))
+end)
 
 MainWindow.close = false
 
