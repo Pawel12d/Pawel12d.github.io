@@ -91,7 +91,7 @@ LocalTabCategoryNotifications:AddButton("Send Notification", function()
 	end)
 end)
 
-LocalTabCategoryNotifications:AddDropdown("Notification Type", {"Tooltip","Warn","Prompt"}, function(val)
+LocalTabCategoryNotifications:AddDropdown("Notification Type", {"Tooltip","Warn","Prompt"}, "None" function(val)
 	pcall(function() NotificationType = val end)
 end)
 
@@ -140,11 +140,11 @@ PlayersTabCategoryAura:AddToggle("Enabled", false, function(val)
 	end
 end)
 
-PlayersTabCategoryAura:AddDropdown("Target", {"All","Enemies","Teammates"}, function(val)
+PlayersTabCategoryAura:AddDropdown("Target", {"All","Enemies","Teammates"}, "All", function(val)
 	pcall(function() AuraTarget = val end)
 end)
 
-PlayersTabCategoryAura:AddDropdown("Mode", {"Kill","Taze","Arrest"}, function(val)
+PlayersTabCategoryAura:AddDropdown("Mode", {"Kill","Taze","Arrest"}, "Kill", function(val)
 	pcall(function() AuraMode = val end)
 end)
 
@@ -253,11 +253,11 @@ MiscellaneousTabCategoryMain:AddButton("Respawn", function()
     pcall(function() game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer) end)
 end)
 
-MiscellaneousTabCategoryMain:AddDropdown("Switch Team", {"Inmates","Criminals","Guards","Neutral"}, function(val)
+MiscellaneousTabCategoryMain:AddDropdown("Switch Team", {"Inmates","Criminals","Guards","Neutral"}, "None", function(val)
 	pcall(function() ChangeTeam(val) end)
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("Inf Stamina", true, function(val)
+MiscellaneousTabCategoryMain:AddToggle("Inf Stamina", false, function(val)
 	pcall(function()
 	if val == true then
 		ok = true
@@ -436,7 +436,7 @@ SettingsTabCategoryFakeLag:AddSlider("Testing", {0, 1000, 750}, function(val)
 	print(val)
 end)
 
-SettingsTabCategoryFakeLag:AddDropdown("Mode", {"Static","Adaptive","Jumping"}, function(val)
+SettingsTabCategoryFakeLag:AddDropdown("Mode", {"Static","Adaptive","Jumping"}, "None", function(val)
 	pcall(function() FakeLatencyMode = val end)
 end)
 
