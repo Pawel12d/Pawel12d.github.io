@@ -229,7 +229,7 @@ ItemsTabCategoryItemMods:AddButton("Mod Food", function()
 	for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 		if v:IsA("Tool") and v:FindFirstChild("LocalScript") and getsenv(v.LocalScript).drink then
 			print(v.Name, getsenv(v.LocalScript).drink)
-			getsenv(v.LocalScript).drink = math.huge
+			getsen v(v.LocalScript).drink = math.huge
 			getsenv(v.LocalScript).deb = false
 			print(v.Name, getsenv(v.LocalScript).drink)
 		end
@@ -238,13 +238,7 @@ ItemsTabCategoryItemMods:AddButton("Mod Food", function()
 end)
 
 ItemsTabCategoryItemMods:AddButton("Mod Melee", function()
-    pcall(function()
-	for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-		if v:IsA("Tool") and v:FindFirstChild("LocalScript") and getsenv(v.LocalScript).drink then
-			
-		end
-	end
-	end)
+    
 end)
 
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
