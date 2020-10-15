@@ -117,7 +117,7 @@ PlayersTabCategoryAura:AddToggle("Enabled", false, function(val)
 			for i,v in pairs(game.Players:GetChildren()) do
 				if v ~= game.Players.LocalPlayer and v.Character and v.Character.Humanoid and v.Character.Humanoid.Health>0 then
 					if AuraTarget == "All" or (AuraTarget == "Enemies" and v.Team ~= game.Players.LocalPlayer.Team) or (AuraTarget == "Teammates" and v.Team == game.Players.LocalPlayer.Team) then
-						if (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude < 20 then
+						if (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude < AuraDistance then
 							if AuraMode == "Kill" then
 								game.ReplicatedStorage.meleeEvent:FireServer(v)
 							elseif AuraMode == "Taze" then
@@ -138,6 +138,10 @@ PlayersTabCategoryAura:AddToggle("Enabled", false, function(val)
 			end
 		end)
 	end
+end)
+
+PlayersTabCategoryAura:AddSlider("Distance", {0, 20, 5}, function(val)
+    AuraDistance = val
 end)
 
 PlayersTabCategoryAura:AddDropdown("Target", {"All","Enemies","Teammates"}, "All", function(val)
