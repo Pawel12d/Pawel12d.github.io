@@ -91,7 +91,7 @@ LocalTabCategoryNotifications:AddButton("Send Notification", function()
 	end)
 end)
 
-LocalTabCategoryNotifications:AddDropdown("Notification Type", {"Tooltip","Warn","Prompt"}, "None" function(val)
+LocalTabCategoryNotifications:AddDropdown("Notification Type", {"Tooltip","Warn","Prompt"}, "None", function(val)
 	pcall(function() NotificationType = val end)
 end)
 
@@ -229,7 +229,7 @@ ItemsTabCategoryItemMods:AddButton("Mod Food", function()
 	for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 		if v:IsA("Tool") and v:FindFirstChild("LocalScript") and getsenv(v.LocalScript).drink then
 			print(v.Name, getsenv(v.LocalScript).drink)
-			getsen v(v.LocalScript).drink = math.huge
+			getsenv(v.LocalScript).drink = math.huge
 			getsenv(v.LocalScript).deb = false
 			print(v.Name, getsenv(v.LocalScript).drink)
 		end
@@ -433,7 +433,7 @@ end)
 SettingsTabCategoryFakeLag:AddDropdown("Mode", {"Static","Adaptive","Jumping"}, "None", function(val)
 	pcall(function() FakeLatencyMode = val end)
 end)
-
+--[[
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
 
@@ -445,14 +445,11 @@ mt.__namecall = newcclosure(function(self, ...)
     local args = {...}
 	
     if method == "kick" then
-		print("detection1")
-        return wait(99e99)
-	elseif args[1] == game.Players.LocalPlayer.UserId then
 		
     end
     return oldNamecall(self, unpack(args))
 end)
-
+--]]
 MainWindow.close = false
 
 print("Ready! It took", tonumber(tick() - LaunchTick), "seconds to load!")
