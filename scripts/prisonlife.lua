@@ -20,6 +20,21 @@ local function ChangeTeam(team)
 		end
 	end
 end
+
+local function RemoveTazerFunction()
+	for _,V in next, getgc() do
+		if getfenv(V).script == game.Players.LocalPlayer.Character.ClientInputHandler then
+			if type(V) == 'function' then
+				if getinfo(V).name == 'taze' then
+					for I2,V2 in next, getupvalues(V) do
+						setupvalue(V,I2,function() end)
+					end
+					game:GetService('StarterGui'):SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, true)
+				end
+			end
+		end
+	end
+end
 --[[
 local function Get_Player_Vehicle(plr)
 	for i,v in pairs(workspace.CarContainer:GetChildren()) do
@@ -277,6 +292,17 @@ MiscellaneousTabCategoryMain:AddToggle("Inf Stamina", false, function(val)
 	end)
 end)
 
+MiscellaneousTabCategoryMain:AddToggle("Anti Taze", false, function(val)
+	pcall(function()
+	if val == true then
+		RemoveTazerFunction()
+		AntiTazeFunc = game.Players.LocalPlayer.CharacterAdded:Connect(RemoveTazerFunction)
+	else
+		if AntiTazeFunc then AntiTazeFunc:Disconnect() end
+	end
+	end)
+end)
+
 MiscellaneousTabCategoryMain:AddToggle("No Punch Cooldown", false, function(val)
 	pcall(function()
 	if val == true then
@@ -454,6 +480,7 @@ mt.__namecall = newcclosure(function(self, ...)
     return oldNamecall(self, unpack(args))
 end)
 --]]
+
 MainWindow.close = false
 
 print("Ready! It took", tonumber(tick() - LaunchTick), "seconds to load!")
