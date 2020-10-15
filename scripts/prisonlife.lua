@@ -22,8 +22,9 @@ local function ChangeTeam(team)
 end
 
 local function RemoveTazerFunction()
+	repeat wait() until game.Players.LocalPlayer.Character
 	for _,V in next, getgc() do
-		if getfenv(V).script == game.Players.LocalPlayer.Character.ClientInputHandler then
+		if getfenv(V).script == game.Players.LocalPlayer.Character:WaitForChild("ClientInputHandler") then
 			if type(V) == 'function' then
 				if getinfo(V).name == 'taze' then
 					for I2,V2 in next, getupvalues(V) do
