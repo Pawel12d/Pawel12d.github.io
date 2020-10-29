@@ -267,6 +267,25 @@ MiscellaneousTabCategoryMain:AddButton("Respawn", function()
     pcall(function() game.Workspace.Remote.loadchar:InvokeServer(game.Players.LocalPlayer) end)
 end)
 
+MiscellaneousTabCategoryMain:AddButton("Open All Doors", function()
+    pcall(function()
+		OldTeam = game.Players.LocalPlayer.Team
+		ChangeTeam("Guards")
+		workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.buttons["Prison Gate"]["Prison Gate"])
+		for i,v in pairs(game.Workspace.Doors:GetChildren()) do
+			pcall(function()
+				if v:FindFirstChild("block") and v.block:FindFirstChild("hitbox") then
+					firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.block.hitbox, 0)
+					wait()
+					firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.block.hitbox, 1)
+				end
+			end)
+		end
+		ChangeTeam(tostring(OldTeam))
+		OldTeam = nil
+	end)
+end)
+
 MiscellaneousTabCategoryMain:AddDropdown("Switch Team", {"Inmates","Criminals","Guards","Neutral"}, "None", function(val)
 	pcall(function() ChangeTeam(val) end)
 end)
