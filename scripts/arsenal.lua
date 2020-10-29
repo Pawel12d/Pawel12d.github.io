@@ -136,6 +136,12 @@ MiscellaneousTabCategoryGunMods:AddToggle("No Spread", false, function(val)
 	end)
 end)
 
+local SettingsTabCategoryMain = SettingsTab:AddCategory("Main")
+
+SettingsTabCategoryMain:AddButton("Rejoin Server", function()
+    pcall(function() game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer) end)
+end)
+
 local function DamageObject(v, amount)
 	amount = amount or 1
 	local CurrentGun = game.ReplicatedStorage.Weapons:FindFirstChild(game.Players.LocalPlayer.NRPBS.EquippedTool.Value)
@@ -208,7 +214,7 @@ spawn(function()
 		end
 		
 		if KillBoss then
-			if workspace:FindFirstChild("Mapa") and workspace.Map:FindFirstChild("Hackula") then
+			if workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("Hackula") then
 				DamageObject(workspace.Map.Hackula, 3)
 			end
 		end
