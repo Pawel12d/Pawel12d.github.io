@@ -195,7 +195,7 @@ HEXHUB_LOADER('open', 'Initializing', 0.25)
 local CurrentGame = game.GameId
 
 local GamesList = {
-	["286090429"] = {"arsenal", "Arsenal"},
+	["111958650"] = {"arsenal", "Arsenal"},
 	["115797356"] = {"counterblox", "Counter Blox"},
 	["606849621"] = {"jailbreak", "Jailbreak"},
 	["73885730"] = {"prisonlife", "Prison Life"}
