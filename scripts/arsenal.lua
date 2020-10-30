@@ -169,7 +169,6 @@ local function DamageObject(v, amount)
 	}
 	for i=1,amount do
 		game.ReplicatedStorage.Events.HitPart:FireServer(unpack(args))
-		print("damaging", v.Name)
 	end
 end
 
@@ -182,12 +181,13 @@ end
 spawn(function()
 	while true do
 		wait()
+		spawn(function()
 		if GunModsEnabled then
 			local GunStats = getfenv(GameData)
 			
 			if GunModsInfAmmo then
 				GunStats.primarystored = 99
-				debug.setupvalue(GameData, 5, 99)
+				-- debug.setupvalue(GameData, 5, 99)
 			end
 			
 			if GunModsRapidFire then
@@ -218,6 +218,18 @@ spawn(function()
 				DamageObject(workspace.Map.Hackula, 3)
 			end
 		end
+		
+		if CoolMovement then
+			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+				if game.Players.LocalPlayer.Character.Humanoid.WalkSpeed ~= WalkSpeed then
+					game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = WalkSpeed
+				end
+				if game.Players.LocalPlayer.Character.Humanoid.JumpPower ~= JumpPower then
+					game.Players.LocalPlayer.Character.Humanoid.JumpPower = JumpPower
+				end
+			end
+		end
+		end)
 	end
 end)
 
