@@ -15,10 +15,10 @@ Hex Hub Aimbot
 
 local defaultcfg = [[
 {
-	["universalsettings"] = {
-		["GUIkeybind"] = Enum.KeyCode.RightShift
-	},
-	["gamesettings"] = {
+	["permsettings"] = {
+		["global"] = {
+			["GUIkeybind"] = Enum.KeyCode.RightShift
+		},
 		["arsenal"] = {},
 		["counterblox"] = {
 			["SkinsTable"] = {}
