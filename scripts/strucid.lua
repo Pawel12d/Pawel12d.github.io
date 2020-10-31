@@ -1,1 +1,1 @@
-print("Strucid Script Loaded! (a)")
+print("Strucid Script Loaded!")

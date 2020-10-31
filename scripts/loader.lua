@@ -4,6 +4,13 @@ loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- 
 
 Add:
 Islands
+
+Hex Hub Aimbot
+- Enabled
+- Aim Type (Always Active, On Shoot, Key Held)
+- Aimbot Mode (Normal, Silent)
+- Auto Shoot (Triggerbot, Auto Wall)
+- Settings (Sensivity, Smoothing, FOV, Visibility, Alive, Aimpart)
 --]]
 
 print("Loading")
@@ -216,19 +223,14 @@ HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0.05)
 
 HEXHUB_LOADER('showStatus', 'Loading Settings', 0.01)
 
+local HexHubSettings = {}
+
 if isfile("hexhub.cfg") then
 	print("cfg found")
+	HexHubSettings.GlobalSettings = game:GetService("HttpService"):JSONDecode(readfile("hexhub.cfg"))
 else
 	print("cfg not found")
-	writefile("hexhub.cfg", 
-[[
-{
-["arsenal"] = {},
-["counterblox"] = {
-	["UnlockInventorySkins"] = {"AK47_Precision"}
-},
-}
-]])
+	writefile("hexhub.cfg", "")
 end
 
 getgenv().HexHubCFG = readfile("hexhub.cfg")
@@ -238,6 +240,11 @@ HEXHUB_LOADER('showStatus', 'Ready!', 0.05)
 HEXHUB_LOADER('close')
 
 if CurrentGameName and CurrentGameDisplayName then
+	for i,v in pairs(HexHubSettings.GlobalSettings) do
+		print(i,v)
+	end
+	print(typeof(HexHubSettings.GlobalSettings))
+
 	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 else
 	print("Current Game Not Supported!")

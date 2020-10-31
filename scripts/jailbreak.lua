@@ -1,1 +1,1 @@
-print("Jailbreak Script Loaded! (b)")
+print("Jailbreak Script Loaded!")

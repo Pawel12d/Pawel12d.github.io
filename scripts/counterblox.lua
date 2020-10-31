@@ -4,8 +4,9 @@ local LaunchTick = tick()
 
 local SkinsTable = {
 	{'Glock_Stock'},
-	{'P2000_Stock'},
-	{'USP_Stock'}
+	{'AWP_Nerf'},
+	{'AK47_VAV'},
+	{'Butterfly Knife_Frozen Dream'}
 }
 
 local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
@@ -24,7 +25,9 @@ local VisualsTab = MainWindow:CreateTab("Visuals")
 local MiscellaneousTab = MainWindow:CreateTab("Miscellaneous")
 local SettingsTab = MainWindow:CreateTab("Settings")
 
-MiscellaneousTab:AddToggle("Enabled", false, function(val)
+local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
+
+MiscellaneousTabCategoryMain:AddToggle("Enabled", false, function(val)
 	if val == true then
 		InventoryUnlockerEnabled = true
 		
@@ -50,11 +53,11 @@ local oldNamecall = mt.__namecall
 setreadonly(mt, false)
 
 mt.__namecall = newcclosure(function(self, ...)
-    local method = getnamecallmethod()
+    local method = tostring(getnamecallmethod())
 	local callingscript = getcallingscript()
     local args = {...}
 	
-    if method == "kick" then
+    if method == "Kick" then
 		print("detection1")
         return wait(99e99)
 	elseif tonumber(args[1]) == tonumber(game.Players.LocalPlayer.UserId) then
@@ -65,23 +68,65 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithWhitelist" then
 
     elseif method == "FindPartOnRayWithIgnoreList" then
-
-    elseif method == "InvokeServer" then
-        if self.Name == "Hugh" then
-			print("detection 3")
-            return wait(99e99)
-        end
+	
+    elseif method == "InvokeServer" and self.Name == "Hugh" then
+		return true
     elseif method == "FireServer" then
-		if self.Name == "DataEvent" and args[1][4] then
+		if self.Name == "DataEvent" and args[1][1] == "EquipItem" then
+			print("skin changing remote")
+			
+			local MainTable = args[1]
+			local ItemTable = args[1][4]
+			local Skin = string.split(ItemTable[1], "_")[2]
+			
+			if MainTable[2] == "Both" then
+				game.Players.LocalPlayer.SkinFolder.TFolder[MainTable[3]]:ClearAllChildren()
+				game.Players.LocalPlayer.SkinFolder.TFolder[MainTable[3]].Value = Skin
+				game.Players.LocalPlayer.SkinFolder.CTFolder[MainTable[3]].Value = Skin
+				if ItemTable[2] == "StatTrak" then
+					local MarkerT = Instance.new("StringValue")
+					MarkerT.Name = "StatTrak"
+					MarkerT.Value = ItemTable[3]
+					MarkerT.Parent = game.Players.LocalPlayer.SkinFolder.TFolder[MainTable[3]]
+					local CountT = Instance.new("IntValue")
+					CountT.Name = "Count"
+					CountT.Value = ItemTable[4]
+					CountT.Parent = MarkerT
+					local MarkerCT = Instance.new("StringValue")
+					MarkerCT.Name = "StatTrak"
+					MarkerCT.Value = ItemTable[3]
+					MarkerCT.Parent = game.Players.LocalPlayer.SkinFolder.CTFolder[MainTable[3]]
+					local CountCT = Instance.new("IntValue")
+					CountCT.Name = "Count"
+					CountCT.Value = ItemTable[4]
+					CountCT.Parent = MarkerCT
+				end
+			else
+				game.Players.LocalPlayer.SkinFolder[MainTable[2].."Folder"][MainTable[3]]:ClearAllChildren()
+				game.Players.LocalPlayer.SkinFolder[MainTable[2].."Folder"][MainTable[3]].Value = Skin
+				if ItemTable[2] == "StatTrak" then
+					local Marker = Instance.new("StringValue")
+					Marker.Name = "StatTrak"
+					Marker.Value = ItemTable[3]
+					Marker.Parent = game.Players.LocalPlayer.SkinFolder[MainTable[2].."Folder"][MainTable[3]]
+					local Count = Instance.new("IntValue")
+					Count.Name = "Count"
+					Count.Value = ItemTable[4]
+					Count.Parent = Marker
+				end
+			end
+		elseif string.len(self.Name) == 38 then
 			if InventoryUnlockerEnabled then
 				args[1] = SkinsTable
 				print("Skins Changed!")
 			end
 		end
     end
-    return oldNamecall(self, unpack(args))
+	
+	return oldNamecall(self, unpack(args))
 end)
 
 MainWindow.close = false
 
 print("Ready! It took", tonumber(tick() - LaunchTick), "seconds to load!")
+
