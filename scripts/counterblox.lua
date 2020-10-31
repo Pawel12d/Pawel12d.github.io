@@ -71,7 +71,7 @@ mt.__namecall = newcclosure(function(self, ...)
 	
 	elseif method == "InvokeServer" and self.Name == "Hugh" then
 		print("detection 3")
-		return true
+		return wait(99e99)
     elseif method == "FireServer" then
 		if self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 			print("skin changing remote")

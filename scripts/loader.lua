@@ -13,9 +13,9 @@ Hex Hub Aimbot
 - Settings (Sensivity, Smoothing, FOV, Visibility, Alive, Aimpart)
 --]]
 
-local defaultcfg = [["
+local defaultcfg = [[
 {
-	["globalsettings"] = {
+	["universalsettings"] = {
 		["GUIkeybind"] = Enum.KeyCode.RightShift
 	},
 	["gamesettings"] = {
@@ -25,9 +25,10 @@ local defaultcfg = [["
 		},
 		["jailbreak"] = {},
 		["prisonlife"] = {}
-	}
+	},
+	["tempsettings"] = {}
 }
-"]]
+]]
 
 local CurrentGame = game.GameId
 
@@ -249,14 +250,14 @@ else
 	writefile("hexhub.cfg", defaultcfg)
 end
 
-getgenv().HexHubSettings.GlobalSettings = loadstring("return "..readfile("hexhub.cfg"))()
+getgenv().HexHubSettings = loadstring("return "..readfile("hexhub.cfg"))()
 
 HEXHUB_LOADER('showStatus', 'Ready!', 0.05)
 
 HEXHUB_LOADER('close')
 
 if CurrentGameName and CurrentGameDisplayName then
-	for i,v in pairs(getgenv().HexHubSettings.GlobalSettings) do
+	for i,v in pairs(getgenv().HexHubSettings.PermSettings) do
 		print(i,v)
 	end
 	print(typeof(getgenv().HexHubSettings.GlobalSettings))
