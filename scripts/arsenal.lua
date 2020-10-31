@@ -8,26 +8,26 @@ local VisualsTab = MainWindow:CreateTab("Visuals")
 local MiscellaneousTab = MainWindow:CreateTab("Miscellaneous")
 local SettingsTab = MainWindow:CreateTab("Settings")
 
-HexHubSettings.Arsenal = {}
+getgenv().HexHubSettings.Arsenal = {}
 
 local LocalTabCategoryMovement = LocalTab:AddCategory("Movement")
 
 LocalTabCategoryMovement:AddToggle("Enabled", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.MovementMods = true
+		getgenv().HexHubSettings.Arsenal.MovementMods = true
 	else
-		HexHubSettings.Arsenal.MovementMods = false
+		getgenv().HexHubSettings.Arsenal.MovementMods = false
 	end
 	end)
 end)
 
 LocalTabCategoryMovement:AddSlider("WalkSpeed", {0, 500, 16}, function(val)
-    HexHubSettings.Arsenal.MovementModsWalkSpeed = val
+    getgenv().HexHubSettings.Arsenal.MovementModsWalkSpeed = val
 end)
 
 LocalTabCategoryMovement:AddSlider("JumpPower", {0, 500, 50}, function(val)
-    HexHubSettings.Arsenal.MovementModsJumpPower = val
+    getgenv().HexHubSettings.Arsenal.MovementModsJumpPower = val
 end)
 
 local VisualsTabCategoryViewmodel = VisualsTab:AddCategory("Viewmodel")
@@ -35,23 +35,23 @@ local VisualsTabCategoryViewmodel = VisualsTab:AddCategory("Viewmodel")
 VisualsTabCategoryViewmodel:AddToggle("Enabled", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.ViewmodelModsEnabled = true
+		getgenv().HexHubSettings.Arsenal.ViewmodelModsEnabled = true
 	else
-		HexHubSettings.Arsenal.ViewmodelModsEnabled = false
+		getgenv().HexHubSettings.Arsenal.ViewmodelModsEnabled = false
 	end
 	end)
 end)
 
 VisualsTabCategoryViewmodel:AddSlider("Viewmodel X", {0, 360, 180}, function(val)
-    HexHubSettings.Arsenal.ViewmodelModsOffsetX = val
+    getgenv().HexHubSettings.Arsenal.ViewmodelModsOffsetX = val
 end)
 
 VisualsTabCategoryViewmodel:AddSlider("Viewmodel Y", {0, 360, 180}, function(val)
-    HexHubSettings.Arsenal.ViewmodelModsOffsetY = val
+    getgenv().HexHubSettings.Arsenal.ViewmodelModsOffsetY = val
 end)
 
 VisualsTabCategoryViewmodel:AddSlider("Viewmodel Z", {0, 360, 180}, function(val)
-    HexHubSettings.Arsenal.ViewmodelModsOffsetZ = val
+    getgenv().HexHubSettings.Arsenal.ViewmodelModsOffsetZ = val
 end)
 
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
@@ -59,9 +59,9 @@ local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
 MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.KillAll = true
+		getgenv().HexHubSettings.Arsenal.KillAll = true
 	else
-		HexHubSettings.Arsenal.KillAll = false
+		getgenv().HexHubSettings.Arsenal.KillAll = false
 	end
 	end)
 end)
@@ -69,9 +69,9 @@ end)
 MiscellaneousTabCategoryMain:AddToggle("Kill Boss", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.KillBoss = true
+		getgenv().HexHubSettings.Arsenal.KillBoss = true
 	else
-		HexHubSettings.Arsenal.KillBoss = false
+		getgenv().HexHubSettings.Arsenal.KillBoss = false
 	end
 	end)
 end)
@@ -79,9 +79,9 @@ end)
 MiscellaneousTabCategoryMain:AddToggle("Disable Filter", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.DisableFilter = true
+		getgenv().HexHubSettings.Arsenal.DisableFilter = true
 	else
-		HexHubSettings.Arsenal.DisableFilter = false
+		getgenv().HexHubSettings.Arsenal.DisableFilter = false
 	end
 	end)
 end)
@@ -91,9 +91,9 @@ local MiscellaneousTabCategoryGunMods = MiscellaneousTab:AddCategory("Gun Mods")
 MiscellaneousTabCategoryGunMods:AddToggle("Enabled", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.GunModsEnabled = true
+		getgenv().HexHubSettings.Arsenal.GunModsEnabled = true
 	else
-		HexHubSettings.Arsenal.GunModsEnabled = false
+		getgenv().HexHubSettings.Arsenal.GunModsEnabled = false
 	end
 	end)
 end)
@@ -101,9 +101,9 @@ end)
 MiscellaneousTabCategoryGunMods:AddToggle("Infinite Ammo", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.GunModsInfAmmo = true
+		getgenv().HexHubSettings.Arsenal.GunModsInfAmmo = true
 	else
-		HexHubSettings.Arsenal.GunModsInfAmmo = false
+		getgenv().HexHubSettings.Arsenal.GunModsInfAmmo = false
 	end
 	end)
 end)
@@ -111,9 +111,9 @@ end)
 MiscellaneousTabCategoryGunMods:AddToggle("Rapid Fire", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.GunModsRapidFire = true
+		getgenv().HexHubSettings.Arsenal.GunModsRapidFire = true
 	else
-		HexHubSettings.Arsenal.GunModsRapidFire = false
+		getgenv().HexHubSettings.Arsenal.GunModsRapidFire = false
 	end
 	end)
 end)
@@ -121,9 +121,9 @@ end)
 MiscellaneousTabCategoryGunMods:AddToggle("No Recoil", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.GunModsNoRecoil = true
+		getgenv().HexHubSettings.Arsenal.GunModsNoRecoil = true
 	else
-		HexHubSettings.Arsenal.GunModsNoRecoil = false
+		getgenv().HexHubSettings.Arsenal.GunModsNoRecoil = false
 	end
 	end)
 end)
@@ -131,9 +131,9 @@ end)
 MiscellaneousTabCategoryGunMods:AddToggle("No Spread", false, function(val)
 	pcall(function()
 	if val == true then
-		HexHubSettings.Arsenal.GunModsNoSpread = true
+		getgenv().HexHubSettings.Arsenal.GunModsNoSpread = true
 	else
-		HexHubSettings.Arsenal.GunModsNoSpread = false
+		getgenv().HexHubSettings.Arsenal.GunModsNoSpread = false
 	end
 	end)
 end)
@@ -176,7 +176,7 @@ end
 
 for i,v in pairs(getgc(true)) do
 	if type(v) == "function" and debug.getinfo(v).name == "firebullet" then
-		HexHubSettings.Arsenal.GameData = v
+		getgenv().HexHubSettings.Arsenal.GameData = v
 	end
 end
 
@@ -184,30 +184,30 @@ spawn(function()
 	while true do
 		wait()
 		spawn(function()
-		if HexHubSettings.Arsenal.GunModsEnabled then
-			local GunStats = getfenv(HexHubSettings.Arsenal.GameData)
+		if getgenv().HexHubSettings.Arsenal.GunModsEnabled then
+			local GunStats = getfenv(getgenv().HexHubSettings.Arsenal.GameData)
 			
-			if HexHubSettings.Arsenal.GunModsInfAmmo then
-				debug.setupvalue(HexHubSettings.Arsenal.GameData, 5, 99)
+			if getgenv().HexHubSettings.Arsenal.GunModsInfAmmo then
+				debug.setupvalue(getgenv().HexHubSettings.Arsenal.GameData, 5, 99)
 				GunStats.primarystored = 99
 			end
 			
-			if HexHubSettings.Arsenal.GunModsRapidFire then
+			if getgenv().HexHubSettings.Arsenal.GunModsRapidFire then
 				GunStats.DISABLED = false
 				GunStats.DISABLED2 = false
 				GunStats.mode = "automatic"
 			end
 			
-			if HexHubSettings.Arsenal.GunModsNoSpread then
+			if getgenv().HexHubSettings.Arsenal.GunModsNoSpread then
 				GunStats.currentspread = 0
 			end
 			
-			if HexHubSettings.Arsenal.GunModsNoRecoil then
+			if getgenv().HexHubSettings.Arsenal.GunModsNoRecoil then
 				GunStats.recoil = 0
 			end
 		end
 		
-		if HexHubSettings.Arsenal.KillAll then
+		if getgenv().HexHubSettings.Arsenal.KillAll then
 			for i,v in pairs(game.Players:GetPlayers()) do
 				if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
 					DamageObject(v.Character)
@@ -215,19 +215,19 @@ spawn(function()
 			end
 		end
 		
-		if HexHubSettings.Arsenal.KillBoss then
+		if getgenv().HexHubSettings.Arsenal.KillBoss then
 			if workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("Hackula") then
 				DamageObject(workspace.Map.Hackula, 3)
 			end
 		end
 		
-		if HexHubSettings.Arsenal.MovementMods == true then
+		if getgenv().HexHubSettings.Arsenal.MovementMods == true then
 			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-				if game.Players.LocalPlayer.Character.Humanoid.WalkSpeed ~= HexHubSettings.Arsenal.MovementModsWalkSpeed then
-					game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = HexHubSettings.Arsenal.MovementModsWalkSpeed
+				if game.Players.LocalPlayer.Character.Humanoid.WalkSpeed ~= getgenv().HexHubSettings.Arsenal.MovementModsWalkSpeed then
+					game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().HexHubSettings.Arsenal.MovementModsWalkSpeed
 				end
-				if game.Players.LocalPlayer.Character.Humanoid.JumpPower ~= HexHubSettings.Arsenal.MovementModsJumpPower then
-					game.Players.LocalPlayer.Character.Humanoid.JumpPower = HexHubSettings.Arsenal.MovementModsJumpPower
+				if game.Players.LocalPlayer.Character.Humanoid.JumpPower ~= getgenv().HexHubSettings.Arsenal.MovementModsJumpPower then
+					game.Players.LocalPlayer.Character.Humanoid.JumpPower = getgenv().HexHubSettings.Arsenal.MovementModsJumpPower
 				end
 			end
 		end
@@ -245,9 +245,9 @@ mt.__namecall = newcclosure(function(self, ...)
     local callingscript = getcallingscript()
     local args = {...}
 
-    if method == "SetPrimaryPartCFrame" and self.Name == "Arms" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Client and HexHubSettings.Arsenal.ViewmodelModsEnabled == true then
-        args[1] = args[1] * CFrame.new(Vector3.new(math.rad(HexHubSettings.Arsenal.ViewmodelModsOffsetX-180), math.rad(HexHubSettings.Arsenal.ViewmodelModsOffsetY-180), math.rad(HexHubSettings.Arsenal.ViewmodelModsOffsetZ-180)))
-	elseif method == "InvokeServer" and self.Name == "Filter" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat and HexHubSettings.Arsenal.DisableFilter == true then
+    if method == "SetPrimaryPartCFrame" and self.Name == "Arms" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Client and getgenv().HexHubSettings.Arsenal.ViewmodelModsEnabled == true then
+        args[1] = args[1] * CFrame.new(Vector3.new(math.rad(getgenv().HexHubSettings.Arsenal.ViewmodelModsOffsetX-180), math.rad(getgenv().HexHubSettings.Arsenal.ViewmodelModsOffsetY-180), math.rad(getgenv().HexHubSettings.Arsenal.ViewmodelModsOffsetZ-180)))
+	elseif method == "InvokeServer" and self.Name == "Filter" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat and getgenv().HexHubSettings.Arsenal.DisableFilter == true then
 		return args[1]
     end
     

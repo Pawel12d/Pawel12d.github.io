@@ -223,27 +223,25 @@ HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0.05)
 
 HEXHUB_LOADER('showStatus', 'Loading Settings', 0.01)
 
-local HexHubSettings = {}
+getgenv().HexHubSettings = {}
 
 if isfile("hexhub.cfg") then
 	print("cfg found")
-	HexHubSettings.GlobalSettings = loadstring(readfile("hexhub.cfg"))()
+	getgenv().HexHubSettings.GlobalSettings = loadstring("return "..readfile("hexhub.cfg"))()
 else
 	print("cfg not found")
 	writefile("hexhub.cfg", "")
 end
-
-getgenv().HexHubCFG = readfile("hexhub.cfg")
 
 HEXHUB_LOADER('showStatus', 'Ready!', 0.05)
 
 HEXHUB_LOADER('close')
 
 if CurrentGameName and CurrentGameDisplayName then
-	for i,v in pairs(HexHubSettings.GlobalSettings) do
+	for i,v in pairs(getgenv().HexHubSettings.GlobalSettings) do
 		print(i,v)
 	end
-	print(typeof(HexHubSettings.GlobalSettings))
+	print(typeof(getgenv().HexHubSettings.GlobalSettings))
 
 	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 else
