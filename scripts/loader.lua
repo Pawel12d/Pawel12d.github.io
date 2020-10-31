@@ -227,7 +227,7 @@ local HexHubSettings = {}
 
 if isfile("hexhub.cfg") then
 	print("cfg found")
-	HexHubSettings.GlobalSettings = game:GetService("HttpService"):JSONDecode(readfile("hexhub.cfg"))
+	HexHubSettings.GlobalSettings = loadstring(readfile("hexhub.cfg"))()
 else
 	print("cfg not found")
 	writefile("hexhub.cfg", "")
