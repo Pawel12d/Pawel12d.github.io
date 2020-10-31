@@ -1497,9 +1497,9 @@ library.colors = {
 	tabselected = Color3.fromRGB(50, 50, 50) -- (50, 50, 50)
 }
 
---[[
 return library
---]]
+
+--[[
 -- local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
@@ -1548,7 +1548,7 @@ MainLocalTab:AddColorPicker("ColorPicker", Color3.fromRGB(255, 255, 255), functi
 end)
 
 MainWindow.close = false
-
+--]]
 --[[
 ToDo:
 Fix category title bar showing over dropdown frame

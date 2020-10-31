@@ -60,7 +60,7 @@ mt.__namecall = newcclosure(function(self, ...)
     if method == "Kick" then
 		print("detection1")
         return wait(99e99)
-	elseif tonumber(args[1]) == tonumber(game.Players.LocalPlayer.UserId) then
+	elseif args[1] == game.Players.LocalPlayer.UserId then
 		print("detection 2")
 		return wait(99e99)
     elseif method == "SetPrimaryPartCFrame" then
@@ -69,7 +69,8 @@ mt.__namecall = newcclosure(function(self, ...)
 
     elseif method == "FindPartOnRayWithIgnoreList" then
 	
-    elseif method == "InvokeServer" and self.Name == "Hugh" then
+	elseif method == "InvokeServer" and self.Name == "Hugh" then
+		print("detection 3")
 		return true
     elseif method == "FireServer" then
 		if self.Name == "DataEvent" and args[1][1] == "EquipItem" then
