@@ -13,6 +13,32 @@ Hex Hub Aimbot
 - Settings (Sensivity, Smoothing, FOV, Visibility, Alive, Aimpart)
 --]]
 
+local defaultcfg = [["
+{
+	["globalsettings"] = {
+		["GUIkeybind"] = Enum.KeyCode.RightShift
+	},
+	["gamesettings"] = {
+		["arsenal"] = {},
+		["counterblox"] = {
+			["SkinsTable"] = {}
+		},
+		["jailbreak"] = {},
+		["prisonlife"] = {}
+	}
+}
+"]]
+
+local CurrentGame = game.GameId
+
+local GamesList = {
+	["111958650"] = {"arsenal", "Arsenal"},
+	["115797356"] = {"counterblox", "Counter Blox"},
+	["606849621"] = {"jailbreak", "Jailbreak"},
+	["73885730"] = {"prisonlife", "Prison Life"}
+}
+
+
 print("Loading")
 
 if not syn and syn.run_secure_function then
@@ -197,18 +223,9 @@ function HEXHUB_LOADER.showStatus(text, delay_, callback)
 	repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
 end
 
-HEXHUB_LOADER('open', 'Initializing', 0.25)
+HEXHUB_LOADER('open', 'Initializing', 0.01)
 
-local CurrentGame = game.GameId
-
-local GamesList = {
-	["111958650"] = {"arsenal", "Arsenal"},
-	["115797356"] = {"counterblox", "Counter Blox"},
-	["606849621"] = {"jailbreak", "Jailbreak"},
-	["73885730"] = {"prisonlife", "Prison Life"}
-}
-
-HEXHUB_LOADER('showStatus', 'Scanning', 0.10)
+HEXHUB_LOADER('showStatus', 'Scanning', 0.01)
 
 for i,v in pairs(GamesList) do
 	if tonumber(i) == tonumber(CurrentGame) then
@@ -219,7 +236,7 @@ for i,v in pairs(GamesList) do
 	end
 end
 
-HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0.05)
+HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0.01)
 
 HEXHUB_LOADER('showStatus', 'Loading Settings', 0.01)
 
@@ -227,11 +244,12 @@ getgenv().HexHubSettings = {}
 
 if isfile("hexhub.cfg") then
 	print("cfg found")
-	getgenv().HexHubSettings.GlobalSettings = loadstring("return "..readfile("hexhub.cfg"))()
 else
 	print("cfg not found")
-	writefile("hexhub.cfg", "")
+	writefile("hexhub.cfg", defaultcfg)
 end
+
+getgenv().HexHubSettings.GlobalSettings = loadstring("return "..readfile("hexhub.cfg"))()
 
 HEXHUB_LOADER('showStatus', 'Ready!', 0.05)
 

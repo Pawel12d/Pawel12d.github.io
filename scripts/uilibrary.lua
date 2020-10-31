@@ -313,6 +313,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 	window.title = self:create("TextLabel", {
 		Size = UDim2.new(1,0,0,18),
 		BackgroundTransparency = 1,
+		Name = "TitleLabel",
 		Text = tostring(" "..ctitle) or tostring(" "..self.settings.title),
 		TextColor3 = self.colors.text,
 		TextStrokeTransparency = self.settings.textstroke and 0 or 1,
@@ -404,6 +405,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 			Size = UDim2.new(1,0,0,-18),
 			BackgroundColor3 = library.colors.tabbutton,
 			BorderColor3 = library.colors.outline,
+			Name = "FooterLabel",
 			Text = " "..library.settings.footer,
 			TextColor3 = library.colors.text,
 			TextStrokeTransparency = library.settings.textstroke and 0 or 1,
@@ -1475,7 +1477,7 @@ end
 library.settings = {
 	guiname = "hexhubgui",
 	title = "Hex Hub",
-	footer = "https://hexhub.xyz",
+	footer = "UId: 1770943654 | 18:48:21 | FPS: 60 | https://hexhub.xyz",
 	modal = true,
 	toggle = Enum.KeyCode.RightShift,
 	font = Enum.Font.Code,
@@ -1495,11 +1497,21 @@ library.colors = {
 	tabselected = Color3.fromRGB(50, 50, 50) -- (50, 50, 50)
 }
 
-return library
 --[[
+return library
+--]]
 -- local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
+
+spawn(function()
+while true do
+	for i=1,3 do
+		wait(1)
+		library.pointer.Parent.TextButton.FooterLabel.Text = i
+	end
+end
+end)
 
 local MainTab = MainWindow:CreateTab("Tab")
 
@@ -1536,7 +1548,7 @@ MainLocalTab:AddColorPicker("ColorPicker", Color3.fromRGB(255, 255, 255), functi
 end)
 
 MainWindow.close = false
---]]
+
 --[[
 ToDo:
 Fix category title bar showing over dropdown frame
