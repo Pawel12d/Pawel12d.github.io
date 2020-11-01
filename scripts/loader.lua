@@ -260,7 +260,7 @@ if CurrentGameName and CurrentGameDisplayName then
 	for i,v in pairs(getgenv().HexHubSettings.permsettings) do
 		print(i,v)
 	end
-	print(typeof(getgenv().HexHubSettings.GlobalSettings))
+	print(typeof(getgenv().HexHubSettings.permsettings))
 
 	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 else

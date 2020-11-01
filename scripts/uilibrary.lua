@@ -1476,8 +1476,8 @@ end
 
 library.settings = {
 	guiname = "hexhubgui",
-	title = "Hex Hub",
-	footer = "UId: 1770943654 | 18:48:21 | FPS: 60 | https://hexhub.xyz",
+	title = "Hex Hub v2.4",
+	footer = "...",-- "UId: 1770943654 | 18:48:21 | FPS: 60 | https://hexhub.xyz",
 	modal = true,
 	toggle = Enum.KeyCode.RightShift,
 	font = Enum.Font.Code,
@@ -1496,6 +1496,13 @@ library.colors = {
 	tabbutton = Color3.fromRGB(30, 30, 30), -- (40, 40, 40)
 	tabselected = Color3.fromRGB(50, 50, 50) -- (50, 50, 50)
 }
+
+spawn(function()
+	while true do
+		library.pointer.Parent.TextButton.FooterLabel.Text = "UID: "..game:GetService("Players").LocalPlayer.UserId.." | "..os.date('%X', os.time()).." | https://hexhub.xyz"
+		wait(1)
+	end
+end)
 
 return library
 
