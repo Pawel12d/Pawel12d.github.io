@@ -138,8 +138,10 @@ mt.__namecall = newcclosure(function(self, ...)
 
     elseif method == "FindPartOnRayWithIgnoreList" then
 	
-	elseif method == "InvokeServer" and self.Name == "Hugh" then
-		return wait(99e99)
+	elseif method == "InvokeServer" then
+		if self.Name == "Hugh" then
+			return wait(99e99)
+		end
 	elseif method == "FireServer" then
 		if string.len(self.Name) == 38 then
 			return wait(99e99)
