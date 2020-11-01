@@ -15,7 +15,7 @@ local SkinsTable = {
 	{"Glove_Crystal"}
 }
 --]]
-if not getgenv().HexHubSettings.permsettings.counterblox.SkinsTable then
+if #getgenv().HexHubSettings.permsettings.counterblox.SkinsTable == 0 then
 	print("Hex Hub | Skins table not found, generating table with auto assamble.")
 	for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 		if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
