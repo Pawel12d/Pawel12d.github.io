@@ -87,11 +87,10 @@ MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
 
 end)
 
+spawn(function()
 while true do
 	wait()
-
 	pcall(function()
-
 	if getgenv().HexHubSettings.tempsettings.counterblox.KillAll == true then
 		for i,v in pairs(game.Players:GetChildren()) do
 			if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
@@ -113,9 +112,9 @@ while true do
 			end
 		end
 	end
-
 	end)
 end
+end)
 
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
@@ -129,9 +128,9 @@ mt.__namecall = newcclosure(function(self, ...)
 	
     if method == "Kick" then
 		print("client kick detection")
-        return wait(99e99)
+        return
 	elseif args[1] == game.Players.LocalPlayer.UserId then
-		return wait(99e99)
+		return
     elseif method == "SetPrimaryPartCFrame" then
 
     elseif method == "FindPartOnRayWithWhitelist" then
@@ -139,17 +138,17 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithIgnoreList" then
 	
 	elseif method == "InvokeServer" then
-		if tostring(self.Name) == "Hugh" then
+		if self.Name == "Hugh" then
 			print("rolve niggers")
 			return
 			print("no")
 		end
 	elseif method == "FireServer" then
 		if string.len(self.Name) == 38 then
-			return wait(99e99)
+			return
 		elseif self.Name == "test" then
 			print("noclip detection")
-			return wait(99e99)
+			return
 		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 			print("skin changing remote")
 			
