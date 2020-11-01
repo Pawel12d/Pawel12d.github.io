@@ -1473,7 +1473,7 @@ local Services = setmetatable({},{__index = function(self,req) return game:GetSe
 function zigzag(X) 
     return math.acos(math.cos(X*math.pi))/math.pi;
 end
-
+-- ok
 library.settings = {
 	guiname = "hexhubgui",
 	title = "Hex Hub v2.4",
