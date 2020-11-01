@@ -224,9 +224,9 @@ function HEXHUB_LOADER.showStatus(text, delay_, callback)
 	repeat wait() if math.floor(tick() - time) > 10 then return warn('Failed to initialize') end until done
 end
 
-HEXHUB_LOADER('open', 'Initializing', 0.01)
+HEXHUB_LOADER('open', 'Initializing', 0)
 
-HEXHUB_LOADER('showStatus', 'Scanning', 0.01)
+HEXHUB_LOADER('showStatus', 'Scanning', 0)
 
 for i,v in pairs(GamesList) do
 	if tonumber(i) == tonumber(CurrentGame) then
@@ -237,9 +237,9 @@ for i,v in pairs(GamesList) do
 	end
 end
 
-HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0.01)
+HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0)
 
-HEXHUB_LOADER('showStatus', 'Loading Settings', 0.01)
+HEXHUB_LOADER('showStatus', 'Loading Settings', 0)
 
 getgenv().HexHubSettings = {}
 
@@ -252,7 +252,7 @@ end
 
 getgenv().HexHubSettings = loadstring("return "..readfile("hexhub.cfg"))()
 
-HEXHUB_LOADER('showStatus', 'Ready!', 0.05)
+HEXHUB_LOADER('showStatus', 'Ready!', 0)
 
 HEXHUB_LOADER('close')
 
