@@ -3,18 +3,7 @@ print("Counter Blox Script Loaded!")
 getgenv().HexHubSettings.tempsettings.counterblox = {}
 
 local LaunchTick = tick()
---[[
-local SkinsTable = {
-	{'Glock_Anubis'},
-	{'AWP_Nerf'},
-	{'AK47_VAV'},
-	{'Butterfly Knife_Frozen Dream'}
-	{'Karambit_Jade Dream'}
-	{"Banana_Stock"}
-	{"Bayonet_Stock"}
-	{"Glove_Crystal"}
-}
---]]
+
 if #getgenv().HexHubSettings.permsettings.counterblox.SkinsTable == 0 then
 	print("Hex Hub | Skins table not found, generating table with auto assamble.")
 	for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
@@ -47,7 +36,6 @@ local cbPickup = cbClient.pickup
 local cbSpeedUpdate = cbClient.speedupdate
 local cbDisplayChat = getsenv(game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat)
 local cbGetIcon = require(game.ReplicatedStorage.GetIcon)
--- cbClient.CurrentInventory = skins
 
 local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
@@ -77,43 +65,36 @@ end)
 
 MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
 	pcall(function()
-
 	if val == true then
-		getgenv().HexHubSettings.tempsettings.counterblox.KillAll = true
+		game:GetService("RunService"):BindToRenderStep("KillAllLoop", 1, function()
+			spawn(function()
+				pcall(function()
+					for i,v in pairs(game.Players:GetChildren()) do
+						if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+							if game.Players.LocalPlayer.Character.EquippedTool and v.Team ~= game.Players.LocalPlayer.Team then
+								game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
+									[1] = v.Character.Head,
+									[2] = v.Character.Head.Position,
+									[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
+									[4] = 100,
+									[5] = game.Players.LocalPlayer.Character.Gun,
+									[8] = 100, -- Damage Multiplier
+									[9] = false, -- ?
+									[10] = false, -- Is Wallbang
+									[11] = Vector3.new(),
+									[12] = math.rad(1,100000),
+									[13] = Vector3.new()
+								}))
+							end
+						end
+					end
+				end)
+			end)
+		end)
 	else
-		getgenv().HexHubSettings.tempsettings.counterblox.KillAll = false
+		game:GetService("RunService"):UnbindFromRenderStep("KillAllLoop")
 	end
 	end)
-
-end)
-
-spawn(function()
-while true do
-	wait()
-	pcall(function()
-	if getgenv().HexHubSettings.tempsettings.counterblox.KillAll == true then
-		for i,v in pairs(game.Players:GetChildren()) do
-			if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
-				if game.Players.LocalPlayer.Character.EquippedTool and v.Team ~= game.Players.LocalPlayer.Team then
-					game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
-						[1] = v.Character.Head,
-						[2] = v.Character.Head.Position,
-						[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
-						[4] = 100,
-						[5] = game.Players.LocalPlayer.Character.Gun,
-						[8] = 100, -- Damage Multiplier
-						[9] = false, -- ?
-						[10] = false, -- Is Wallbang
-						[11] = Vector3.new(),
-						[12] = math.rad(1,100000),
-						[13] = Vector3.new()
-					}))
-				end
-			end
-		end
-	end
-	end)
-end
 end)
 
 local mt = getrawmetatable(game)
@@ -148,8 +129,6 @@ mt.__namecall = newcclosure(function(self, ...)
 			print("noclip detection")
 			return wait(99e99)
 		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
-			print("skin changing remote")
-			
 			local MainTable = args[1]
 			local ItemTable = args[1][4]
 			local Skin = string.split(ItemTable[1], "_")[2]
