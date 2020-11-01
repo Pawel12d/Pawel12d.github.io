@@ -75,6 +75,45 @@ MiscellaneousTabCategoryMain:AddButton("Unlock Inventory", function()
 	end)
 end)
 
+MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
+	pcall(function()
+
+	if val == true then
+		getgenv().HexHubSettings.tempsettings.counterblox.KillAll = true
+	else
+		getgenv().HexHubSettings.tempsettings.counterblox.KillAll = false
+	end
+	end)
+
+end)
+
+while true do
+	wait()
+	pcall(function()
+	if getgenv().HexHubSettings.tempsettings.counterblox.KillAll == true then
+		for i,v in pairs(game.Players:GetChildren()) do
+			if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+				if game.Players.LocalPlayer.Character.EquippedTool and v.Team ~= game.Players.LocalPlayer.Team then
+					game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
+						[1] = v.Character.Head,
+						[2] = v.Character.Head.Position,
+						[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
+						[4] = 100,
+						[5] = game.Players.LocalPlayer.Character.Gun,
+						[8] = 100, -- Damage Multiplier
+						[9] = false, -- ?
+						[10] = false, -- Is Wallbang
+						[11] = Vector3.new(),
+						[12] = math.rad(1,100000),
+						[13] = Vector3.new()
+					}))
+				end
+			end
+		end
+	end
+	end)
+end
+
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
 
