@@ -89,7 +89,7 @@ end)
 
 while true do
 	wait()
-	
+
 	pcall(function()
 
 	if getgenv().HexHubSettings.tempsettings.counterblox.KillAll == true then
@@ -138,9 +138,9 @@ mt.__namecall = newcclosure(function(self, ...)
 
     elseif method == "FindPartOnRayWithIgnoreList" then
 	
-	elseif method == "InvokeServer" and self.Name == "Hugh" and getgenv().HexHubSettings.tempsettings.counterblox.InventoryUnlocked == true then
+	elseif method == "InvokeServer" and self.Name == "Hugh" then
 		return wait(99e99)
-	elseif method == "FireServer" and getgenv().HexHubSettings.tempsettings.counterblox.InventoryUnlocked == true then
+	elseif method == "FireServer" then
 		if string.len(self.Name) == 38 then
 			return wait(99e99)
 		elseif self.Name == "test" then
