@@ -67,7 +67,6 @@ MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
 	pcall(function()
 	if val == true then
 		game:GetService("RunService"):BindToRenderStep("KillAllLoop", 1, function()
-			spawn(function()
 				pcall(function()
 					for i,v in pairs(game.Players:GetChildren()) do
 						if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
@@ -89,7 +88,6 @@ MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
 						end
 					end
 				end)
-			end)
 		end)
 	else
 		game:GetService("RunService"):UnbindFromRenderStep("KillAllLoop")
