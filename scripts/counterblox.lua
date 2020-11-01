@@ -1,13 +1,45 @@
 print("Counter Blox Script Loaded!")
 
-local LaunchTick = tick()
+getgenv().HexHubSettings.tempsettings.counterblox = {}
 
+local LaunchTick = tick()
+--[[
 local SkinsTable = {
-	{'Glock_Stock'},
+	{'Glock_Anubis'},
 	{'AWP_Nerf'},
 	{'AK47_VAV'},
 	{'Butterfly Knife_Frozen Dream'}
+	{'Karambit_Jade Dream'}
+	{"Banana_Stock"}
+	{"Bayonet_Stock"}
+	{"Glove_Crystal"}
 }
+--]]
+if not getgenv().HexHubSettings.permsettings.counterblox.SkinsTable then
+	print("Hex Hub | Skins table not found, generating table with auto assamble.")
+	for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
+		if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
+			for i,c in pairs(v:GetChildren()) do
+				table.insert(getgenv().HexHubSettings.permsettings.counterblox.SkinsTable, {v.Name.."_"..c.Name})
+			end
+		end
+	end
+	for i,v in pairs(game.ReplicatedStorage.Gloves:GetChildren()) do
+		if v:FindFirstChild("Type") then
+			local GloveType = 
+				(v.Type.Value == "Straps" and "Strapped Glove") or
+				(v.Type.Value == "Wraps" and "Handwraps") or
+				(v.Type.Value == "Sports" and "Sports Glove") or
+				(v.Type.Value == "Fingerless" and "Fingerless Glove")
+				
+			if GloveType then
+				table.insert(getgenv().HexHubSettings.permsettings.counterblox.SkinsTable, {GloveType.."_"..v.Name})
+			end
+		end
+	end
+else
+	print("Hex Hub | Skins table found.")
+end
 
 local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
 local cbfirebullet = cbClient.firebullet
@@ -27,24 +59,15 @@ local SettingsTab = MainWindow:CreateTab("Settings")
 
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
 
-MiscellaneousTabCategoryMain:AddToggle("Enabled", false, function(val)
-	if val == true then
-		InventoryUnlockerEnabled = true
-		
-		local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
-		local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
-		
-		cbClient.CurrentInventory = SkinsTable
-	else
-		InventoryUnlockerEnabled = false
-		
-		if oldSkinsCT then oldSkinsCT.Parent = game.Players.LocalPlayer.SkinFolder end
-		if oldSkinsT then oldSkinsT.Parent = game.Players.LocalPlayer.SkinFolder end
-		
-		oldSkinsCT = nil
-		oldSkinsT = nil
-		
-	end
+MiscellaneousTabCategoryMain:AddButton("Unlock Inventory", function()
+	pcall(function()
+
+	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
+	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
+			
+	cbClient.CurrentInventory = getgenv().HexHubSettings.permsettings.counterblox.SkinsTable
+
+	end)
 end)
 
 local mt = getrawmetatable(game)
@@ -58,10 +81,10 @@ mt.__namecall = newcclosure(function(self, ...)
     local args = {...}
 	
     if method == "Kick" then
-		print("detection1")
+		print("client kick detection")
         return wait(99e99)
 	elseif args[1] == game.Players.LocalPlayer.UserId then
-		print("detection 2")
+		print("skin detection 1")
 		return wait(99e99)
     elseif method == "SetPrimaryPartCFrame" then
 
@@ -70,10 +93,15 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithIgnoreList" then
 	
 	elseif method == "InvokeServer" and self.Name == "Hugh" then
-		print("detection 3")
 		return wait(99e99)
-    elseif method == "FireServer" then
-		if self.Name == "DataEvent" and args[1][1] == "EquipItem" then
+	elseif method == "FireServer" then
+		if string.len(self.Name) == 38 then
+			print("skin detection 2")
+			return wait(99e99)
+		elseif self.Name == "test" then
+			print("noclip detection")
+			return wait(99e99)
+		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 			print("skin changing remote")
 			
 			local MainTable = args[1]
@@ -115,11 +143,6 @@ mt.__namecall = newcclosure(function(self, ...)
 					Count.Value = ItemTable[4]
 					Count.Parent = Marker
 				end
-			end
-		elseif string.len(self.Name) == 38 then
-			if InventoryUnlockerEnabled then
-				args[1] = SkinsTable
-				print("Skins Changed!")
 			end
 		end
     end
