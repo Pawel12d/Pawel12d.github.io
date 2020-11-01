@@ -257,7 +257,7 @@ HEXHUB_LOADER('showStatus', 'Ready!', 0.05)
 HEXHUB_LOADER('close')
 
 if CurrentGameName and CurrentGameDisplayName then
-	for i,v in pairs(getgenv().HexHubSettings.PermSettings) do
+	for i,v in pairs(getgenv().HexHubSettings.permsettings) do
 		print(i,v)
 	end
 	print(typeof(getgenv().HexHubSettings.GlobalSettings))
