@@ -89,7 +89,9 @@ end)
 
 while true do
 	wait()
+	
 	pcall(function()
+
 	if getgenv().HexHubSettings.tempsettings.counterblox.KillAll == true then
 		for i,v in pairs(game.Players:GetChildren()) do
 			if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
@@ -111,6 +113,7 @@ while true do
 			end
 		end
 	end
+
 	end)
 end
 
