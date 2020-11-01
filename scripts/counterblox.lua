@@ -61,11 +61,16 @@ local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
 
 MiscellaneousTabCategoryMain:AddButton("Unlock Inventory", function()
 	pcall(function()
-
+	
 	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
 	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
-			
+	
+	getgenv().HexHubSettings.tempsettings.counterblox.InventoryUnlocked = true
 	cbClient.CurrentInventory = getgenv().HexHubSettings.permsettings.counterblox.SkinsTable
+
+	local InventoryLoadout = game.Players.LocalPlayer.PlayerGui.GUI["Inventory&Loadout"]
+	InventoryLoadout.Visible = false
+	InventoryLoadout.Visible = true
 
 	end)
 end)
@@ -84,7 +89,6 @@ mt.__namecall = newcclosure(function(self, ...)
 		print("client kick detection")
         return wait(99e99)
 	elseif args[1] == game.Players.LocalPlayer.UserId then
-		print("skin detection 1")
 		return wait(99e99)
     elseif method == "SetPrimaryPartCFrame" then
 
@@ -92,11 +96,10 @@ mt.__namecall = newcclosure(function(self, ...)
 
     elseif method == "FindPartOnRayWithIgnoreList" then
 	
-	elseif method == "InvokeServer" and self.Name == "Hugh" then
+	elseif method == "InvokeServer" and self.Name == "Hugh" and getgenv().HexHubSettings.tempsettings.counterblox.InventoryUnlocked == true then
 		return wait(99e99)
-	elseif method == "FireServer" then
+	elseif method == "FireServer" and getgenv().HexHubSettings.tempsettings.counterblox.InventoryUnlocked == true then
 		if string.len(self.Name) == 38 then
-			print("skin detection 2")
 			return wait(99e99)
 		elseif self.Name == "test" then
 			print("noclip detection")
