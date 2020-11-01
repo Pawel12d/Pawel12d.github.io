@@ -128,9 +128,9 @@ mt.__namecall = newcclosure(function(self, ...)
 	
     if method == "Kick" then
 		print("client kick detection")
-        return
+        return wait(99e99)
 	elseif args[1] == game.Players.LocalPlayer.UserId then
-		return
+		return wait(99e99)
     elseif method == "SetPrimaryPartCFrame" then
 
     elseif method == "FindPartOnRayWithWhitelist" then
@@ -139,16 +139,14 @@ mt.__namecall = newcclosure(function(self, ...)
 	
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
-			print("rolve niggers")
-			return
-			print("no")
+			return wait(99e99)
 		end
 	elseif method == "FireServer" then
 		if string.len(self.Name) == 38 then
-			return
+			return wait(99e99)
 		elseif self.Name == "test" then
 			print("noclip detection")
-			return
+			return wait(99e99)
 		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 			print("skin changing remote")
 			
