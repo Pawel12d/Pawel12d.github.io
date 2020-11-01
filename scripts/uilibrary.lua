@@ -1454,7 +1454,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 end
 
 game:GetService("UserInputService").InputBegan:Connect(function(key, isFocused)
-	if key.KeyCode == library.settings.toggle then
+	if key.KeyCode == getgenv().HexHubSettings.permsettings.global.GUIkeybind then
 		if not isFocused then
 			library.pointer.Parent.Enabled = not library.pointer.Parent.Enabled
 		end
@@ -1479,7 +1479,6 @@ library.settings = {
 	title = "Hex Hub v2.4",
 	footer = "...",-- "UId: 1770943654 | 18:48:21 | FPS: 60 | https://hexhub.xyz",
 	modal = true,
-	toggle = Enum.KeyCode.RightShift,
 	font = Enum.Font.Code,
 	textsize = 14,
 	textstroke = true
