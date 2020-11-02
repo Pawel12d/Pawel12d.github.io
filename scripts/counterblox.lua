@@ -9,7 +9,7 @@ local AllSkinsTable = {}
 
 for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTables) do table.insert(SkinsTableNames, i) end
 
-if #getgenv().HexHubSettings.permsettings.counterblox.SkinsTable == 0 then
+--if #getgenv().HexHubSettings.permsettings.counterblox.SkinsTable == 0 then
 	print("Hex Hub | Skins table not found, generating table with auto assamble.")
 	for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 		if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
@@ -31,9 +31,9 @@ if #getgenv().HexHubSettings.permsettings.counterblox.SkinsTable == 0 then
 			end
 		end
 	end
-else
-	print("Hex Hub | Skins table found.")
-end
+--else
+--	print("Hex Hub | Skins table found.")
+--end
 
 local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
 local cbfirebullet = cbClient.firebullet
