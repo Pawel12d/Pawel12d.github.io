@@ -10,7 +10,7 @@ local AllSkinsTable = {}
 for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTables) do table.insert(SkinsTableNames, i) end
 
 --if #getgenv().HexHubSettings.permsettings.counterblox.SkinsTable == 0 then
-	print("Hex Hub | Skins table not found, generating table with auto assamble.")
+--	print("Hex Hub | Skins table not found, generating table with auto assamble.")
 	for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 		if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
 			for i,c in pairs(v:GetChildren()) do
@@ -75,7 +75,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "
 	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
 	
 	if typeof(val) == "table" then
-		cbClient.CurrentInventory = val
+		cbClient.CurrentInventory = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
 	elseif tostring(val) == "Default" then
 		cbClient.CurrentInventory = oldinv
 	elseif tostring(val) == "All" then
