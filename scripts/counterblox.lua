@@ -9,8 +9,7 @@ local AllSkinsTable = {}
 
 for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTables) do table.insert(SkinsTableNames, i) end
 
---if #getgenv().HexHubSettings.permsettings.counterblox.SkinsTable == 0 then
---	print("Hex Hub | Skins table not found, generating table with auto assamble.")
+
 	for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 		if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
 			for i,c in pairs(v:GetChildren()) do
@@ -31,9 +30,7 @@ for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTabl
 			end
 		end
 	end
---else
---	print("Hex Hub | Skins table found.")
---end
+
 
 local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
 local cbfirebullet = cbClient.firebullet
@@ -51,24 +48,6 @@ local MiscellaneousTab = MainWindow:CreateTab("Miscellaneous")
 local SettingsTab = MainWindow:CreateTab("Settings")
 
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
-
---[[
-MiscellaneousTabCategoryMain:AddButton("Unlock Inventory", function()
-	pcall(function()
-	
-	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
-	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
-	
-	getgenv().HexHubSettings.tempsettings.counterblox.InventoryUnlocked = true
-	cbClient.CurrentInventory = getgenv().HexHubSettings.permsettings.counterblox.SkinsTable
-
-	local InventoryLoadout = game.Players.LocalPlayer.PlayerGui.GUI["Inventory&Loadout"]
-	InventoryLoadout.Visible = false
-	InventoryLoadout.Visible = true
-
-	end)
-end)
---]]
 
 MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
 	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
