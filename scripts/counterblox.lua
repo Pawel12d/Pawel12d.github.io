@@ -3,13 +3,18 @@ print("Counter Blox Script Loaded!")
 getgenv().HexHubSettings.tempsettings.counterblox = {}
 
 local LaunchTick = tick()
+local oldinv = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client")).CurrentInventory
+local SkinsTableNames = {}; 
+local AllSkinsTable = {}
+
+for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTables) do table.insert(SkinsTableNames, i) end
 
 if #getgenv().HexHubSettings.permsettings.counterblox.SkinsTable == 0 then
 	print("Hex Hub | Skins table not found, generating table with auto assamble.")
 	for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 		if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
 			for i,c in pairs(v:GetChildren()) do
-				table.insert(getgenv().HexHubSettings.permsettings.counterblox.SkinsTable, {v.Name.."_"..c.Name})
+				table.insert(AllSkinsTable, {v.Name.."_"..c.Name})
 			end
 		end
 	end
@@ -22,7 +27,7 @@ if #getgenv().HexHubSettings.permsettings.counterblox.SkinsTable == 0 then
 				(v.Type.Value == "Fingerless" and "Fingerless Glove")
 				
 			if GloveType then
-				table.insert(getgenv().HexHubSettings.permsettings.counterblox.SkinsTable, {GloveType.."_"..v.Name})
+				table.insert(AllSkinsTable, {GloveType.."_"..v.Name})
 			end
 		end
 	end
@@ -47,6 +52,7 @@ local SettingsTab = MainWindow:CreateTab("Settings")
 
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
 
+--[[
 MiscellaneousTabCategoryMain:AddButton("Unlock Inventory", function()
 	pcall(function()
 	
@@ -61,6 +67,25 @@ MiscellaneousTabCategoryMain:AddButton("Unlock Inventory", function()
 	InventoryLoadout.Visible = true
 
 	end)
+end)
+--]]
+
+MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
+	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
+	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
+	
+	if typeof(val) == "table" then
+		cbClient.CurrentInventory = val
+	elseif tostring(val) == "Default" then
+		cbClient.CurrentInventory = oldinv
+	elseif tostring(val) == "All" then
+		cbClient.CurrentInventory = AllSkinsTable
+	end
+
+	local InventoryLoadout = game.Players.LocalPlayer.PlayerGui.GUI["Inventory&Loadout"]
+	InventoryLoadout.Visible = false
+	InventoryLoadout.Visible = true
+
 end)
 
 MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
