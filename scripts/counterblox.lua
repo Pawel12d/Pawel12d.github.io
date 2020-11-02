@@ -10,34 +10,40 @@ local AllSkinsTable = {}
 for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTables) do table.insert(SkinsTableNames, i) end
 
 
-	for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
-		if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
-			for i,c in pairs(v:GetChildren()) do
-				table.insert(AllSkinsTable, {v.Name.."_"..c.Name})
-			end
+for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
+	if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
+		for i,c in pairs(v:GetChildren()) do
+			table.insert(AllSkinsTable, {v.Name.."_"..c.Name})
 		end
 	end
-	for i,v in pairs(game.ReplicatedStorage.Gloves:GetChildren()) do
-		if v:FindFirstChild("Type") then
-			local GloveType = 
-				(v.Type.Value == "Straps" and "Strapped Glove") or
-				(v.Type.Value == "Wraps" and "Handwraps") or
-				(v.Type.Value == "Sports" and "Sports Glove") or
-				(v.Type.Value == "Fingerless" and "Fingerless Glove")
-				
-			if GloveType then
-				table.insert(AllSkinsTable, {GloveType.."_"..v.Name})
-			end
+end
+for i,v in pairs(game.ReplicatedStorage.Gloves:GetChildren()) do
+	if v:FindFirstChild("Type") then
+		local GloveType = 
+			(v.Type.Value == "Straps" and "Strapped Glove") or
+			(v.Type.Value == "Wraps" and "Handwraps") or
+			(v.Type.Value == "Sports" and "Sports Glove") or
+			(v.Type.Value == "Fingerless" and "Fingerless Glove")
+			
+		if GloveType then
+			table.insert(AllSkinsTable, {GloveType.."_"..v.Name})
 		end
 	end
+end
 
 
 local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
-local cbfirebullet = cbClient.firebullet
-local cbPickup = cbClient.pickup
-local cbSpeedUpdate = cbClient.speedupdate
 local cbDisplayChat = getsenv(game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat)
 local cbGetIcon = require(game.ReplicatedStorage.GetIcon)
+
+for i,v in pairs(cbClient.CurrentInventory) do
+	game:GetService("ReplicatedStorage").Events.DataEvent:FireServer({
+		[1] = "EquipItem",
+		[2] = "Both",
+		[3] = v[1],
+		-- [4] = {"AK47_Scythe"}
+	})
+end
 
 local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
@@ -99,6 +105,16 @@ MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
 		game:GetService("RunService"):UnbindFromRenderStep("KillAllLoop")
 	end
 	end)
+end)
+
+game.Players.LocalPlayer.DamageLogs.ChildAdded:Connect(function(new)
+	print("Damage Logs:", new.Name, new:WaitForChild("Hits").Value, new:WaitForChild("DMG").Value)
+end)
+
+cbfirebullethook = hookfunc(cbClient.firebullet, function(...)
+	local args = {...}
+    print("on shoot, "..#args)
+    return cbfirebullethook(unpack(args))
 end)
 
 local mt = getrawmetatable(game)
