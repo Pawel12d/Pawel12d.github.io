@@ -24,8 +24,7 @@ local defaultcfg = [[
 				["InventoryTables"] = {
 					["Default"] = "table_def",
 					["All"] = "table_all",
-					["Custom1"] = {{'Fingerless Glove_Crystal'},{'Banana_Stock','StatTrak','0',696969}},
-					["Custom2"] = {{'AWP_Nerf'},{'DesertEagle_DropX'},{'DesertEagle_Scapter'},{'AWP_Nerf'},{'AK47_VAV'}}
+					["Custom1"] = {{'Fingerless Glove_Crystal','StatTrak','0',696969},{'AWP_Nerf','StatTrak','0',696969},{'DesertEagle_DropX','StatTrak','0',696969},{'DesertEagle_Scapter','StatTrak','0',696969},,{'AK47_VAV','StatTrak','0',696969}}
 				}
 			},
 			["jailbreak"] = {},
@@ -33,6 +32,7 @@ local defaultcfg = [[
 		},
 		["tempsettings"] = {}
 	}
+
 ]]
 
 local CurrentGame = game.GameId
