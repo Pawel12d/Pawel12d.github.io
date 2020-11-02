@@ -14,20 +14,25 @@ Hex Hub Aimbot
 --]]
 
 local defaultcfg = [[
-{
-	["permsettings"] = {
-		["global"] = {
-			["GUIkeybind"] = Enum.KeyCode.RightShift
+	{
+		["permsettings"] = {
+			["global"] = {
+				["GUIkeybind"] = Enum.KeyCode.RightShift
+			},
+			["arsenal"] = {},
+			["counterblox"] = {
+				["InventoryTables"] = {
+					["Default"] = "table_def",
+					["All"] = "table_all",
+					["Custom1"] = {{'Fingerless Glove_Crystal'},{'Banana_Stock','StatTrak','0',696969}},
+					["Custom2"] = {{'AWP_Nerf'},{'DesertEagle_DropX'},{'DesertEagle_Scapter'},{'AWP_Nerf'},{'AK47_VAV'}}
+				}
+			},
+			["jailbreak"] = {},
+			["prisonlife"] = {}
 		},
-		["arsenal"] = {},
-		["counterblox"] = {
-			["SkinsTable"] = {}
-		},
-		["jailbreak"] = {},
-		["prisonlife"] = {}
-	},
-	["tempsettings"] = {}
-}
+		["tempsettings"] = {}
+	}
 ]]
 
 local CurrentGame = game.GameId
