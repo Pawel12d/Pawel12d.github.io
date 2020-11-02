@@ -73,8 +73,9 @@ end)
 MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
 	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
 	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
-	
-	if typeof(val) == "table" then
+	local selected = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
+
+	if typeof(selected) == "table" then
 		cbClient.CurrentInventory = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
 	elseif tostring(val) == "Default" then
 		cbClient.CurrentInventory = oldinv
@@ -83,9 +84,10 @@ MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "
 	end
 
 	local InventoryLoadout = game.Players.LocalPlayer.PlayerGui.GUI["Inventory&Loadout"]
-	InventoryLoadout.Visible = false
-	InventoryLoadout.Visible = true
-
+	if InventoryLoadout.Visible == true then
+		InventoryLoadout.Visible = false
+		InventoryLoadout.Visible = true
+	end
 end)
 
 MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
