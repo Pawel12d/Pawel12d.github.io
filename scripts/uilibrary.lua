@@ -1203,7 +1203,8 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end
 				
 				LocalTab.main.Size = UDim2.new(1,0,0,self.layout.AbsoluteContentSize.Y+16)
-				
+				bind:SetKeybind(key)
+
 				return bind
 			end
 				
