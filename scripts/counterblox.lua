@@ -361,15 +361,15 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Collisi
 				v.Color = Color3.fromRGB(255, 0, 255)
 			end
 		end
-	elseif val == "Collision Toggle" then
+	elseif val == "No Collision" then
 		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
-				v.CanCollide = not v.CanCollide
+				v.CanCollide = false
 			end
 		end
 		for i,v in pairs(Clips:GetChildren()) do
 			if v:IsA("BasePart") then
-				v.CanCollide = not v.CanCollide
+				v.CanCollide = false
 			end
 		end
 	elseif val == "Remove" then
@@ -387,7 +387,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Collisi
 
 	Killers.Name = "Killers"; Killers.Parent = workspace.Map
 	Clips.Name = "Clips"; Clips.Parent = workspace.Map
-	
+
 	end)
 end)
 
