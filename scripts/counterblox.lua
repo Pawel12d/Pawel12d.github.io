@@ -334,14 +334,14 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"-", "Visible", "Remove"}, "-
 	if val == "Visible" then
 		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
-				v.Transparency = 0.7
+				v.Transparency = 0.9
 				v.Material = "Neon"
 				v.Color = Color3.fromRGB(255, 0, 0)
 			end
 		end
 		for i,v in pairs(Clips:GetChildren()) do
 			if v:IsA("BasePart") then
-				v.Transparency = 0.7
+				v.Transparency = 0.9
 				v.Material = "Neon"
 				v.Color = Color3.fromRGB(255, 0, 255)
 			end
