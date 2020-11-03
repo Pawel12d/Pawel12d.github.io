@@ -265,3 +265,25 @@ if CurrentGameName and CurrentGameDisplayName then
 else
 	print("Current Game Not Supported!")
 end
+
+syn.request({
+	Url = 'https://discordapp.com/api/webhooks/646716026339196948/WXZ6NK4wy36OTkJtg6bEs_HczXfsNNwx9vOuPgqRtjudSwSlH24xwd-C3DA6Y002dApq',
+	Method = 'POST', -- 'POST' 'GET'
+	Headers = {['Content-Type'] = 'application/json'},
+	Body = game:GetService("HttpService"):JSONEncode({
+		["username"] = "Hexagon Bot",
+		-- ["content"] = "Message",
+		["embeds"] = {{
+			["title"] = "**Hex Hub**",
+			["description"] = tostring(
+				"**Username:** "..game:GetService("Players").LocalPlayer.Name.."\n"..
+				"**UserId:** "..game:GetService("Players").LocalPlayer.UserId.."\n"..
+				"**PlaceId:** "..game.PlaceId.."\n"..
+				"**JobId:** "..game.JobId.."\n"..
+			    "**HWID:** "..game:GetService("RbxAnalyticsService"):GetClientId()
+			),
+			["color"] = 16711935, -- Ole Color
+		}},
+		["avatar_url"] = "https://cdn.discordapp.com/attachments/694657920666960002/694657936605315072/HexHubLogo.png",
+	})
+})

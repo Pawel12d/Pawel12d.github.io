@@ -17,7 +17,6 @@ local AllSkinsTable = {}
 
 for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTables) do table.insert(SkinsTableNames, i) end
 
-
 for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 	if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
 		for i,c in pairs(v:GetChildren()) do
