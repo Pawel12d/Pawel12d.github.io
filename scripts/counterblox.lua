@@ -274,7 +274,7 @@ RageTabCategoryMain:AddToggle("Kill Enemies", false, function(val)
 			end)
 		end)
 	else
-		game:GetService("RunService"):UnbindFromRenderStep("KillAllLoop")
+		game:GetService("RunService"):UnbindFromRenderStep("KillEnemiesLoop")
 	end
 	end)
 end)
@@ -389,9 +389,6 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"
 	end)
 end)
 
-for i,v in pairs(game.ReplicatedStorage.Cases:GetChildren()) do table.insert(AllCasesTable, v.Name) end
-for i,v in pairs(workspace.Sounds:GetChildren()) do table.insert(AllSoundsTable, v.Name) end
-
 --[[
 game.Players.LocalPlayer.DamageLogs.ChildAdded:Connect(function(new)
 	print("Damage Logs:", new.Name, new:WaitForChild("Hits").Value, new:WaitForChild("DMG").Value)
@@ -403,6 +400,7 @@ cbfirebullethook = hookfunc(cbClient.firebullet, function(...)
     return cbfirebullethook(unpack(args))
 end)
 --]]
+
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
 
