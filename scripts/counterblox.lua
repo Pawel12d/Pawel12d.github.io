@@ -356,7 +356,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"
 	elseif val == "Collision Off" then
 		APPLY_CLIPS_CHANGES = {{"CanCollide", false}}
 	elseif val == "Remove" then
-		APPLY_CLIPS_CHANGES = {{"Remove()"}}
+		APPLY_CLIPS_CHANGES = {{"Remove"}}
 		--[[
 		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
@@ -375,7 +375,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"
 		if v:IsA("BasePart") then
 			for i,c in pairs(APPLY_CLIPS_CHANGES) do
 				if #c == 1 then
-					v:[c[1]]
+					v:Remove()
 				else
 					v[c[1]] = c[2]
 				end
