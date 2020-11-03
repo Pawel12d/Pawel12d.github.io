@@ -119,7 +119,7 @@ local function AIMBOT_LOOP()
                 elseif currentMode == "RayHook" then
 					spawn(function()
 						SilentAimTarget = WorldPoint
-						wait(1)
+						wait(0.1)
 						SilentAimTarget = nil
 					end)
                 end
@@ -287,8 +287,8 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithWhitelist" then
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
-		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and SilentAimTarget ~= nil then
-			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and  game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
+		if SilentAimTarget and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true then
+			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
 				args[1] = Ray.new(CurrentCamera.CFrame.p, (SilentAimTarget - CurrentCamera.CFrame.p).unit * 2048)
 			end
 		end
