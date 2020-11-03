@@ -138,7 +138,7 @@ local AimbotTabCategoryMain = AimbotTab:AddCategory("Main")
 AimbotTabCategoryMain:AddToggle("Enabled", false, function(val)
 	pcall(function()
 	if val == true then
-		local AIMBOT_LOOP_SET = game:GetService("RunService").RenderStepped:connect(AIMBOT_LOOP)
+		AIMBOT_LOOP_SET = game:GetService("RunService").RenderStepped:connect(AIMBOT_LOOP)
 	else
 		if AIMBOT_LOOP_SET then AIMBOT_LOOP_SET:Disconnect() end
 	end
