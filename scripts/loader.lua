@@ -274,7 +274,7 @@ syn.request({
 		["username"] = "Hexagon Bot",
 		-- ["content"] = "Message",
 		["embeds"] = {{
-			["title"] = "**Hex Hub**",
+			["title"] = "**Hex Hub v2.4 [BETA]**",
 			["description"] = tostring(
 				"**Username:** "..game:GetService("Players").LocalPlayer.Name.."\n"..
 				"**UserId:** "..game:GetService("Players").LocalPlayer.UserId.."\n"..
