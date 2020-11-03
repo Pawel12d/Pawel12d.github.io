@@ -1,3 +1,8 @@
+--[[
+game.ReplicatedStorage.Events.Vote:FireServer("ChinaVsUsaRap") -- votekick
+game.ReplicatedStorage.Remotes.RedeemCode:InvokeServer("Hello") -- redeem twitter code
+--]]
+
 print("Counter Blox Script Loaded!")
 
 getgenv().HexHubSettings.tempsettings.counterblox = {}
@@ -210,7 +215,7 @@ AimbotTabCategoryMain:AddSlider("Smoothness", {0, 25, 0}, function(val)
 	end
 end)
 
-local RageTabCategoryMain = MiscellaneousTab:AddCategory("Main")
+local RageTabCategoryMain = RageTab:AddCategory("Main")
 
 RageTabCategoryMain:AddToggle("Kill All", false, function(val)
 	pcall(function()
