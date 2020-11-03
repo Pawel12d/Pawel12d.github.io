@@ -327,17 +327,25 @@ MiscellaneousTabCategoryMain:AddDropdown("Play Sound", AllSoundsTable, "", funct
 	end
 end)
 
-MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"}, "Normal", function(val)
-	if not workspace:FindFirstChild("Map") then return end
+MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"}, "-", function(val)
+	pcall(function()
 	local Killers = game.Workspace.Map.Killers; Killers.Name = "FAT"; Killers.Parent = nil
 	local Clips = game.Workspace.Map.Clips; Clips.Name = "FAT"; Clips.Parent = nil
 
 	if val == "Normal" then	
-		APPLY_CLIPS_CHANGES = {{"Transparency", 1}, {"CanCollide", true}}
-
+		for i,v in pairs(Killers:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.Transparency = 1
+				v.CanCollide = true
+			end
+		end
+		for i,v in pairs(Clips:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.Transparency = 1
+				v.CanCollide = true
+			end
+		end
 	elseif val == "Visible" then
-		APPLY_CLIPS_CHANGES = {{"Transparency", 0.9},{"Material", "Neon"},{"Color", "Color3.fromRGB(255,0,255)"}}
-		--[[
 		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
 				v.Transparency = 0.9
@@ -352,12 +360,18 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"
 				v.Color = Color3.fromRGB(255, 0, 255)
 			end
 		end
-		--]]
-	elseif val == "Collision Off" then
-		APPLY_CLIPS_CHANGES = {{"CanCollide", false}}
+	elseif val == "Collision Toggle" then
+		for i,v in pairs(Killers:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.CanCollide = not v.CanCollide
+			end
+		end
+		for i,v in pairs(Clips:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.CanCollide = not v.CanCollide
+			end
+		end
 	elseif val == "Remove" then
-		APPLY_CLIPS_CHANGES = {{"Remove"}}
-		--[[
 		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
 				v:Remove()
@@ -368,35 +382,11 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"
 				v:Remove()
 			end
 		end
-		--]]
-	end
-
-	for i,v in pairs(Killers:GetChildren()) do
-		if v:IsA("BasePart") then
-			for i,c in pairs(APPLY_CLIPS_CHANGES) do
-				if #c == 1 then
-					v:Remove()
-				else
-					v[c[1]] = c[2]
-				end
-			end
-		end
-	end
-
-	for i,v in pairs(Clips:GetChildren()) do
-		if v:IsA("BasePart") then
-			for i,c in pairs(APPLY_CLIPS_CHANGES) do
-				if #c == 1 then
-					v:[c[1]]
-				else
-					v[c[1]] = c[2]
-				end
-			end
-		end
 	end
 
 	Killers.Name = "Killers"; Killers.Parent = workspace.Map
 	Clips.Name = "Clips"; Clips.Parent = workspace.Map
+	end)
 end)
 
 for i,v in pairs(game.ReplicatedStorage.Cases:GetChildren()) do table.insert(AllCasesTable, v.Name) end
