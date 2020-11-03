@@ -83,35 +83,38 @@ local function AIMBOT_LOOP()
     pcall(function()
     if game:GetService("Players").LocalPlayer.Character then
         local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
-		print("CP1")
+
         if activationMode == "OnKey" and game:GetService("UserInputService"):IsKeyDown(getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind) == false then
             return
         elseif activationMode == "OnShoot" and game:GetService("UserInputService"):IsMouseButtonPressed(Enum.UserInputType.MouseButton1) == false then
             return
         end
-		print("CP2")
+
         plr = GET_LEGITBOT_TARGET()
 		if plr then
-			print("CP3")
             local WorldPoint = plr.Character[getgenv().HexHubSettings.permsettings.aimbotbase.AimPart].Position
             local vector, onScreen = CurrentCamera:WorldToScreenPoint(WorldPoint)
             local maxFOV = (Vector2.new(mouse.X, mouse.Y) - Vector2.new(vector.X, vector.Y)).magnitude
             
             if maxFOV < getgenv().HexHubSettings.permsettings.aimbotbase.FOV then
                 local currentMode = getgenv().HexHubSettings.permsettings.aimbotbase.ShootMode
-				print("CP4")
+
                 if currentMode == "MouseHook" then
                     local magnitudeX = mouse.X-vector.X
                     local magnitudeY = mouse.Y-vector.Y
                     local smoothnessX = magnitudeX/getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing
                     local smoothnessY = magnitudeY/getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing
-					print("CP5")
+
                     mousemoverel(-smoothnessX, -smoothnessY)
                 elseif currentMode == "CameraHook" then
                     workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.p, WorldPoint)
                     -- CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CFrame.new(CurrentCamera.CFrame.p, WorldPoint), 5)
                 elseif currentMode == "RayHook" then
-                    
+					spawn(function()
+						SilentAimTarget = WorldPoint
+						wait(1)
+						SilentAimTarget = nil
+					end)
                 end
             end
         end
@@ -138,8 +141,10 @@ local AimbotTabCategoryMain = AimbotTab:AddCategory("Main")
 AimbotTabCategoryMain:AddToggle("Enabled", false, function(val)
 	pcall(function()
 	if val == true then
+		getgenv().HexHubSettings.permsettings.aimbotbase.Enabled = true
 		AIMBOT_LOOP_SET = game:GetService("RunService").RenderStepped:connect(AIMBOT_LOOP)
 	else
+		getgenv().HexHubSettings.permsettings.aimbotbase.Enabled = false
 		if AIMBOT_LOOP_SET then AIMBOT_LOOP_SET:Disconnect() end
 	end
 	end)
@@ -273,8 +278,12 @@ mt.__namecall = newcclosure(function(self, ...)
 
     elseif method == "FindPartOnRayWithWhitelist" then
 
-    elseif method == "FindPartOnRayWithIgnoreList" then
-	
+	elseif method == "FindPartOnRayWithIgnoreList" then
+		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
+			if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and SilentAimTarget ~= nil then
+				args[2] = Ray.new(CurrentCamera.CFrame.p, (SilentAimTarget - CurrentCamera.CFrame.p).unit * 2048)
+			end
+		end
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
 			return wait(99e99)
