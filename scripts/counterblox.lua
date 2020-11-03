@@ -3,6 +3,13 @@ print("Counter Blox Script Loaded!")
 getgenv().HexHubSettings.tempsettings.counterblox = {}
 getgenv().HexHubSettings.permsettings.aimbotbase = {}
 
+local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
+local cbDisplayChat = getsenv(game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat)
+local cbGetIcon = require(game.ReplicatedStorage.GetIcon)
+
+local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
+local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
+
 local LaunchTick = tick()
 local oldinv = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client")).CurrentInventory
 local SkinsTableNames = {}; 
@@ -81,7 +88,7 @@ end
 local function AIMBOT_LOOP()
 	wait()
     pcall(function()
-    if game:GetService("Players").LocalPlayer.Character then
+    if game:GetService("Players").LocalPlayer.Character and library.pointer.Parent.Enabled == false then
         local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
 
         if activationMode == "OnKey" and game:GetService("UserInputService"):IsKeyDown(getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind) == false then
@@ -124,13 +131,6 @@ local function AIMBOT_LOOP()
     end)
 end
 
-local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
-local cbDisplayChat = getsenv(game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat)
-local cbGetIcon = require(game.ReplicatedStorage.GetIcon)
-
-local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
-local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
-
 local AimbotTab = MainWindow:CreateTab("Aimbot")
 local VisualsTab = MainWindow:CreateTab("Visuals")
 local MiscellaneousTab = MainWindow:CreateTab("Miscellaneous")
@@ -154,7 +154,7 @@ AimbotTabCategoryMain:AddDropdown("Shoot Mode", {"MouseHook", "CameraHook", "Ray
 	getgenv().HexHubSettings.permsettings.aimbotbase.ShootMode = val
 end)
 
-AimbotTabCategoryMain:AddDropdown("Activation Mode", {"Always", "OnShoot", "OnKey"}, "OnKey", function(val)
+AimbotTabCategoryMain:AddDropdown("Activation Mode", {"Always", "OnShoot", "OnKey"}, "Always", function(val)
 	getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode = val
 end)
 

@@ -261,7 +261,7 @@ if CurrentGameName and CurrentGameDisplayName then
 	end
 	print(typeof(getgenv().HexHubSettings.permsettings))
 
-	loadstring(game:HttpGet(('http://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
+	loadstring(game:HttpGet(('https://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 else
 	print("Current Game Not Supported!")
 end
