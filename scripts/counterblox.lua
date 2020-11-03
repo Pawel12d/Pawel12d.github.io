@@ -65,7 +65,7 @@ local function PLR_VISIBLE(plr)
 	return false
 end
 
-local function GET_LEGITBOT_TARGET()
+local function GET_AIMBOT_TARGET()
     local selected = false
     local minFOV = math.huge
     pcall(function()
@@ -107,7 +107,8 @@ local function AIMBOT_LOOP()
             return
         end
 
-        plr = GET_LEGITBOT_TARGET()
+		plr = GET_AIMBOT_TARGET()
+		
 		if plr then
             local WorldPoint = plr.Character[getgenv().HexHubSettings.permsettings.aimbotbase.AimPart].Position
             local vector, onScreen = CurrentCamera:WorldToScreenPoint(WorldPoint)
