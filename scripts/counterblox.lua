@@ -180,7 +180,11 @@ AimbotTabCategoryMain:AddToggle("Visibility Check", false, function(val)
 end)
 
 AimbotTabCategoryMain:AddSlider("Field of View", {0, 500, 0}, function(val)
-    getgenv().HexHubSettings.permsettings.aimbotbase.FOV = val
+	if val == 0 then
+		getgenv().HexHubSettings.permsettings.aimbotbase.FOV = math.huge
+	else
+		getgenv().HexHubSettings.permsettings.aimbotbase.FOV = val
+	end
 end)
 
 AimbotTabCategoryMain:AddSlider("Max Distance", {0, 2048, 0}, function(val)
@@ -191,8 +195,12 @@ AimbotTabCategoryMain:AddSlider("Max Distance", {0, 2048, 0}, function(val)
 	end
 end)
 
-AimbotTabCategoryMain:AddSlider("Smoothness", {0, 25, 1}, function(val)
-    getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing = val
+AimbotTabCategoryMain:AddSlider("Smoothness", {0, 25, 0}, function(val)
+	if val <= 1 then
+		getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing = 1
+	else
+		getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing = val
+	end
 end)
 
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
@@ -280,8 +288,9 @@ mt.__namecall = newcclosure(function(self, ...)
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
 		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and SilentAimTarget ~= nil then
-			print("hugh")
-			args[1] = Ray.new(CurrentCamera.CFrame.p, (SilentAimTarget - CurrentCamera.CFrame.p).unit * 2048)
+			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and  game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
+				args[1] = Ray.new(CurrentCamera.CFrame.p, (SilentAimTarget - CurrentCamera.CFrame.p).unit * 2048)
+			end
 		end
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
