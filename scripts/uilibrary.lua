@@ -1134,7 +1134,6 @@ function library:CreateWindow(ctitle, csize, cpos)
 					bind.key = key
 					bind.label.Text = bind.key.Name
 					bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
-					_function(val)
 				end
 				
 				local a = tick()
