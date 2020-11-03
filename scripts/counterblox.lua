@@ -328,7 +328,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Play Sound", AllSoundsTable, "", funct
 	end
 end)
 
-MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"}, "-", function(val)
+MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Collision", "Remove"}, "-", function(val)
 	pcall(function()
 	local Killers = game.Workspace.Map.Killers; Killers.Name = "FAT"; Killers.Parent = nil
 	local Clips = game.Workspace.Map.Clips; Clips.Name = "FAT"; Clips.Parent = nil
@@ -390,6 +390,16 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"
 	end)
 end)
 
+MiscellaneousTabCategoryMain:AddToggle("Disable Filter", false, function(val)
+	pcall(function()
+	if val == true then
+		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = true
+	else
+		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = false
+	end
+	end)
+end)
+
 --[[
 game.Players.LocalPlayer.DamageLogs.ChildAdded:Connect(function(new)
 	print("Damage Logs:", new.Name, new:WaitForChild("Hits").Value, new:WaitForChild("DMG").Value)
@@ -432,6 +442,8 @@ mt.__namecall = newcclosure(function(self, ...)
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
 			return wait(99e99)
+		elseif self.Name == "Filter" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat and getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter == true then
+			return args[1]
 		end
 	elseif method == "FireServer" then
 		if string.len(self.Name) == 38 then
