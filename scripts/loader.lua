@@ -26,7 +26,6 @@ local defaultcfg = [[
 		},
 		["tempsettings"] = {}
 	}
-
 ]]
 
 local CurrentGame = game.GameId

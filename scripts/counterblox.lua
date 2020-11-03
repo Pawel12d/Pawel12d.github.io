@@ -387,6 +387,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Collisi
 
 	Killers.Name = "Killers"; Killers.Parent = workspace.Map
 	Clips.Name = "Clips"; Clips.Parent = workspace.Map
+	
 	end)
 end)
 
