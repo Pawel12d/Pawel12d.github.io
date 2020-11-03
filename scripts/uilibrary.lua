@@ -903,11 +903,8 @@ function library:CreateWindow(ctitle, csize, cpos)
 				return dropdown
 			end
 			function LocalTab:AddSlider(text, values, _function, float, incrementalMode)
-				minVal = values[1]
-				maxVal = values[2]
-				defVal = values[3]
-				if defVal then
-					if typeof(defVal) == "function" then
+				if values[3] then
+					if typeof(values[3]) == "function" then
 						if _function then
 							if typeof(_function) == "number" then
 								incrementalMode = float
@@ -917,8 +914,8 @@ function library:CreateWindow(ctitle, csize, cpos)
 								float = nil
 							end
 						end
-						_function = defVal
-						defVal = 0
+						_function = values[3]
+						values[3] = 0
 					else
 						if float then
 							if typeof(float) == "boolean" then
@@ -928,11 +925,11 @@ function library:CreateWindow(ctitle, csize, cpos)
 						end
 					end
 				end
-				if defVal > maxVal then
-					defVal = maxVal
+				if values[3] > values[2] then
+					values[3] = values[2]
 				end
 				_function = _function or function() end
-				local slider = {value = defVal}
+				local slider = {value = values[3]}
 				checkRow()
 				LocalTab.main.Parent = tab.row
 				
@@ -979,7 +976,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				})
 				
 				slider.sliderfill = library:create("Frame", {
-					Size = UDim2.new(slider.value/maxVal,0,1,0),
+					Size = UDim2.new(slider.value/values[2],0,1,0),
 					BackgroundColor3 = library.colors.theme,
 					BorderSizePixel = 0,
 					Parent = slider.sliderbar,
@@ -987,7 +984,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				
 				slider.sliderbox = library:create("Frame", {
 					AnchorPoint = Vector2.new(0.5,0.5),
-					Position = UDim2.new(slider.value/maxVal,0,0.5,0),
+					Position = UDim2.new(slider.value/values[2],0,0.5,0),
 					Size = UDim2.new(0,4,0,12),
 					BackgroundColor3 = library.colors.main,
 					BorderSizePixel = 0,
@@ -997,19 +994,19 @@ function library:CreateWindow(ctitle, csize, cpos)
 				self.order = self.order + 1
 				
 				local function updateValue()
-					slider.value = round(slider.value*maxVal, float)
-					if slider.value > maxVal then
-						slider.value = maxVal
+					slider.value = round(slider.value*values[2], float)
+					if slider.value > values[2] then
+						slider.value = values[2]
 					end
-					if slider.value < minVal then
-						slider.value = minVal
+					if slider.value < values[1] then
+						slider.value = values[1]
 					end
 					if incrementalMode then
-						slider.sliderbox.Position = UDim2.new(slider.value/maxVal,0,0.5,0)
-						slider.sliderfill.Size = UDim2.new(slider.value/maxVal,0,1,0)
+						slider.sliderbox.Position = UDim2.new(slider.value/values[2],0,0.5,0)
+						slider.sliderfill.Size = UDim2.new(slider.value/values[2],0,1,0)
 					else
-						slider.sliderbox:TweenPosition(UDim2.new(slider.value/maxVal,0,0.5,0), "Out", "Quint", 0.3, true)
-						slider.sliderfill:TweenSize(UDim2.new(slider.value/maxVal,0,1,0), "Out", "Quint", 0.3, true)
+						slider.sliderbox:TweenPosition(UDim2.new(slider.value/values[2],0,0.5,0), "Out", "Quint", 0.3, true)
+						slider.sliderfill:TweenSize(UDim2.new(slider.value/values[2],0,1,0), "Out", "Quint", 0.3, true)
 					end
 					slider.visualize.Text = slider.value
 					_function(slider.value)
@@ -1038,7 +1035,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 
 				slider.visualize.FocusLost:connect(function()
-					slider.value = (tonumber(slider.visualize.Text) or 0) / maxVal
+					slider.value = (tonumber(slider.visualize.Text) or 0) / values[2]
 					updateValue()
 				end)
 				
@@ -1062,13 +1059,13 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 				
 				function slider:SetValue(num)
-					slider.value = num/maxVal
+					slider.value = num/values[2]
 					updateValue()
 				end
 				
 				LocalTab.main.Size = UDim2.new(1,0,0,self.layout.AbsoluteContentSize.Y+18)
 				
-				slider:SetValue(defVal)
+				slider:SetValue(values[3])
 				
 				return slider
 			end
@@ -1555,7 +1552,6 @@ end)
 
 MainWindow.close = false
 --]]
-
 --[[
 ToDo:
 Fix category title bar showing over dropdown frame
