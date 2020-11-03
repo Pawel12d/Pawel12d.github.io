@@ -81,7 +81,7 @@ end
 local function AIMBOT_LOOP()
     wait()
     pcall(function()
-    if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and game:GetService("Players").LocalPlayer.Character then
+    if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and library.pointer.Parent.Enabled == false and game:GetService("Players").LocalPlayer.Character then
         local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
 
         if activationMode == "OnKey" and game:GetService("UserInputService"):IsKeyDown(getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind) == false then
@@ -185,7 +185,7 @@ AimbotTabCategoryMain:AddSlider("Max Distance", {0, 2048, 0}, function(val)
 	end
 end)
 
-AimbotTabCategoryMain:AddSlider("Smoothness", {1, 25, 0}, function(val)
+AimbotTabCategoryMain:AddSlider("Smoothness", {0, 25, 1}, function(val)
     getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing = val
 end)
 

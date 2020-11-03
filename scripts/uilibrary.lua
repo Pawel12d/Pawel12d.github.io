@@ -1555,6 +1555,7 @@ end)
 
 MainWindow.close = false
 --]]
+
 --[[
 ToDo:
 Fix category title bar showing over dropdown frame
