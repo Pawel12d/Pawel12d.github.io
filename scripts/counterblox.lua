@@ -279,11 +279,9 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithWhitelist" then
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
-		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
-			if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and SilentAimTarget ~= nil then
-				print("hugh")
-				args[1] = Ray.new(CurrentCamera.CFrame.p, (SilentAimTarget - CurrentCamera.CFrame.p).unit * 2048)
-			end
+		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and SilentAimTarget ~= nil then
+			print("hugh")
+			args[1] = Ray.new(CurrentCamera.CFrame.p, (SilentAimTarget - CurrentCamera.CFrame.p).unit * 2048)
 		end
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
