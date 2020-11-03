@@ -1,6 +1,7 @@
 print("Counter Blox Script Loaded!")
 
 getgenv().HexHubSettings.tempsettings.counterblox = {}
+getgenv().HexHubSettings.permsettings.aimbotbase = {}
 
 local LaunchTick = tick()
 local oldinv = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client")).CurrentInventory
@@ -17,6 +18,7 @@ for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 		end
 	end
 end
+
 for i,v in pairs(game.ReplicatedStorage.Gloves:GetChildren()) do
 	if v:FindFirstChild("Type") then
 		local GloveType = 
@@ -31,19 +33,96 @@ for i,v in pairs(game.ReplicatedStorage.Gloves:GetChildren()) do
 	end
 end
 
+local mouse = game:GetService("Players").LocalPlayer:GetMouse()
+local CurrentCamera = workspace.CurrentCamera
+
+local function PLR_VISIBLE(plr)
+	local IgnoreList = {game:GetService("Players").LocalPlayer.Character}
+	local NewRay = Ray.new(CurrentCamera.CFrame.p, (plr.Character.HumanoidRootPart.Position - CurrentCamera.CFrame.p).unit * 2048)
+	local FindPart = workspace:FindPartOnRayWithIgnoreList(NewRay, IgnoreList)
+	
+	if FindPart and FindPart:IsDescendantOf(plr.Character) then
+		return true
+	end
+	
+	return false
+end
+
+local function GET_LEGITBOT_TARGET()
+    local selected = false
+    local minFOV = math.huge
+    pcall(function()
+    for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+        if v ~= game:GetService("Players").LocalPlayer then
+            if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character:FindFirstChild("HumanoidRootPart") and v.Character.Humanoid.Health > 0 then
+                if getgenv().HexHubSettings.permsettings.aimbotbase.MaxDistance == false or (v.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).magnitude <= getgenv().HexHubSettings.permsettings.aimbotbase.MaxDistance then
+                    if getgenv().HexHubSettings.permsettings.aimbotbase.FFA or v.TeamColor ~= game:GetService("Players").LocalPlayer.TeamColor then
+                        if getgenv().HexHubSettings.permsettings.aimbotbase.VisCheck == false or PLR_VISIBLE(v) == true then
+                            local WorldPoint = v.Character[getgenv().HexHubSettings.permsettings.aimbotbase.AimPart].Position
+                            local vector, onScreen = CurrentCamera:WorldToScreenPoint(WorldPoint)
+                            local maxFOV = (Vector2.new(mouse.X, mouse.Y) - Vector2.new(vector.X, vector.Y)).magnitude
+                                
+                            if minFOV > maxFOV then
+                                minFOV = maxFOV
+                                selected = v
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    end)
+    if selected ~= false then
+        return selected
+    end
+end
+
+local function AIMBOT_LOOP()
+    wait()
+    pcall(function()
+    if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and game:GetService("Players").LocalPlayer.Character then
+        local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
+
+        if activationMode == "OnKey" and game:GetService("UserInputService"):IsKeyDown(getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind) == false then
+            return
+        elseif activationMode == "OnShoot" and game:GetService("UserInputService"):IsMouseButtonPressed(Enum.UserInputType.MouseButton1) == false then
+            return
+        end
+
+        plr = GET_LEGITBOT_TARGET()
+        if plr then
+            local WorldPoint = plr.Character[getgenv().HexHubSettings.permsettings.aimbotbase.AimPart].Position
+            local vector, onScreen = CurrentCamera:WorldToScreenPoint(WorldPoint)
+            local maxFOV = (Vector2.new(mouse.X, mouse.Y) - Vector2.new(vector.X, vector.Y)).magnitude
+            
+            if maxFOV < getgenv().HexHubSettings.permsettings.aimbotbase.FOV then
+                local currentMode = getgenv().HexHubSettings.permsettings.aimbotbase.ShootMode
+
+                if currentMode == "MouseHook" then
+                    local magnitudeX = mouse.X-vector.X
+                    local magnitudeY = mouse.Y-vector.Y
+                    local smoothnessX = magnitudeX/getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing
+                    local smoothnessY = magnitudeY/getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing
+
+                    mousemoverel(-smoothnessX, -smoothnessY)
+                elseif currentMode == "CameraHook" then
+                    workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.p, WorldPoint)
+                    -- CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CFrame.new(CurrentCamera.CFrame.p, WorldPoint), 5)
+                elseif currentMode == "RayHook" then
+                    
+                end
+            end
+        end
+    else
+        wait(0.1)
+    end
+    end)
+end
 
 local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
 local cbDisplayChat = getsenv(game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat)
 local cbGetIcon = require(game.ReplicatedStorage.GetIcon)
-
-for i,v in pairs(cbClient.CurrentInventory) do
-	game:GetService("ReplicatedStorage").Events.DataEvent:FireServer({
-		[1] = "EquipItem",
-		[2] = "Both",
-		[3] = v[1],
-		-- [4] = {"AK47_Scythe"}
-	})
-end
 
 local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
@@ -52,6 +131,63 @@ local AimbotTab = MainWindow:CreateTab("Aimbot")
 local VisualsTab = MainWindow:CreateTab("Visuals")
 local MiscellaneousTab = MainWindow:CreateTab("Miscellaneous")
 local SettingsTab = MainWindow:CreateTab("Settings")
+
+local AimbotTabCategoryMain = AimbotTab:AddCategory("Main")
+
+AimbotTabCategoryMain:AddToggle("Enabled", false, function(val)
+	pcall(function()
+	if val == true then
+		local AIMBOT_LOOP_SET = game:GetService("RunService").RenderStepped:connect(AIMBOT_LOOP)
+	else
+		if AIMBOT_LOOP_SET then AIMBOT_LOOP_SET:Disconnect() end
+	end
+	end)
+end)
+
+AimbotTabCategoryMain:AddDropdown("Shoot Mode", {"MouseHook", "CameraHook", "RayHook"}, "MouseHook", function(val)
+	getgenv().HexHubSettings.permsettings.aimbotbase.ShootMode = val
+end)
+
+AimbotTabCategoryMain:AddDropdown("Activation Mode", {"Always", "OnShoot", "OnKey"}, "OnKey", function(val)
+	getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode = val
+end)
+
+AimbotTabCategoryMain:AddDropdown("Aim Part", {"Head", "HumanoidRootPart", "Upper Torso", "Lower Torso"}, "Head", function(val)
+	getgenv().HexHubSettings.permsettings.aimbotbase.AimPart = val
+end)
+
+AimbotTabCategoryMain:AddKeybind("Aimbot Keybind", Enum.KeyCode.X, function(val)
+	print(val)
+	getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind = val
+end)
+
+AimbotTabCategoryMain:AddToggle("Free for All", false, function(val)
+	pcall(function()
+		getgenv().HexHubSettings.permsettings.aimbotbase.FFA = val
+	end)
+end)
+
+AimbotTabCategoryMain:AddToggle("Visibility Check", false, function(val)
+	pcall(function()
+		getgenv().HexHubSettings.permsettings.aimbotbase.VisCheck = val
+	end)
+end)
+
+AimbotTabCategoryMain:AddSlider("Field of View", {0, 500, 0}, function(val)
+    getgenv().HexHubSettings.permsettings.aimbotbase.FOV = val
+end)
+
+AimbotTabCategoryMain:AddSlider("Max Distance", {0, 2048, 0}, function(val)
+	if val == 0 then
+		getgenv().HexHubSettings.permsettings.aimbotbase.MaxDistance = false
+	else
+		getgenv().HexHubSettings.permsettings.aimbotbase.MaxDistance = val
+	end
+end)
+
+AimbotTabCategoryMain:AddSlider("Smoothness", {1, 25, 0}, function(val)
+    getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing = val
+end)
 
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
 
@@ -79,27 +215,27 @@ MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
 	pcall(function()
 	if val == true then
 		game:GetService("RunService"):BindToRenderStep("KillAllLoop", 1, function()
-				pcall(function()
-					for i,v in pairs(game.Players:GetChildren()) do
-						if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
-							if game.Players.LocalPlayer.Character.EquippedTool and v.Team ~= game.Players.LocalPlayer.Team then
-								game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
-									[1] = v.Character.Head,
-									[2] = v.Character.Head.Position,
-									[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
-									[4] = 100,
-									[5] = game.Players.LocalPlayer.Character.Gun,
-									[8] = 100, -- Damage Multiplier
-									[9] = false, -- ?
-									[10] = false, -- Is Wallbang
-									[11] = Vector3.new(),
-									[12] = math.rad(1,100000),
-									[13] = Vector3.new()
-								}))
-							end
+			pcall(function()
+				for i,v in pairs(game.Players:GetChildren()) do
+					if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+						if game.Players.LocalPlayer.Character.EquippedTool and v.Team ~= game.Players.LocalPlayer.Team then
+							game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
+								[1] = v.Character.Head,
+								[2] = v.Character.Head.Position,
+								[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
+								[4] = 100,
+								[5] = game.Players.LocalPlayer.Character.Gun,
+								[8] = 100, -- Damage Multiplier
+								[9] = false, -- ?
+								[10] = false, -- Is Wallbang
+								[11] = Vector3.new(),
+								[12] = math.rad(1,100000),
+								[13] = Vector3.new()
+							}))
 						end
 					end
-				end)
+				end
+			end)
 		end)
 	else
 		game:GetService("RunService"):UnbindFromRenderStep("KillAllLoop")

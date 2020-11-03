@@ -4,13 +4,6 @@ loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- 
 
 Add:
 Islands
-
-Hex Hub Aimbot
-- Enabled
-- Aim Type (Always Active, On Shoot, Key Held)
-- Aimbot Mode (Normal, Silent)
-- Auto Shoot (Triggerbot, Auto Wall)
-- Settings (Sensivity, Smoothing, FOV, Visibility, Alive, Aimpart)
 --]]
 
 local defaultcfg = [[
