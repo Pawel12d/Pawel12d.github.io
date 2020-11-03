@@ -79,7 +79,8 @@ local function GET_LEGITBOT_TARGET()
 end
 
 local function AIMBOT_LOOP()
-    wait()
+	wait()
+	print("working")
     pcall(function()
     if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and library.pointer.Parent.Enabled == false and game:GetService("Players").LocalPlayer.Character then
         local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
