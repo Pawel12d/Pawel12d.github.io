@@ -335,7 +335,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"
 	if val == "Normal" then	
 		APPLY_CLIPS_CHANGES = {{"Transparency", 1}, {"CanCollide", true}}
 
-	else val == "Visible" then
+	elseif val == "Visible" then
 		APPLY_CLIPS_CHANGES = {{"Transparency", 0.9},{"Material", "Neon"},{"Color", "Color3.fromRGB(255,0,255)"}}
 		--[[
 		for i,v in pairs(Killers:GetChildren()) do
