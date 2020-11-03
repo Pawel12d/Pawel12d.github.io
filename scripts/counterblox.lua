@@ -11,11 +11,17 @@ local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lu
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
 
 local LaunchTick = tick()
+
+-- tables & stuff
 local oldinv = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client")).CurrentInventory
 local SkinsTableNames = {}; 
 local AllSkinsTable = {}
+local AllCasesTable = {}
+local AllSoundsTable = {}
 
 for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTables) do table.insert(SkinsTableNames, i) end
+for i,v in pairs(game.ReplicatedStorage.Cases:GetChildren()) do table.insert(AllCasesTable, v.Name) end
+for i,v in pairs(workspace.Sounds:GetChildren()) do table.insert(AllSoundsTable, v.Name) end
 
 for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 	if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
@@ -132,6 +138,7 @@ local function AIMBOT_LOOP()
 end
 
 local AimbotTab = MainWindow:CreateTab("Aimbot")
+local RageTab = MainWindow:CreateTab("Rage")
 local VisualsTab = MainWindow:CreateTab("Visuals")
 local MiscellaneousTab = MainWindow:CreateTab("Miscellaneous")
 local SettingsTab = MainWindow:CreateTab("Settings")
@@ -203,32 +210,42 @@ AimbotTabCategoryMain:AddSlider("Smoothness", {0, 25, 0}, function(val)
 	end
 end)
 
-local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
+local RageTabCategoryMain = MiscellaneousTab:AddCategory("Main")
 
-MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
-	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
-	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
-	local selected = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
-
-	if typeof(selected) == "table" then
-		cbClient.CurrentInventory = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
-	elseif tostring(val) == "Default" then
-		cbClient.CurrentInventory = oldinv
-	elseif tostring(val) == "All" then
-		cbClient.CurrentInventory = AllSkinsTable
-	end
-
-	local InventoryLoadout = game.Players.LocalPlayer.PlayerGui.GUI["Inventory&Loadout"]
-	if InventoryLoadout.Visible == true then
-		InventoryLoadout.Visible = false
-		InventoryLoadout.Visible = true
-	end
-end)
-
-MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
+RageTabCategoryMain:AddToggle("Kill All", false, function(val)
 	pcall(function()
 	if val == true then
 		game:GetService("RunService"):BindToRenderStep("KillAllLoop", 1, function()
+			pcall(function()
+				for i,v in pairs(game.Players:GetChildren()) do
+					if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+						game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
+							[1] = v.Character.Head,
+							[2] = v.Character.Head.Position,
+							[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
+							[4] = 100,
+							[5] = game.Players.LocalPlayer.Character.Gun,
+							[8] = 100, -- Damage Multiplier
+							[9] = false, -- ?
+							[10] = false, -- Is Wallbang
+							[11] = Vector3.new(),
+							[12] = math.rad(1,100000),
+							[13] = Vector3.new()
+						}))
+					end
+				end
+			end)
+		end)
+	else
+		game:GetService("RunService"):UnbindFromRenderStep("KillAllLoop")
+	end
+	end)
+end)
+
+RageTabCategoryMain:AddToggle("Kill Enemies", false, function(val)
+	pcall(function()
+	if val == true then
+		game:GetService("RunService"):BindToRenderStep("KillEnemiesLoop", 1, function()
 			pcall(function()
 				for i,v in pairs(game.Players:GetChildren()) do
 					if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
@@ -257,6 +274,58 @@ MiscellaneousTabCategoryMain:AddToggle("Kill All", false, function(val)
 	end)
 end)
 
+RageTabCategoryMain:AddButton("Crash Server", function()
+	if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
+		game:GetService("RunService").RenderStepped:Connect(function() wait(0.1)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Molotov"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["HE Grenade"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Decoy Grenade"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Smoke Grenade"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Flashbang"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+		end)
+	end
+end)
+
+local RageTabCategoryAntiAimbot = RageTab:AddCategory("Anti Aimbot")
+
+local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
+
+MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
+	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
+	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
+	local selected = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
+
+	if typeof(selected) == "table" then
+		cbClient.CurrentInventory = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
+	elseif tostring(val) == "Default" then
+		cbClient.CurrentInventory = oldinv
+	elseif tostring(val) == "All" then
+		cbClient.CurrentInventory = AllSkinsTable
+	end
+
+	local InventoryLoadout = game.Players.LocalPlayer.PlayerGui.GUI["Inventory&Loadout"]
+	if InventoryLoadout.Visible == true then
+		InventoryLoadout.Visible = false
+		InventoryLoadout.Visible = true
+	end
+end)
+
+MiscellaneousTabCategoryMain:AddDropdown("Open Case", AllCasesTable, "", function(val)
+	if game.ReplicatedStorage.Cases:FindFirstChild(val) then
+		game.ReplicatedStorage.Events.DataEvent:FireServer({"BuyCase", val})
+	end
+end)
+
+MiscellaneousTabCategoryMain:AddDropdown("Play Sound", AllSoundsTable, "", function(val)
+	if workspace.Sounds:FindFirstChild(val) then
+		workspace.Sounds[val]:Play()
+	end
+end)
+
+for i,v in pairs(game.ReplicatedStorage.Cases:GetChildren()) do table.insert(AllCasesTable, v.Name) end
+for i,v in pairs(workspace.Sounds:GetChildren()) do table.insert(AllSoundsTable, v.Name) end
+
+--[[
 game.Players.LocalPlayer.DamageLogs.ChildAdded:Connect(function(new)
 	print("Damage Logs:", new.Name, new:WaitForChild("Hits").Value, new:WaitForChild("DMG").Value)
 end)
@@ -266,7 +335,7 @@ cbfirebullethook = hookfunc(cbClient.firebullet, function(...)
     print("on shoot, "..#args)
     return cbfirebullethook(unpack(args))
 end)
-
+--]]
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
 
