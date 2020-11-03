@@ -81,7 +81,7 @@ end
 local function AIMBOT_LOOP()
 	wait()
     pcall(function()
-    if library.pointer.Parent.Enabled == false and game:GetService("Players").LocalPlayer.Character then
+    if game:GetService("Players").LocalPlayer.Character then
         local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
 		print("CP1")
         if activationMode == "OnKey" and game:GetService("UserInputService"):IsKeyDown(getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind) == false then
