@@ -326,6 +326,42 @@ MiscellaneousTabCategoryMain:AddDropdown("Play Sound", AllSoundsTable, "", funct
 	end
 end)
 
+MiscellaneousTabCategoryMain:AddDropdown("Clips", {"-", "Visible", "Remove"}, "-", function(val)
+	local Killers = game.Workspace.Map.Killers; Killers.Name = "FAT"; Killers.Parent = nil
+	local Clips = game.Workspace.Map.Clips; Clips.Name = "FAT"; Clips.Parent = nil
+
+	if val == "Visible" then
+		for i,v in pairs(Killers:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.Transparency = 0.3
+				v.Material = "Neon"
+				v.Color = Color3.fromRGB(255, 0, 0)
+			end
+		end
+		for i,v in pairs(Clips:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.Transparency = 0.3
+				v.Material = "Neon"
+				v.Color = Color3.fromRGB(255, 0, 255)
+			end
+		end
+	elseif val == "Remove" then
+		for i,v in pairs(Killers:GetChildren()) do
+			if v:IsA("BasePart") then
+				v:Remove()
+			end
+		end
+		for i,v in pairs(Clips:GetChildren()) do
+			if v:IsA("BasePart") then
+				v:Remove()
+			end
+		end
+	end
+
+	Killers.Name = "Killers"; Killers.Parent = workspace.Map
+	Clips.Name = "Clips"; Clips.Parent = workspace.Map
+end)
+
 for i,v in pairs(game.ReplicatedStorage.Cases:GetChildren()) do table.insert(AllCasesTable, v.Name) end
 for i,v in pairs(workspace.Sounds:GetChildren()) do table.insert(AllSoundsTable, v.Name) end
 
@@ -428,3 +464,19 @@ MainWindow.close = false
 
 print("Ready! It took", tonumber(tick() - LaunchTick), "seconds to load!")
 
+--[[
+local player = game.Players.LocalPlayer
+			BV = Instance.new("BodyVelocity", player.Character.HumanoidRootPart)
+			BV.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+			animationTrack.Looped = true
+			animationTrack.Name = "FlyAnimation"
+			animationTrack:Play()
+			local function UpdateFly()
+				BV.Velocity = player:GetMouse().Hit.LookVector * 30
+				player.Character.HumanoidRootPart.CFrame = CFrame.new(player.Character.HumanoidRootPart.Position, player.Character.HumanoidRootPart.Position + player:GetMouse().Hit.LookVector)
+			end
+			-- Bind the UpdateFly() method
+			runService:BindToRenderStep("UpdateFly", Enum.RenderPriority.Camera.Value - 1, UpdateFly)
+		-- if already flying, disable fly
+
+]]
