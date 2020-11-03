@@ -83,29 +83,29 @@ local function AIMBOT_LOOP()
     pcall(function()
     if library.pointer.Parent.Enabled == false and game:GetService("Players").LocalPlayer.Character then
         local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
-
+		print("CP1")
         if activationMode == "OnKey" and game:GetService("UserInputService"):IsKeyDown(getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind) == false then
             return
         elseif activationMode == "OnShoot" and game:GetService("UserInputService"):IsMouseButtonPressed(Enum.UserInputType.MouseButton1) == false then
             return
         end
-
+		print("CP2")
         plr = GET_LEGITBOT_TARGET()
 		if plr then
-
+			print("CP3")
             local WorldPoint = plr.Character[getgenv().HexHubSettings.permsettings.aimbotbase.AimPart].Position
             local vector, onScreen = CurrentCamera:WorldToScreenPoint(WorldPoint)
             local maxFOV = (Vector2.new(mouse.X, mouse.Y) - Vector2.new(vector.X, vector.Y)).magnitude
             
             if maxFOV < getgenv().HexHubSettings.permsettings.aimbotbase.FOV then
                 local currentMode = getgenv().HexHubSettings.permsettings.aimbotbase.ShootMode
-
+				print("CP4")
                 if currentMode == "MouseHook" then
                     local magnitudeX = mouse.X-vector.X
                     local magnitudeY = mouse.Y-vector.Y
                     local smoothnessX = magnitudeX/getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing
                     local smoothnessY = magnitudeY/getgenv().HexHubSettings.permsettings.aimbotbase.Smoothing
-
+					print("CP5")
                     mousemoverel(-smoothnessX, -smoothnessY)
                 elseif currentMode == "CameraHook" then
                     workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.p, WorldPoint)
