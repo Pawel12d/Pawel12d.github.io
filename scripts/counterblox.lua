@@ -328,6 +328,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Play Sound", AllSoundsTable, "", funct
 end)
 
 MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"}, "Normal", function(val)
+	if not workspace:FindFirstChild("Map") then return end
 	local Killers = game.Workspace.Map.Killers; Killers.Name = "FAT"; Killers.Parent = nil
 	local Clips = game.Workspace.Map.Clips; Clips.Name = "FAT"; Clips.Parent = nil
 
@@ -352,6 +353,8 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"
 			end
 		end
 		--]]
+	elseif val == "Collision Off" then
+		APPLY_CLIPS_CHANGES = {{"CanCollide", false}}
 	elseif val == "Remove" then
 		APPLY_CLIPS_CHANGES = {{"Remove()"}}
 		--[[
