@@ -1134,6 +1134,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 					bind.key = key
 					bind.label.Text = bind.key.Name
 					bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
+					_function(key)
 				end
 				
 				local a = tick()
@@ -1146,7 +1147,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 					end)
 					return _function(true)
 				end
-				--[[
+
 				UserInputService.InputBegan:connect(function(input)
 					if bind.binding then
 						if input.KeyCode == Enum.KeyCode.Backspace then
@@ -1185,7 +1186,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 						bind.holding = false
 					end
 				end)
-				--]]
+
 				function bind:SetKeybind(key)
 					if typeof(key) == "string" then
 						if not keyCheck(Enum.KeyCode[key:upper()], blacklistedKeys) then
@@ -1555,6 +1556,5 @@ MainWindow.close = false
 --[[
 ToDo:
 Fix category title bar showing over dropdown frame
-Fix keybind
 Add notification system
 --]]
