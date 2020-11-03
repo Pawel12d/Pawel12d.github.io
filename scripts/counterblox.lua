@@ -327,11 +327,16 @@ MiscellaneousTabCategoryMain:AddDropdown("Play Sound", AllSoundsTable, "", funct
 	end
 end)
 
-MiscellaneousTabCategoryMain:AddDropdown("Clips", {"-", "Visible", "Remove"}, "-", function(val)
+MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"}, "Normal", function(val)
 	local Killers = game.Workspace.Map.Killers; Killers.Name = "FAT"; Killers.Parent = nil
 	local Clips = game.Workspace.Map.Clips; Clips.Name = "FAT"; Clips.Parent = nil
 
-	if val == "Visible" then
+	if val == "Normal" then	
+		APPLY_CLIPS_CHANGES = {{"Transparency", 1}, {"CanCollide", true}}
+
+	else val == "Visible" then
+		APPLY_CLIPS_CHANGES = {{"Transparency", 0.9},{"Material", "Neon"},{"Color", "Color3.fromRGB(255,0,255)"}}
+		--[[
 		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
 				v.Transparency = 0.9
@@ -346,7 +351,10 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"-", "Visible", "Remove"}, "-
 				v.Color = Color3.fromRGB(255, 0, 255)
 			end
 		end
+		--]]
 	elseif val == "Remove" then
+		APPLY_CLIPS_CHANGES = {{"Remove()"}}
+		--[[
 		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
 				v:Remove()
@@ -355,6 +363,31 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"-", "Visible", "Remove"}, "-
 		for i,v in pairs(Clips:GetChildren()) do
 			if v:IsA("BasePart") then
 				v:Remove()
+			end
+		end
+		--]]
+	end
+
+	for i,v in pairs(Killers:GetChildren()) do
+		if v:IsA("BasePart") then
+			for i,c in pairs(APPLY_CLIPS_CHANGES) do
+				if #c == 1 then
+					v:[c[1]]
+				else
+					v[c[1]] = c[2]
+				end
+			end
+		end
+	end
+
+	for i,v in pairs(Clips:GetChildren()) do
+		if v:IsA("BasePart") then
+			for i,c in pairs(APPLY_CLIPS_CHANGES) do
+				if #c == 1 then
+					v:[c[1]]
+				else
+					v[c[1]] = c[2]
+				end
 			end
 		end
 	end
