@@ -290,7 +290,7 @@ mt.__namecall = newcclosure(function(self, ...)
 	elseif method == "FindPartOnRayWithIgnoreList" then
 		if SilentAimAiming == true and SilentAimTarget ~= nil and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true then
 			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
-				args[1] = Ray.new(CurrentCamera.CFrame.p, (SilentAimTarget - CurrentCamera.CFrame.p).unit * 2048)
+				args[1] = Ray.new(CurrentCamera.CFrame.p, (SilentAimTarget - CurrentCamera.CFrame.p).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
 			end
 		end
 	elseif method == "InvokeServer" then
