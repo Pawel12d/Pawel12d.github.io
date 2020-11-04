@@ -1136,7 +1136,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 
 				local function setKey(key)
-					if key == "None" then
+					if key == nil then
 						bind.key = nil
 						bind.label.Text = "None"
 						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
@@ -1149,7 +1149,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end
 				
 				local a = tick()
-				
+
 				local function holdKey()
 					RunService:BindToRenderStep(a .. bind.key.Name, 1, function()
 						if bind.holding == false or not bind.hold then
