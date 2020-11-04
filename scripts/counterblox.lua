@@ -306,6 +306,30 @@ VisualsTabCategoryViewmodel:AddSlider("Viewmodel Z", {0, 360, 180}, function(val
     getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ = val
 end)
 
+local VisualsTabCategoryThirdPerson = VisualsTab:AddCategory("Third Person")
+
+VisualsTabCategoryThirdPerson:AddToggle("Enabled", false, function(val)
+	pcall(function()
+		if val == true then
+			game:GetService("RunService"):BindToRenderStep("ThirdPerson", 100, function()
+				if game.Players.LocalPlayer.CameraMinZoomDistance ~= getgenv().HexHubSettings.tempsettings.counterblox.ThirdPersonDistance then
+					game.Players.LocalPlayer.CameraMinZoomDistance = getgenv().HexHubSettings.tempsettings.counterblox.ThirdPersonDistance
+					game.Players.LocalPlayer.CameraMaxZoomDistance = getgenv().HexHubSettings.tempsettings.counterblox.ThirdPersonDistance
+					workspace.ThirdPerson.Value = true
+				end
+			end)
+		else
+			game:GetService("RunService"):UnbindFromRenderStep("ThirdPerson")
+			wait()
+			workspace.ThirdPerson.Value = false
+		end
+	end)
+end)
+
+VisualsTabCategoryThirdPerson:AddSlider("Distance", {0, 30, 10}, function(val)
+    getgenv().HexHubSettings.tempsettings.counterblox.ThirdPersonDistance = val
+end)
+
 local VisualsTabCategoryViewmodelChams = VisualsTab:AddCategory("Viewmodel Chams")
 
 VisualsTabCategoryViewmodelChams:AddToggle("Enabled", false, function(val)
