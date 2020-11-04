@@ -308,6 +308,30 @@ end)
 
 local RageTabCategoryAntiAimbot = RageTab:AddCategory("Anti Aimbot")
 
+local VisualsTabCategoryViewmodel = VisualsTab:AddCategory("Viewmodel")
+
+VisualsTabCategoryViewmodel:AddToggle("Enabled", false, function(val)
+	pcall(function()
+	if val == true then
+		getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsEnabled = true
+	else
+		getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsEnabled = false
+	end
+	end)
+end)
+
+VisualsTabCategoryViewmodel:AddSlider("Viewmodel X", {0, 360, 180}, function(val)
+    getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetX = val
+end)
+
+VisualsTabCategoryViewmodel:AddSlider("Viewmodel Y", {0, 360, 180}, function(val)
+    getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetY = val
+end)
+
+VisualsTabCategoryViewmodel:AddSlider("Viewmodel Z", {0, 360, 180}, function(val)
+    getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ = val
+end)
+
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
 
 MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
@@ -442,8 +466,10 @@ mt.__namecall = newcclosure(function(self, ...)
         return wait(99e99)
 	elseif args[1] == game.Players.LocalPlayer.UserId then
 		return wait(99e99)
-    elseif method == "SetPrimaryPartCFrame" then
-
+	elseif method == "SetPrimaryPartCFrame" then
+		if self.Name == "Arms" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Client and getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsEnabled == true then
+			args[1] = args[1] * CFrame.new(Vector3.new(math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetX-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetY-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ-180)))
+		end
     elseif method == "FindPartOnRayWithWhitelist" then
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
