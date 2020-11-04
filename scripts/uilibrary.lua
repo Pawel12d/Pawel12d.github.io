@@ -127,6 +127,10 @@ local function round(num, bracket)
 end
 
 --keybind
+local closeKeys = {
+	Enum.KeyCode.Backspace,Enum.KeyCode.Escape
+}
+
 local blacklistedKeys = { --add or remove keys if you find the need to
 	Enum.KeyCode.Unknown,Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.KeyCode.Slash,Enum.KeyCode.Tab,Enum.KeyCode.Backspace,Enum.KeyCode.One,Enum.KeyCode.Two,Enum.KeyCode.Three,Enum.KeyCode.Four,Enum.KeyCode.Five,Enum.KeyCode.Six,Enum.KeyCode.Seven,Enum.KeyCode.Eight,Enum.KeyCode.Nine,Enum.KeyCode.Zero,Enum.KeyCode.Escape,Enum.KeyCode.F1,Enum.KeyCode.F2,Enum.KeyCode.F3,Enum.KeyCode.F4,Enum.KeyCode.F5,Enum.KeyCode.F6,Enum.KeyCode.F7,Enum.KeyCode.F8,Enum.KeyCode.F9,Enum.KeyCode.F10,Enum.KeyCode.F11,Enum.KeyCode.F12
 }
@@ -1150,8 +1154,9 @@ function library:CreateWindow(ctitle, csize, cpos)
 
 				UserInputService.InputBegan:connect(function(input)
 					if bind.binding then
-						if input.KeyCode == Enum.KeyCode.Backspace then
-							setKey(bind.key)
+						if table.find(closeKeys, input.KeyCode) then
+							-- setKey(bind.key)
+							setKey(nil)
 							bind.binding = false
 						else
 							if not keyCheck(input.KeyCode, blacklistedKeys) then
