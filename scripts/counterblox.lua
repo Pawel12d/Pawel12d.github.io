@@ -262,8 +262,8 @@ RageTabCategoryMain:AddToggle("Wallbang", false, function(val)
 	end)
 end)
 
-RageTabCategoryMain:AddSlider("Damage Multiplier", {0, 100, 1}, function(val)
-	getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier = val
+RageTabCategoryMain:AddSlider("Damage Multiplier [Percentage]", {0, 100000, 100}, function(val)
+	getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier = val/100
 end)
 
 RageTabCategoryMain:AddButton("Crash Server", function()
