@@ -300,6 +300,7 @@ RageTabCategoryAntiAimbot:AddToggle("Enabled", false, function(val)
 	else
 		getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled = false
 		if ANTIAIMBOT_LOOP_SET then ANTIAIMBOT_LOOP_SET:Disconnect() end 
+		wait()
 		game.Players.LocalPlayer.Character.Humanoid.AutoRotate = true
 	end
 	end)
@@ -569,34 +570,43 @@ CurrentCamera.ChildAdded:Connect(function(child)
 				local RightSleeve = RightArm:FindFirstChild("Sleeve") or nil
 				local LeftSleeve = LeftArm:FindFirstChild("Sleeve") or nil
 				
-				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsEnabled == true and RightArm and LeftArm then
-					RightArm.Mesh.TextureId = ""
-					RightArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
-					RightArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
-					
-					LeftArm.Mesh.TextureId = ""
-					LeftArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
-					LeftArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsEnabled == true then
+					if RightArm then
+						RightArm.Mesh.TextureId = ""
+						RightArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
+						RightArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+					end
+					if LeftArm then
+						LeftArm.Mesh.TextureId = ""
+						LeftArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
+						LeftArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+					end
 				end
 
-				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesEnabled == true and RightGlove and LeftGlove then
-					RightGlove.Mesh.TextureId = ""
-					RightGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
-					RightGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
-
-					LeftGlove.Mesh.TextureId = ""
-					LeftGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
-					LeftGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
+				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesEnabled == true then
+					if RightGlove then
+						RightGlove.Mesh.TextureId = ""
+						RightGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
+						RightGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
+					end
+					if LeftGlove then
+						LeftGlove.Mesh.TextureId = ""
+						LeftGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
+						LeftGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
+					end
 				end
 
-				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesEnabled == true and RightSleeve and LeftSleeve then
-					RightSleeve.Mesh.TextureId = ""
-					RightSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
-					RightSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
-					
-					LeftSleeve.Mesh.TextureId = ""
-					LeftSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
-					LeftSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
+				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesEnabled == true then
+					if RightSleeve then
+						RightSleeve.Mesh.TextureId = ""
+						RightSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
+						RightSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
+					end
+					if LeftSleeve then
+						LeftSleeve.Mesh.TextureId = ""
+						LeftSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
+						LeftSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
+					end
 				end
 			elseif getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsEnabled == true and v:IsA("BasePart") and v.Name ~= ("Right Arm" or "Left Arm" or "Flash") and v.Transparency ~= 1 then -- Weapons Pointer
 
