@@ -146,6 +146,13 @@ local function AIMBOT_LOOP()
     end)
 end
 
+local function ANTIAIMBOT_LOOP()
+	game.Players.LocalPlayer.Character.Humanoid.AutoRotate = false
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0.1, 0)
+	game.ReplicatedStorage.Events.ControlTurn:FireServer(-1, false)
+end
+
+
 local function KILL_LOOP(plrs)
 	pcall(function()
 		for i,v in pairs(game.Players:GetChildren()) do
@@ -281,6 +288,18 @@ RageTabCategoryMain:AddButton("Crash Server", function()
 end)
 
 local RageTabCategoryAntiAimbot = RageTab:AddCategory("Anti Aimbot")
+
+RageTabCategoryAntiAimbot:AddToggle("Enabled", false, function(val)
+	pcall(function()
+	if val == true then
+		ANTIAIMBOT_LOOP_SET = game:GetService("RunService").RenderStepped:connect(ANTIAIMBOT_LOOP)
+	else
+		getgenv().HexHubSettings.permsettings.aimbotbase.Enabled = false
+		if ANTIAIMBOT_LOOP_SET then ANTIAIMBOT_LOOP:Disconnect() end 
+		game.Players.LocalPlayer.Character.Humanoid.AutoRotate = true
+	end
+	end)
+end)
 
 local VisualsTabCategoryViewmodel = VisualsTab:AddCategory("Viewmodel")
 
