@@ -1136,7 +1136,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 				local function setKey(key)
 					bind.key = key
-					bind.label.Text = bind.key.Name or "None"
+					bind.label.Text = (bind.key.Name or "None")
 					bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
 					_function(key)
 				end
