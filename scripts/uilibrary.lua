@@ -651,7 +651,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				return toggle
 			end
 			
-			function LocalTab:AddTextBox(text, txtval, _function, keep)
+			function LocalTab:AddTextBox(text, txtval, isDynamic, _function, keep)
 				local box = {value = ""}
 				
 				if txtval then
@@ -662,6 +662,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 						box.value = txtval
 					end
 				end
+
 				if keep then
 					if typeof(keep) == "string" then
 						keep = false
@@ -735,7 +736,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end
 				
 				LocalTab.main.Size = UDim2.new(1,0,0,self.layout.AbsoluteContentSize.Y+18)
-				
+
 				box:SetValue(box.value)
 				
 				return box
@@ -788,7 +789,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				})
 				
 				dropdown.container = library:create("Frame", {
-					ZIndex = 2,
+					ZIndex = 15,
 					Position = UDim2.new(0,0,1,3),
 					BackgroundTransparency = 1,
 					Visible = false,
@@ -796,7 +797,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				})
 				
 				dropdown.contentholder = library:create("ScrollingFrame", {
-					ZIndex = 2,
+					ZIndex = 15,
 					ClipsDescendants = true,
 					Size = UDim2.new(1,0,1,0),
 					BackgroundTransparency = 0,
@@ -823,6 +824,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 						closeWindow(dropdown.container)
 						ddcheck = dropdown
 						dropdown.closed = not dropdown.closed
+
 						if dropdown.closed then
 							dropdown.arrow.Text = ">"
 							dropdown.container.Visible = false
@@ -903,7 +905,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				LocalTab.main.Size = UDim2.new(1,0,0,self.layout.AbsoluteContentSize.Y+18)
 				
 				dropdown:SetValue(defVal)
-				
+
 				return dropdown
 			end
 			function LocalTab:AddSlider(text, values, _function, float, incrementalMode)
@@ -1084,9 +1086,11 @@ function library:CreateWindow(ctitle, csize, cpos)
 				else
 					bindname = bind.key.Name
 				end
-				print(key, bindname)
+
 				local bounds = game:GetService('TextService'):GetTextSize(bindname, library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
+
 				checkRow()
+
 				LocalTab.main.Parent = tab.row
 				
 				bind.button = library:create("TextButton", {
@@ -1119,6 +1123,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				
 				bind.button.InputBegan:connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+						print(input)
 						bind.label.Text = "..."
 						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
 					end
@@ -1131,13 +1136,13 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 
 				local function setKey(key)
-					if key == "None" then
+					if key == nil then
 						bind.key = nil
-						bind.label.Text = bindname
+						bind.label.Text = "None"
 						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
 					else
 						bind.key = key
-						bind.label.Text = bindname
+						bind.label.Text = key.Name
 						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
 						_function(key)
 					end
@@ -1145,43 +1150,17 @@ function library:CreateWindow(ctitle, csize, cpos)
 				
 				local a = tick()
 
-				local function holdKey()
-					RunService:BindToRenderStep(a .. bindname, 1, function()
-						if bind.holding == false or not bind.hold then
-							RunService:UnbindFromRenderStep(a .. bindname)
-						end
-						_function()
-					end)
-					return _function(true)
-				end
-
 				UserInputService.InputBegan:connect(function(input)
 					if bind.binding then
-						if table.find(closeKeys, input.KeyCode) then
-							-- setKey(bind.key)
+						if keyCheck(input.KeyCode, closeKeys) then
 							setKey(nil)
 							bind.binding = false
-						else
-							if not keyCheck(input.KeyCode, blacklistedKeys) then
-								setKey(input.KeyCode)
-								bind.binding = false
-							end
-							if keyCheck(input.UserInputType, whitelistedMouse) then
-								setKey(input.UserInputType)
-								bind.binding = false
-							end
-						end
-					else
-						if library.settings.modal and window.main.Visible then
-							return
-						end
-						if input.KeyCode.Name == bindname or input.UserInputType.Name == bindname then
-							bind.holding = true
-							if bind.hold then
-								holdKey()
-							else
-								_function()
-							end
+						elseif not keyCheck(input.KeyCode, blacklistedKeys) then
+							setKey(input.KeyCode)
+							bind.binding = false
+						elseif keyCheck(input.UserInputType, whitelistedMouse) then
+							setKey(input.UserInputType)
+							bind.binding = false
 						end
 					end
 				end)
@@ -1196,27 +1175,9 @@ function library:CreateWindow(ctitle, csize, cpos)
 					end
 					end)
 				end)
-
-				function bind:SetKeybind(key)
-					--[[
-					if typeof(key) == "string" then
-						if not keyCheck(Enum.KeyCode[key:upper()], blacklistedKeys) then
-							key = Enum.KeyCode[key:upper()]
-						end
-						if keyCheck(key, whitelistedMouse) then
-							key = Enum.UserInputType[key:upper()]
-						end
-					end
-					--]]
-					if key ~= bind.key then
-						RunService:UnbindFromRenderStep(a .. bindname)
-					end
-					
-					setKey(key)
-				end
 				
 				LocalTab.main.Size = UDim2.new(1,0,0,self.layout.AbsoluteContentSize.Y+16)
-				bind:SetKeybind(key)
+				setKey(key)
 
 				return bind
 			end
@@ -1466,7 +1427,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 end
 
 game:GetService("UserInputService").InputBegan:Connect(function(key, isFocused)
-	if key.KeyCode == getgenv().HexHubSettings.permsettings.global.GUIkeybind then
+	if key.KeyCode == (Enum.KeyCode.X or getgenv().HexHubSettings.permsettings.global.GUIkeybind) then
 		if not isFocused then
 			library.pointer.Parent.Enabled = not library.pointer.Parent.Enabled
 		end
@@ -1516,8 +1477,8 @@ spawn(function()
 end)
 
 return library
-
 --[[
+
 -- local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
 
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
@@ -1563,6 +1524,16 @@ end)
 
 MainLocalTab:AddColorPicker("ColorPicker", Color3.fromRGB(255, 255, 255), function(val)
 	print("ColorPicker", val)
+end)
+
+MainLocalTab:AddDropdown("Dropdown", {"1", "2", "3"}, "2", function(val)
+	print("Dropdown", val)
+end)
+
+local MainLocalTab = MainTab:AddCategory("Category")
+
+MainLocalTab:AddButton("Button", function()
+    print("Button")
 end)
 
 MainWindow.close = false
