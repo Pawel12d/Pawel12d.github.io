@@ -231,8 +231,8 @@ RageTabCategoryMain:AddToggle("Kill All", false, function(val)
 							[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
 							[4] = 100,
 							[5] = game.Players.LocalPlayer.Character.Gun,
-						 	 [6] = nil,
-							 [7] = nil,
+						 	[6] = nil,
+							[7] = nil,
 							[8] = 100, -- Damage Multiplier
 							[9] = nil, -- ?
 							[10] = false, -- Is Wallbang
@@ -264,8 +264,8 @@ RageTabCategoryMain:AddToggle("Kill Enemies", false, function(val)
 								[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
 								[4] = 100,
 								[5] = game.Players.LocalPlayer.Character.Gun,
-								 [6] = nil,
-								 [7] = nil,
+								[6] = nil,
+								[7] = nil,
 								[8] = 100, -- Damage Multiplier
 								[9] = nil, -- ?
 								[10] = false, -- Is Wallbang
@@ -281,6 +281,12 @@ RageTabCategoryMain:AddToggle("Kill Enemies", false, function(val)
 	else
 		game:GetService("RunService"):UnbindFromRenderStep("KillEnemiesLoop")
 	end
+	end)
+end)
+
+AimbotTabCategoryMain:AddToggle("Wallbang", false, function(val)
+	pcall(function()
+		getgenv().HexHubSettings.permsettings.counterblox.Wallbang = val
 	end)
 end)
 
@@ -447,6 +453,10 @@ mt.__namecall = newcclosure(function(self, ...)
 				args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (oldtar - workspace.CurrentCamera.CFrame.Position).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
 				-- args[2] = Ray.new(Camera.CFrame.Position, (silentaimtarget.Character[LegitbotAimbotTargetPart].CFrame.p - Camera.CFrame.Position).unit * 2048)
 			end
+		end
+		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
+			print(unpack(args[2]))
+			table.insert(args[2], workspace.Map)
 		end
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
