@@ -613,7 +613,7 @@ mt.__namecall = newcclosure(function(self, ...)
 	elseif method == "FindPartOnRayWithIgnoreList" then
 		if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and callingscript == game.Players.LocalPlayer.PlayerGui.Client then
 			if game.Players.LocalPlayer.Character and silentaimtarget ~= nil and silentaimtarget.Character then
-				args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (silentaimtarget.Character[tostring(getgenv().HexHubSettings.permsettings.aimbotbase.AimPart)].Position - workspace.CurrentCamera.CFrame.Position).unit * game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value)-- * 2048)
+				args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (silentaimtarget.Character[tostring(getgenv().HexHubSettings.permsettings.aimbotbase.AimPart)].Position - workspace.CurrentCamera.CFrame.Position).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
 			end
 		end
 
