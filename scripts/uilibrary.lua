@@ -1134,7 +1134,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 						bind.binding = true
 					end
 				end)
-				
+
 				local function setKey(key)
 					if key == "None" then
 						bind.key = nil
@@ -1149,6 +1149,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end
 				
 				local a = tick()
+				
 				local function holdKey()
 					RunService:BindToRenderStep(a .. bind.key.Name, 1, function()
 						if bind.holding == false or not bind.hold then
