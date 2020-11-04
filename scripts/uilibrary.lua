@@ -1093,7 +1093,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				local bind = {binding = false, holding = false, key = key, hold = hold}
 				local bindname = ""
 
-				if key.Name then
+				if key ~= "None" then
 					bindname = bind.key.Name
 				else
 					bindname = "None"
@@ -1145,10 +1145,14 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 
 				local function setKey(key)
-					bind.key = key
-					bind.label.Text = bindname
-					bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
-					if bindname ~= "None" then
+					if key == "None" then
+						bind.key = nil
+						bind.label.Text = bindname
+						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
+					else
+						bind.key = key
+						bind.label.Text = bindname
+						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
 						_function(key)
 					end
 				end
