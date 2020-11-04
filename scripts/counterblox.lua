@@ -201,7 +201,7 @@ AimbotTabCategoryMain:AddDropdown("Aim Part", {"Head", "HumanoidRootPart", "Uppe
 	getgenv().HexHubSettings.permsettings.aimbotbase.AimPart = val
 end)
 
-AimbotTabCategoryMain:AddKeybind("Aimbot Keybind", nil, function(val)
+AimbotTabCategoryMain:AddKeybind("Aimbot Keybind", "None", function(val)
 	print(val)
 	getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind = val
 end)

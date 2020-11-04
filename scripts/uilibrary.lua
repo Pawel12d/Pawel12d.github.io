@@ -1093,10 +1093,10 @@ function library:CreateWindow(ctitle, csize, cpos)
 				local bind = {binding = false, holding = false, key = key, hold = hold}
 				local bindname = ""
 
-				if key ~= "None" then
-					bindname = bind.key.Name
-				else
+				if tostring(key) == "None" then
 					bindname = "None"
+				else
+					bindname = bind.key.Name
 				end
 
 				local bounds = game:GetService('TextService'):GetTextSize(bindname, library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
