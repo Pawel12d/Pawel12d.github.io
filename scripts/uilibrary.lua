@@ -1134,11 +1134,18 @@ function library:CreateWindow(ctitle, csize, cpos)
 						bind.binding = true
 					end
 				end)
+				
 				local function setKey(key)
-					bind.key = key
-					bind.label.Text = (bind.key.Name or "None")
-					bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
-					_function(key)
+					if key == "None" then
+						bind.key = nil
+						bind.label.Text = "None"
+						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
+					else
+						bind.key = key
+						bind.label.Text = bind.key.Name
+						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
+						_function(key)
+					end
 				end
 				
 				local a = tick()
