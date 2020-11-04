@@ -284,7 +284,7 @@ RageTabCategoryMain:AddToggle("Kill Enemies", false, function(val)
 	end)
 end)
 
-AimbotTabCategoryMain:AddToggle("Wallbang", false, function(val)
+RageTabCategoryMain:AddToggle("Wallbang", false, function(val)
 	pcall(function()
 		getgenv().HexHubSettings.permsettings.counterblox.Wallbang = val
 	end)
@@ -455,7 +455,6 @@ mt.__namecall = newcclosure(function(self, ...)
 			end
 		end
 		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
-			print(unpack(args[2]))
 			table.insert(args[2], workspace.Map)
 		end
 	elseif method == "InvokeServer" then
