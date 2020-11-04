@@ -651,7 +651,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				return toggle
 			end
 			
-			function LocalTab:AddTextBox(text, txtval, isDynamic, _function, keep)
+			function LocalTab:AddTextBox(text, txtval, _function, keep)
 				local box = {value = ""}
 				
 				if txtval then
