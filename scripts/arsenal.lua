@@ -77,7 +77,7 @@ MiscellaneousTabCategoryMain:AddToggle("Kill Boss", false, function(val)
 	end)
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("Disable Filter", false, function(val)
+MiscellaneousTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
 	pcall(function()
 	if val == true then
 		getgenv().HexHubSettings.tempsettings.arsenal.DisableFilter = true

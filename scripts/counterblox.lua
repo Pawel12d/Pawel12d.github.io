@@ -330,30 +330,23 @@ end)
 
 MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Collision", "Remove"}, "-", function(val)
 	pcall(function()
-	local Killers = game.Workspace.Map.Killers; Killers.Name = "FAT"; Killers.Parent = nil
-	local Clips = game.Workspace.Map.Clips; Clips.Name = "FAT"; Clips.Parent = nil
+	local Clips = workspace.Map.Clips; Clips.Name = "FAT"; Clips.Parent = nil
+	local Killers = workspace.Map.Killers; Killers.Name = "FAT"; Killers.Parent = nil
 
 	if val == "Normal" then	
-		for i,v in pairs(Killers:GetChildren()) do
-			if v:IsA("BasePart") then
-				v.Transparency = 1
-				v.CanCollide = true
-			end
-		end
 		for i,v in pairs(Clips:GetChildren()) do
 			if v:IsA("BasePart") then
 				v.Transparency = 1
 				v.CanCollide = true
 			end
 		end
-	elseif val == "Visible" then
 		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
-				v.Transparency = 0.9
-				v.Material = "Neon"
-				v.Color = Color3.fromRGB(255, 0, 0)
+				v.Transparency = 1
+				v.CanCollide = true
 			end
 		end
+	elseif val == "Visible" then
 		for i,v in pairs(Clips:GetChildren()) do
 			if v:IsA("BasePart") then
 				v.Transparency = 0.9
@@ -361,24 +354,31 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Collisi
 				v.Color = Color3.fromRGB(255, 0, 255)
 			end
 		end
-	elseif val == "No Collision" then
 		for i,v in pairs(Killers:GetChildren()) do
+			if v:IsA("BasePart") then
+				v.Transparency = 0.9
+				v.Material = "Neon"
+				v.Color = Color3.fromRGB(255, 0, 0)
+			end
+		end
+	elseif val == "No Collision" then
+		for i,v in pairs(Clips:GetChildren()) do
 			if v:IsA("BasePart") then
 				v.CanCollide = false
 			end
 		end
-		for i,v in pairs(Clips:GetChildren()) do
+		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
 				v.CanCollide = false
 			end
 		end
 	elseif val == "Remove" then
-		for i,v in pairs(Killers:GetChildren()) do
+		for i,v in pairs(Clips:GetChildren()) do
 			if v:IsA("BasePart") then
 				v:Remove()
 			end
 		end
-		for i,v in pairs(Clips:GetChildren()) do
+		for i,v in pairs(Killers:GetChildren()) do
 			if v:IsA("BasePart") then
 				v:Remove()
 			end
@@ -391,7 +391,7 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Collisi
 	end)
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("Disable Filter", false, function(val)
+MiscellaneousTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
 	pcall(function()
 	if val == true then
 		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = true
@@ -452,6 +452,9 @@ mt.__namecall = newcclosure(function(self, ...)
 		elseif self.Name == "test" then
 			print("noclip detection")
 			return wait(99e99)
+		elseif self.Name == "HitPart" then
+			print("cool", args[8])
+			args[8] = 1000
 		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 			local MainTable = args[1]
 			local ItemTable = args[1][4]
@@ -499,23 +502,35 @@ mt.__namecall = newcclosure(function(self, ...)
 	return oldNamecall(self, unpack(args))
 end)
 
+--[[
+spawn(function()
+	for i,v in pairs(getgc(true)) do
+		if type(v) == "function" and debug.getinfo(v).name == "firebullet" then
+			a = v
+		end
+	end
+	while true do
+		wait()
+		local GunStats = getfenv(a)
+		GunStats.ammocount = 999 -- Primary Main
+		GunStats.primarystored = 9999 -- Primary Stored
+		GunStats.ammocount2 = 99999 -- Secondary Main
+		GunStats.secondarystored = 999999 -- Secondary Stored
+		GunStats.DISABLED = false -- Rapid Fire
+		GunStats.mode = "automatic"
+		GunStats.resetaccuracy()
+		GunStats.RecoilX = 0
+		GunStats.RecoilY = 0
+		GunStats.SpreadModifier = 0
+		GunStats.gun = "Glock"
+		--[[
+		for i,v in pairs(GunStats) do
+			print(i,v)
+		end
+		--]]
+	end
+end)
+--]]
 MainWindow.close = false
 
 print("Ready! It took", tonumber(tick() - LaunchTick), "seconds to load!")
-
---[[
-local player = game.Players.LocalPlayer
-			BV = Instance.new("BodyVelocity", player.Character.HumanoidRootPart)
-			BV.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-			animationTrack.Looped = true
-			animationTrack.Name = "FlyAnimation"
-			animationTrack:Play()
-			local function UpdateFly()
-				BV.Velocity = player:GetMouse().Hit.LookVector * 30
-				player.Character.HumanoidRootPart.CFrame = CFrame.new(player.Character.HumanoidRootPart.Position, player.Character.HumanoidRootPart.Position + player:GetMouse().Hit.LookVector)
-			end
-			-- Bind the UpdateFly() method
-			runService:BindToRenderStep("UpdateFly", Enum.RenderPriority.Camera.Value - 1, UpdateFly)
-		-- if already flying, disable fly
-
-]]
