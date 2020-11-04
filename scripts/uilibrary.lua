@@ -1090,11 +1090,8 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end
 				_function = _function or function() end
 				local bind = {binding = false, holding = false, key = key, hold = hold}
-				if key == nil then
-					local bounds = game:GetService('TextService'):GetTextSize("None", library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
-				else
-					local bounds = game:GetService('TextService'):GetTextSize(bind.key.Name, library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
-				end
+				local bindname = bind.key.Name or "None"
+				local bounds = game:GetService('TextService'):GetTextSize(bindname, library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
 				checkRow()
 				LocalTab.main.Parent = tab.row
 				
@@ -1117,7 +1114,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 					Size = UDim2.new(0,-bounds.X-8,1,-4),
 					BackgroundColor3 = library.colors.tabholder,
 					BorderColor3 = library.colors.main,
-					Text = bind.key.Name,
+					Text = bindname,
 					TextColor3 = library.colors.text,
 					Font = library.settings.font,
 					TextSize = library.settings.textsize,
@@ -1140,14 +1137,10 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 
 				local function setKey(key)
-					if key == nil then
-						bind.key = nil
-						bind.label.Text = "None"
-						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
-					else
-						bind.key = key
-						bind.label.Text = bind.key.Name
-						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
+					bind.key = key
+					bind.label.Text = bindname
+					bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
+					if key ~= nil then
 						_function(key)
 					end
 				end
@@ -1155,9 +1148,9 @@ function library:CreateWindow(ctitle, csize, cpos)
 				local a = tick()
 
 				local function holdKey()
-					RunService:BindToRenderStep(a .. bind.key.Name, 1, function()
+					RunService:BindToRenderStep(a .. bindname, 1, function()
 						if bind.holding == false or not bind.hold then
-							RunService:UnbindFromRenderStep(a .. bind.key.Name)
+							RunService:UnbindFromRenderStep(a .. bindname)
 						end
 						_function()
 					end)
@@ -1184,7 +1177,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 						if library.settings.modal and window.main.Visible then
 							return
 						end
-						if input.KeyCode.Name == bind.key.Name or input.UserInputType.Name == bind.key.Name then
+						if input.KeyCode.Name == bindname or input.UserInputType.Name == bindname then
 							bind.holding = true
 							if bind.hold then
 								holdKey()
@@ -1197,10 +1190,10 @@ function library:CreateWindow(ctitle, csize, cpos)
 				
 				UserInputService.InputEnded:connect(function(input)
 					pcall(function()
-					if input.KeyCode.Name == bind.key.Name then
+					if input.KeyCode.Name == bindname then
 						bind.holding = false
 					end
-					if input.UserInputType.Name == bind.key.Name then
+					if input.UserInputType.Name == bindname then
 						bind.holding = false
 					end
 					end)
@@ -1216,7 +1209,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 						end
 					end
 					if key ~= bind.key then
-						RunService:UnbindFromRenderStep(a .. bind.key.Name)
+						RunService:UnbindFromRenderStep(a .. bindname)
 					end
 					setKey(key)
 				end
