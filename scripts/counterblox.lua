@@ -536,7 +536,7 @@ CurrentCamera.ChildAdded:Connect(function(child)
 					LeftArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
 				end
 
-				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesEnabled == true RightGlove and LeftGlove then
+				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesEnabled == true and RightGlove and LeftGlove then
 					RightGlove.Mesh.TextureId = ""
 					RightGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
 					RightGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
@@ -546,7 +546,7 @@ CurrentCamera.ChildAdded:Connect(function(child)
 					LeftGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
 				end
 
-				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesEnabled == true RightSleeve and LeftSleeve then
+				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesEnabled == true and RightSleeve and LeftSleeve then
 					RightSleeve.Mesh.TextureId = ""
 					RightSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
 					RightSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
