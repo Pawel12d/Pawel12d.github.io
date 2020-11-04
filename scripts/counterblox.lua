@@ -197,7 +197,7 @@ AimbotTabCategoryMain:AddDropdown("Activation Mode", {"Always", "OnShoot", "OnKe
 	getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode = val
 end)
 
-AimbotTabCategoryMain:AddDropdown("Aim Part", {"Head", "HumanoidRootPart", "Upper Torso", "Lower Torso"}, "Head", function(val)
+AimbotTabCategoryMain:AddDropdown("Aim Part", {"Head", "HumanoidRootPart", "UpperTorso", "LowerTorso"}, "Head", function(val)
 	getgenv().HexHubSettings.permsettings.aimbotbase.AimPart = val
 end)
 
@@ -461,11 +461,33 @@ end)
 
 MiscellaneousTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
 	pcall(function()
-	if val == true then
-		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = true
-	else
-		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = false
-	end
+		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = val
+	end)
+end)
+
+local MiscellaneousTabCategoryBypasses = MiscellaneousTab:AddCategory("Bypasses")
+
+MiscellaneousTabCategoryBypasses:AddToggle("No Fall Damage", false, function(val)
+	pcall(function()
+		getgenv().HexHubSettings.tempsettings.counterblox.NoFallDamage = val
+	end)
+end)
+
+MiscellaneousTabCategoryBypasses:AddToggle("No Fire Damage", false, function(val)
+	pcall(function()
+		getgenv().HexHubSettings.tempsettings.counterblox.NoFireDamage = val
+	end)
+end)
+
+MiscellaneousTabCategoryBypasses:AddToggle("No Flash Effect", false, function(val)
+	pcall(function()
+		game.Players.LocalPlayer.PlayerGui.Blnd.Enabled = not val
+	end)
+end)
+
+MiscellaneousTabCategoryBypasses:AddToggle("No Smoke Effect", false, function(val)
+	pcall(function()
+	getgenv().HexHubSettings.tempsettings.counterblox.NoSmokeEffect = val
 	end)
 end)
 
@@ -626,6 +648,12 @@ mt.__namecall = newcclosure(function(self, ...)
 					Count.Parent = Marker
 				end
 			end
+		elseif self.Name == "FallDamage" and getgenv().HexHubSettings.tempsettings.counterblox.NoFallDamage == true then
+			return 
+		elseif self.Name == "BURNME" and getgenv().HexHubSettings.tempsettings.counterblox.NoFireDamage == true  then
+			return 
+		elseif self.Name == "Smoked" and getgenv().HexHubSettings.tempsettings.counterblox.NoSmokeEffect == true then
+			return 
 		end
     end
 	
