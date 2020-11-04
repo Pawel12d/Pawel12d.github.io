@@ -231,8 +231,10 @@ RageTabCategoryMain:AddToggle("Kill All", false, function(val)
 							[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
 							[4] = 100,
 							[5] = game.Players.LocalPlayer.Character.Gun,
+						 	 [6] = nil,
+							 [7] = nil,
 							[8] = 100, -- Damage Multiplier
-							[9] = false, -- ?
+							[9] = nil, -- ?
 							[10] = false, -- Is Wallbang
 							[11] = Vector3.new(),
 							[12] = math.rad(1,100000),
@@ -262,8 +264,10 @@ RageTabCategoryMain:AddToggle("Kill Enemies", false, function(val)
 								[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
 								[4] = 100,
 								[5] = game.Players.LocalPlayer.Character.Gun,
+								 [6] = nil,
+								 [7] = nil,
 								[8] = 100, -- Damage Multiplier
-								[9] = false, -- ?
+								[9] = nil, -- ?
 								[10] = false, -- Is Wallbang
 								[11] = Vector3.new(),
 								[12] = math.rad(1,100000),
@@ -278,6 +282,10 @@ RageTabCategoryMain:AddToggle("Kill Enemies", false, function(val)
 		game:GetService("RunService"):UnbindFromRenderStep("KillEnemiesLoop")
 	end
 	end)
+end)
+
+RageTabCategoryMain:AddSlider("Damage Multiplier", {0, 100, 1}, function(val)
+	getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier = val
 end)
 
 RageTabCategoryMain:AddButton("Crash Server", function()
@@ -453,8 +461,7 @@ mt.__namecall = newcclosure(function(self, ...)
 			print("noclip detection")
 			return wait(99e99)
 		elseif self.Name == "HitPart" then
-			print("cool", args[8])
-			args[8] = 1000
+			args[8] = getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier or 1
 		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 			local MainTable = args[1]
 			local ItemTable = args[1][4]
@@ -501,7 +508,6 @@ mt.__namecall = newcclosure(function(self, ...)
 	
 	return oldNamecall(self, unpack(args))
 end)
-
 --[[
 spawn(function()
 	for i,v in pairs(getgc(true)) do
