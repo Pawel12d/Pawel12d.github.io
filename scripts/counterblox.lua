@@ -584,10 +584,9 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithWhitelist" then
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
-		if silentaimtarget ~= nil and silentaimtarget.Character and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true then
-			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
-				args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (silentaimtarget.Character[getgenv().HexHubSettings.permsettings.aimbotbase.AimPart].CFrame.p - workspace.CurrentCamera.CFrame.Position).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
-				-- args[2] = Ray.new(Camera.CFrame.Position, (silentaimtarget.Character[LegitbotAimbotTargetPart].CFrame.p - Camera.CFrame.Position).unit * 2048)
+		if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and callingscript == game.Players.LocalPlayer.PlayerGui.Clientthen
+			if game.Players.LocalPlayer.Character and silentaimtarget ~= nil and silentaimtarget.Character then
+				args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (silentaimtarget.Character[tostring(getgenv().HexHubSettings.permsettings.aimbotbase.AimPart)].Position - workspace.CurrentCamera.CFrame.Position).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
 			end
 		end
 
