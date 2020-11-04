@@ -1,6 +1,7 @@
 --[[
 game.ReplicatedStorage.Events.Vote:FireServer("ChinaVsUsaRap") -- votekick
 game.ReplicatedStorage.Remotes.RedeemCode:InvokeServer("Hello") -- redeem twitter code
+hugh
 --]]
 
 print("Counter Blox Script Loaded!")
