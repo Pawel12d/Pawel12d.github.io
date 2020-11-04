@@ -1088,13 +1088,15 @@ function library:CreateWindow(ctitle, csize, cpos)
 						key = Enum.UserInputType[key:upper()]
 					end
 				end
-				
+
 				_function = _function or function() end
 				local bind = {binding = false, holding = false, key = key, hold = hold}
+				local bindname = ""
+				
 				if bind.key ~= nil then
-					local bindname = bind.key.Name
+					bindname = bind.key.Name
 				else
-					local bindname = "None"
+					bindname = "None"
 				end
 
 				local bounds = game:GetService('TextService'):GetTextSize(bindname, library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
