@@ -248,6 +248,7 @@ RageTabCategoryMain:AddToggle("Kill All", false, function(val)
 	pcall(function()
 		if val == true then
 			KILL_LOOP_SET = game:GetService("RunService").RenderStepped:connect(function()
+				wait()
 				KILL_LOOP(game.Players:GetPlayers())
 			end)
 		else
