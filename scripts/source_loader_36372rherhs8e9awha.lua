@@ -41,7 +41,7 @@ local GamesList = {
 print("Loading")
 
 if not syn and syn.run_secure_function then
-	game.Players.LocalPlayer:Kick("Exploit not supported!")
+	game:GetService("Players").LocalPlayer:Kick("Exploit not supported!")
 	wait(0.1)
 	while true do end
 end
@@ -224,7 +224,6 @@ HEXHUB_LOADER('showStatus', 'Scanning', 0)
 
 for i,v in pairs(GamesList) do
 	if tonumber(i) == tonumber(CurrentGame) then
-		print("Game Detected:", v[2])
 		CurrentGameName = v[1]
 		CurrentGameDisplayName = v[2]
 		break
@@ -238,9 +237,9 @@ HEXHUB_LOADER('showStatus', 'Loading Settings', 0)
 getgenv().HexHubSettings = {}
 
 if isfile("hexhub.cfg") then
-	print("cfg found")
+	-- print("cfg found")
 else
-	print("cfg not found")
+	-- print("cfg not found")
 	writefile("hexhub.cfg", defaultcfg)
 end
 
@@ -251,15 +250,10 @@ HEXHUB_LOADER('showStatus', 'Ready!', 0)
 HEXHUB_LOADER('close')
 
 if CurrentGameName and CurrentGameDisplayName then
-	for i,v in pairs(getgenv().HexHubSettings.permsettings) do
-		print(i,v)
-	end
-	print(typeof(getgenv().HexHubSettings.permsettings))
-
 	-- loadstring(game:HttpGet(('https://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
 	loadstring(syn.request({Url = "https://hexhub.xyz/scripts/"..CurrentGameName..".lua", Method = "GET"}).Body)()
 else
-	print("Current Game Not Supported!")
+	-- print("Current Game Not Supported!")
 end
 
 syn.request({

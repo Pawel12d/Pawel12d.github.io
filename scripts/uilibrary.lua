@@ -1075,20 +1075,6 @@ function library:CreateWindow(ctitle, csize, cpos)
 			end
 			
 			function LocalTab:AddKeybind(text, key, _function, hold)
-				if key and typeof(key) == "function" then
-					hold = _function
-					_function = key
-					key = Enum.KeyCode.F
-				end
-				if typeof(key) == "string" then
-					if not keyCheck(Enum.KeyCode[key:upper()], blacklistedKeys) then
-						key = Enum.KeyCode[key:upper()]
-					end
-					if keyCheck(key, whitelistedMouse) then
-						key = Enum.UserInputType[key:upper()]
-					end
-				end
-
 				_function = _function or function() end
 				local bind = {binding = false, holding = false, key = key, hold = hold}
 				local bindname = ""
