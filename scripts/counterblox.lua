@@ -147,6 +147,7 @@ local function AIMBOT_LOOP()
 end
 
 local function ANTIAIMBOT_LOOP()
+	wait()
 	game.Players.LocalPlayer.Character.Humanoid.AutoRotate = false
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0.1, 0)
 	game.ReplicatedStorage.Events.ControlTurn:FireServer(-1, false)
