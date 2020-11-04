@@ -526,15 +526,17 @@ CurrentCamera.ChildAdded:Connect(function(child)
 				local RightSleeve = RightArm:FindFirstChild("Sleeve") or nil
 				local LeftSleeve = LeftArm:FindFirstChild("Sleeve") or nil
 				
-				RightArm.Mesh.TextureId = ""
-				RightArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
-				RightArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
-				
-				LeftArm.Mesh.TextureId = ""
-				LeftArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
-				LeftArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsEnabled == true and RightArm and LeftArm then
+					RightArm.Mesh.TextureId = ""
+					RightArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
+					RightArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+					
+					LeftArm.Mesh.TextureId = ""
+					LeftArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
+					LeftArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+				end
 
-				if RightGlove and LeftGlove then
+				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesEnabled == true RightGlove and LeftGlove then
 					RightGlove.Mesh.TextureId = ""
 					RightGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
 					RightGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
@@ -544,7 +546,7 @@ CurrentCamera.ChildAdded:Connect(function(child)
 					LeftGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
 				end
 
-				if RightSleeve and LeftSleeve then
+				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesEnabled == true RightSleeve and LeftSleeve then
 					RightSleeve.Mesh.TextureId = ""
 					RightSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
 					RightSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
@@ -567,7 +569,6 @@ CurrentCamera.ChildAdded:Connect(function(child)
 	end)
 end)
 						
-
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
 
