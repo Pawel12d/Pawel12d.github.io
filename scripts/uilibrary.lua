@@ -1198,6 +1198,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 
 				function bind:SetKeybind(key)
+					--[[
 					if typeof(key) == "string" then
 						if not keyCheck(Enum.KeyCode[key:upper()], blacklistedKeys) then
 							key = Enum.KeyCode[key:upper()]
@@ -1206,9 +1207,11 @@ function library:CreateWindow(ctitle, csize, cpos)
 							key = Enum.UserInputType[key:upper()]
 						end
 					end
+					--]]
 					if key ~= bind.key then
 						RunService:UnbindFromRenderStep(a .. bindname)
 					end
+					
 					setKey(key)
 				end
 				
