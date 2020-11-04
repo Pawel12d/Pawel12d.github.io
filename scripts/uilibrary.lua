@@ -1184,12 +1184,14 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end)
 				
 				UserInputService.InputEnded:connect(function(input)
+					pcall(function()
 					if input.KeyCode.Name == bind.key.Name then
 						bind.holding = false
 					end
 					if input.UserInputType.Name == bind.key.Name then
 						bind.holding = false
 					end
+					end)
 				end)
 
 				function bind:SetKeybind(key)
