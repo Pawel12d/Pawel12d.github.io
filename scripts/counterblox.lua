@@ -649,11 +649,11 @@ mt.__namecall = newcclosure(function(self, ...)
 					Count.Parent = Marker
 				end
 			end
-		elseif self.Name == "FallDamage" and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.tempsettings.counterblox.NoFallDamage == true then
+		elseif self.Name == "FallDamage" and getgenv().HexHubSettings.tempsettings.counterblox.NoFallDamage == true then
 			return 
-		elseif self.Name == "BURNME" and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.tempsettings.counterblox.NoFireDamage == true  then
+		elseif self.Name == "BURNME" and getgenv().HexHubSettings.tempsettings.counterblox.NoFireDamage == true  then
 			return 
-		elseif self.Name == "Smoked" and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.tempsettings.counterblox.NoSmokeEffect == true then
+		elseif self.Name == "Smoked" and getgenv().HexHubSettings.tempsettings.counterblox.NoSmokeEffect == true then
 			return 
 		end
     end
