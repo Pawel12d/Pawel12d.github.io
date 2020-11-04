@@ -188,8 +188,6 @@ function HEXHUB_LOADER.close(delay_, callback)
 	MainFrame:TweenSize(UDim2.new(0, 0,0.121, 0), 'Out', 'Quint', 0.6, false, function()
 		if typeof(callback) == 'function' then
 			pcall(callback)
-		else
-			warn('Callback is not a function')
 		end
 		done = true
 	end)
@@ -212,8 +210,6 @@ function HEXHUB_LOADER.showStatus(text, delay_, callback)
 	end
 	if typeof(callback) == 'function' then
 		pcall(callback)
-	else
-		warn('Callback is not a function')
 	end
 	wait(delay_)
 	done = true
