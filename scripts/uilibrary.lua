@@ -1093,10 +1093,10 @@ function library:CreateWindow(ctitle, csize, cpos)
 				local bind = {binding = false, holding = false, key = key, hold = hold}
 				local bindname = ""
 
-				if key == nil then
-					bindname = "None"
-				else
+				if key.Name then
 					bindname = bind.key.Name
+				else
+					bindname = "None"
 				end
 
 				local bounds = game:GetService('TextService'):GetTextSize(bindname, library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
@@ -1148,7 +1148,7 @@ function library:CreateWindow(ctitle, csize, cpos)
 					bind.key = key
 					bind.label.Text = bindname
 					bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
-					if key ~= nil then
+					if bindname ~= "None" then
 						_function(key)
 					end
 				end
