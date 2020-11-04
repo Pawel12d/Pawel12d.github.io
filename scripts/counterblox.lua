@@ -145,6 +145,30 @@ local function AIMBOT_LOOP()
     end)
 end
 
+local function KILL_LOOP(plrs)
+	pcall(function()
+		for i,v in pairs(game.Players:GetChildren()) do
+			if table.find(plrs, v) and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+				game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
+					[1] = v.Character.Head,
+					[2] = v.Character.Head.Position,
+					[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
+					[4] = 100,
+					[5] = game.Players.LocalPlayer.Character.Gun,
+					[6] = nil,
+					[7] = nil,
+					[8] = 100, -- Damage Multiplier
+					[9] = nil, -- ?
+					[10] = false, -- Is Wallbang
+					[11] = Vector3.new(),
+					[12] = math.rad(1,100000),
+					[13] = Vector3.new()
+				}))
+			end
+		end
+	end)
+end
+
 local AimbotTab = MainWindow:CreateTab("Aimbot")
 local RageTab = MainWindow:CreateTab("Rage")
 local VisualsTab = MainWindow:CreateTab("Visuals")
@@ -160,7 +184,7 @@ AimbotTabCategoryMain:AddToggle("Enabled", false, function(val)
 		AIMBOT_LOOP_SET = game:GetService("RunService").RenderStepped:connect(AIMBOT_LOOP)
 	else
 		getgenv().HexHubSettings.permsettings.aimbotbase.Enabled = false
-		if AIMBOT_LOOP_SET then AIMBOT_LOOP_SET:Disconnect() end
+		if AIMBOT_LOOP_SET then AIMBOT_LOOP_SET:Disconnect() end 
 	end
 	end)
 end)
@@ -222,67 +246,13 @@ local RageTabCategoryMain = RageTab:AddCategory("Main")
 
 RageTabCategoryMain:AddToggle("Kill All", false, function(val)
 	pcall(function()
-	if val == true then
-		game:GetService("RunService"):BindToRenderStep("KillAllLoop", 1, function()
-			pcall(function()
-				for i,v in pairs(game.Players:GetChildren()) do
-					if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
-						game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
-							[1] = v.Character.Head,
-							[2] = v.Character.Head.Position,
-							[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
-							[4] = 100,
-							[5] = game.Players.LocalPlayer.Character.Gun,
-						 	[6] = nil,
-							[7] = nil,
-							[8] = 100, -- Damage Multiplier
-							[9] = nil, -- ?
-							[10] = false, -- Is Wallbang
-							[11] = Vector3.new(),
-							[12] = math.rad(1,100000),
-							[13] = Vector3.new()
-						}))
-					end
-				end
+		if val == true then
+			KILL_LOOP_SET = game:GetService("RunService").RenderStepped:connect(function()
+				KILL_LOOP(game.Players:GetPlayers())
 			end)
-		end)
-	else
-		game:GetService("RunService"):UnbindFromRenderStep("KillAllLoop")
-	end
-	end)
-end)
-
-RageTabCategoryMain:AddToggle("Kill Enemies", false, function(val)
-	pcall(function()
-	if val == true then
-		game:GetService("RunService"):BindToRenderStep("KillEnemiesLoop", 1, function()
-			pcall(function()
-				for i,v in pairs(game.Players:GetChildren()) do
-					if v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
-						if game.Players.LocalPlayer.Character.EquippedTool and v.Team ~= game.Players.LocalPlayer.Team then
-							game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
-								[1] = v.Character.Head,
-								[2] = v.Character.Head.Position,
-								[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
-								[4] = 100,
-								[5] = game.Players.LocalPlayer.Character.Gun,
-								[6] = nil,
-								[7] = nil,
-								[8] = 100, -- Damage Multiplier
-								[9] = nil, -- ?
-								[10] = false, -- Is Wallbang
-								[11] = Vector3.new(),
-								[12] = math.rad(1,100000),
-								[13] = Vector3.new()
-							}))
-						end
-					end
-				end
-			end)
-		end)
-	else
-		game:GetService("RunService"):UnbindFromRenderStep("KillEnemiesLoop")
-	end
+		else
+			if KILL_LOOP_SET then KILL_LOOP_SET:Disconnect() end
+		end
 	end)
 end)
 
