@@ -149,7 +149,7 @@ end
 local function ANTIAIMBOT_LOOP()
 	wait()
 	game.Players.LocalPlayer.Character.Humanoid.AutoRotate = false
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0.1, 0)
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0.5, 0)
 	game.ReplicatedStorage.Events.ControlTurn:FireServer(-1, false)
 end
 
@@ -293,10 +293,11 @@ local RageTabCategoryAntiAimbot = RageTab:AddCategory("Anti Aimbot")
 RageTabCategoryAntiAimbot:AddToggle("Enabled", false, function(val)
 	pcall(function()
 	if val == true then
+		getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled = true
 		ANTIAIMBOT_LOOP_SET = game:GetService("RunService").RenderStepped:connect(ANTIAIMBOT_LOOP)
 	else
-		getgenv().HexHubSettings.permsettings.aimbotbase.Enabled = false
-		if ANTIAIMBOT_LOOP_SET then ANTIAIMBOT_LOOP:Disconnect() end 
+		getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled = false
+		if ANTIAIMBOT_LOOP_SET then ANTIAIMBOT_LOOP_SET:Disconnect() end 
 		game.Players.LocalPlayer.Character.Humanoid.AutoRotate = true
 	end
 	end)
@@ -653,6 +654,10 @@ mt.__namecall = newcclosure(function(self, ...)
 			return wait(99e99)
 		elseif self.Name == "HitPart" then
 			args[8] = getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier or 1
+		elseif self.Name == "ControlTurn" then
+			if getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled == true and callingscript == game.Players.LocalPlayer.PlayerGui.Client then
+				return
+			end
 		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 			local MainTable = args[1]
 			local ItemTable = args[1][4]
