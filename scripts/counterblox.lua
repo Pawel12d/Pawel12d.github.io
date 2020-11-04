@@ -24,10 +24,12 @@ local SkinsTableNames = {};
 local AllSkinsTable = {}
 local AllCasesTable = {}
 local AllSoundsTable = {}
+local AllMaterialsTable = {}
 
 for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTables) do table.insert(SkinsTableNames, i) end
 for i,v in pairs(game.ReplicatedStorage.Cases:GetChildren()) do table.insert(AllCasesTable, v.Name) end
 for i,v in pairs(workspace.Sounds:GetChildren()) do table.insert(AllSoundsTable, v.Name) end
+for i,v in pairs(Enum.Material:GetEnumItems()) do table.insert(AllMaterialsTable, v.Name) end
 
 for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 	if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
@@ -342,24 +344,52 @@ VisualsTabCategoryViewmodelChams:AddToggle("Arms", false, function(val)
 	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsEnabled = val
 end)
 
-VisualsTabCategoryViewmodelChams:AddColorPicker("Arms Color", Color3.fromRGB(255, 255, 255), function(val)
+VisualsTabCategoryViewmodelChams:AddColorPicker(" | Arms Color", Color3.fromRGB(255, 255, 255), function(val)
 	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor = val
 end)
 
-VisualsTabCategoryViewmodelChams:AddSlider("Arms Transparency", {0, 100, 0}, function(val)
+VisualsTabCategoryViewmodelChams:AddSlider(" | Arms Transparency", {0, 100, 0}, function(val)
 	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency = val
 end)
 
 VisualsTabCategoryViewmodelChams:AddToggle("Sleeves", false, function(val)
-	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsEnabled = val
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesEnabled = val
+end)
+
+VisualsTabCategoryViewmodelChams:AddColorPicker(" | Sleeves Color", Color3.fromRGB(255, 255, 255), function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor = val
+end)
+
+VisualsTabCategoryViewmodelChams:AddSlider(" | Sleeves Transparency", {0, 100, 0}, function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency = val
 end)
 
 VisualsTabCategoryViewmodelChams:AddToggle("Gloves", false, function(val)
-	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsEnabled = val
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesEnabled = val
+end)
+
+VisualsTabCategoryViewmodelChams:AddColorPicker(" | Gloves Color", Color3.fromRGB(255, 255, 255), function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor = val
+end)
+
+VisualsTabCategoryViewmodelChams:AddSlider(" | Gloves Transparency", {0, 100, 0}, function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency = val
 end)
 
 VisualsTabCategoryViewmodelChams:AddToggle("Weapons", false, function(val)
-	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsEnabled = val
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsEnabled = val
+end)
+
+VisualsTabCategoryViewmodelChams:AddColorPicker(" | Weapons Color", Color3.fromRGB(255, 255, 255), function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsColor = val
+end)
+
+MiscellaneousTabCategoryMain:AddDropdown(" | Weapons Material", AllMaterialsTable, "SmoothPlastic", function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsMaterial = val
+end)
+
+VisualsTabCategoryViewmodelChams:AddSlider(" | Weapons Transparency", {0, 100, 0}, function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsTransparency = val
 end)
 
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
