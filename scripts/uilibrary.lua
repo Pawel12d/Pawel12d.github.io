@@ -1079,12 +1079,12 @@ function library:CreateWindow(ctitle, csize, cpos)
 				local bind = {binding = false, holding = false, key = key, hold = hold}
 				local bindname = ""
 
-				if tostring(key) == "None" then
+				if key == "None" then
 					bindname = "None"
 				else
 					bindname = bind.key.Name
 				end
-
+				print(key, bindname)
 				local bounds = game:GetService('TextService'):GetTextSize(bindname, library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
 				checkRow()
 				LocalTab.main.Parent = tab.row
