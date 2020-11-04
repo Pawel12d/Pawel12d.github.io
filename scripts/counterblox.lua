@@ -585,13 +585,15 @@ mt.__namecall = newcclosure(function(self, ...)
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
 		local oldtar = getgenv().HexHubSettings.permsettings.aimbotbase.silentaimtarget or false
+
 		if oldtar ~= false and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true then
 			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
-				print("Silent Aim", oldtar)
+				print("Silent Aim", oldtar, args[1])
 				-- args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (oldtar - workspace.CurrentCamera.CFrame.Position).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
 				-- args[2] = Ray.new(Camera.CFrame.Position, (silentaimtarget.Character[LegitbotAimbotTargetPart].CFrame.p - Camera.CFrame.Position).unit * 2048)
 			end
 		end
+
 		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
 			table.insert(args[2], workspace.Map)
 		end
