@@ -346,7 +346,7 @@ VisualsTabCategoryViewmodelChams:AddColorPicker("Arms Color", Color3.fromRGB(255
 	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor = val
 end)
 
-VisualsTabCategoryViewmodel:AddSlider("Arms Transparency", {0, 100, 0}, function(val)
+VisualsTabCategoryViewmodelChams:AddSlider("Arms Transparency", {0, 100, 0}, function(val)
 	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency = val
 end)
 
