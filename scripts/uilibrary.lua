@@ -1090,7 +1090,11 @@ function library:CreateWindow(ctitle, csize, cpos)
 				end
 				_function = _function or function() end
 				local bind = {binding = false, holding = false, key = key, hold = hold}
-				local bounds = game:GetService('TextService'):GetTextSize((bind.key.Name or "None"), library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
+				if key == nil then
+					local bounds = game:GetService('TextService'):GetTextSize("None", library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
+				else
+					local bounds = game:GetService('TextService'):GetTextSize(bind.key.Name, library.settings.textsize, library.settings.font, Vector2.new(math.huge, math.huge))
+				end
 				checkRow()
 				LocalTab.main.Parent = tab.row
 				
