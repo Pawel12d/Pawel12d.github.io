@@ -523,11 +523,9 @@ spawn(function()
 		GunStats.RecoilY = 0
 		GunStats.SpreadModifier = 0
 		GunStats.gun = "Glock"
-		--[[
 		for i,v in pairs(GunStats) do
 			print(i,v)
 		end
-		--]]
 	end
 end)
 --]]
