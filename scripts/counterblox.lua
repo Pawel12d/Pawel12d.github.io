@@ -279,7 +279,7 @@ end
 local function KILL_LOOP(plrs)
 	pcall(function()
 		for i,v in pairs(game.Players:GetChildren()) do
-			if table.find(plrs, v) and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+			if v.Team ~= game.Players.LocalPlayer.Team and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then -- table.find(plrs, v)
 				game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
 					[1] = v.Character.Head,
 					[2] = v.Character.Head.Position,
@@ -789,7 +789,6 @@ mt.__namecall = newcclosure(function(self, ...)
     local args = {...}
 	
     if method == "Kick" then
-		print("client kick detection")
         return wait(99e99)
 	elseif args[1] == game.Players.LocalPlayer.userId then
 		return wait(99e99)
