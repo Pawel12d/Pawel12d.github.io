@@ -461,66 +461,67 @@ MiscellaneousTabCategoryMain:AddDropdown("Play Sound", AllSoundsTable, "", funct
 	end
 end)
 
-MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Collision", "Remove"}, "-", function(val)
+MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"}, "-", function(val)
 	pcall(function()
-	local Clips = workspace.Map.Clips; Clips.Name = "FAT"; Clips.Parent = nil
-	local Killers = workspace.Map.Killers; Killers.Name = "FAT"; Killers.Parent = nil
+	if val ~= "-" then
+		local Clips = workspace.Map.Clips; Clips.Name = "FAT"; Clips.Parent = nil
+		local Killers = workspace.Map.Killers; Killers.Name = "FAT"; Killers.Parent = nil
 
-	if val == "Normal" then	
-		for i,v in pairs(Clips:GetChildren()) do
-			if v:IsA("BasePart") then
-				v.Transparency = 1
-				v.CanCollide = true
+		if val == "Normal" then	
+			for i,v in pairs(Clips:GetChildren()) do
+				if v:IsA("BasePart") then
+					v.Transparency = 1
+					v.CanCollide = true
+				end
+			end
+			for i,v in pairs(Killers:GetChildren()) do
+				if v:IsA("BasePart") then
+					v.Transparency = 1
+					v.CanCollide = true
+				end
+			end
+		elseif val == "Visible" then
+			for i,v in pairs(Clips:GetChildren()) do
+				if v:IsA("BasePart") then
+					v.Transparency = 0.9
+					v.Material = "Neon"
+					v.Color = Color3.fromRGB(255, 0, 255)
+				end
+			end
+			for i,v in pairs(Killers:GetChildren()) do
+				if v:IsA("BasePart") then
+					v.Transparency = 0.9
+					v.Material = "Neon"
+					v.Color = Color3.fromRGB(255, 0, 0)
+				end
+			end
+		elseif val == "No Collision" then
+			for i,v in pairs(Clips:GetChildren()) do
+				if v:IsA("BasePart") then
+					v.CanCollide = false
+				end
+			end
+			for i,v in pairs(Killers:GetChildren()) do
+				if v:IsA("BasePart") then
+					v.CanCollide = false
+				end
+			end
+		elseif val == "Remove" then
+			for i,v in pairs(Clips:GetChildren()) do
+				if v:IsA("BasePart") then
+					v:Remove()
+				end
+			end
+			for i,v in pairs(Killers:GetChildren()) do
+				if v:IsA("BasePart") then
+					v:Remove()
+				end
 			end
 		end
-		for i,v in pairs(Killers:GetChildren()) do
-			if v:IsA("BasePart") then
-				v.Transparency = 1
-				v.CanCollide = true
-			end
-		end
-	elseif val == "Visible" then
-		for i,v in pairs(Clips:GetChildren()) do
-			if v:IsA("BasePart") then
-				v.Transparency = 0.9
-				v.Material = "Neon"
-				v.Color = Color3.fromRGB(255, 0, 255)
-			end
-		end
-		for i,v in pairs(Killers:GetChildren()) do
-			if v:IsA("BasePart") then
-				v.Transparency = 0.9
-				v.Material = "Neon"
-				v.Color = Color3.fromRGB(255, 0, 0)
-			end
-		end
-	elseif val == "No Collision" then
-		for i,v in pairs(Clips:GetChildren()) do
-			if v:IsA("BasePart") then
-				v.CanCollide = false
-			end
-		end
-		for i,v in pairs(Killers:GetChildren()) do
-			if v:IsA("BasePart") then
-				v.CanCollide = false
-			end
-		end
-	elseif val == "Remove" then
-		for i,v in pairs(Clips:GetChildren()) do
-			if v:IsA("BasePart") then
-				v:Remove()
-			end
-		end
-		for i,v in pairs(Killers:GetChildren()) do
-			if v:IsA("BasePart") then
-				v:Remove()
-			end
-		end
+
+		Killers.Name = "Killers"; Killers.Parent = workspace.Map
+		Clips.Name = "Clips"; Clips.Parent = workspace.Map
 	end
-
-	Killers.Name = "Killers"; Killers.Parent = workspace.Map
-	Clips.Name = "Clips"; Clips.Parent = workspace.Map
-
 	end)
 end)
 

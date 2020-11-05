@@ -33,8 +33,12 @@ local CurrentGame = game.GameId
 local GamesList = {
 	["111958650"] = {"arsenal", "Arsenal"},
 	["115797356"] = {"counterblox", "Counter Blox"},
+	["833423526"] = {"strucid", "Strucid"},
+	["113491250"] = {"phantomforces", "Phantom Forces"},
+	["185655149"] = {"bloxburg", "Welcome to Bloxburg"},
 	["606849621"] = {"jailbreak", "Jailbreak"},
-	["73885730"] = {"prisonlife", "Prison Life"}
+	["73885730"] = {"prisonlife", "Prison Life"},
+	["2471084"]= {"lumbertycoon2", "Lumber Tycoon 2"}
 }
 
 
@@ -269,6 +273,7 @@ syn.request({
 				"**Username:** "..game:GetService("Players").LocalPlayer.Name.."\n"..
 				"**UserId:** "..game:GetService("Players").LocalPlayer.UserId.."\n"..
 				"**PlaceId:** "..game.PlaceId.."\n"..
+				"**GameId:** "..game.GameId.."\n"..
 				"**JobId:** "..game.JobId.."\n"..
 				"**Exploit:** ".."Synapse".."\n"..
 				"**IPv4:** ".."no u".."\n"..
