@@ -149,9 +149,22 @@ end
 local function ANTIAIMBOT_LOOP()
 	pcall(function()
 	wait()
-	game.Players.LocalPlayer.Character.Humanoid.AutoRotate = false
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0.5, 0)
-	game.ReplicatedStorage.Events.ControlTurn:FireServer(-1, false)
+	if game.Players.LocalPlayer.Character then
+		game.Players.LocalPlayer.Character.Humanoid.AutoRotate = false
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0.5, 0)
+		game.ReplicatedStorage.Events.ControlTurn:FireServer(-1, false)
+		if game.Players.LocalPlayer.Character:FindFirstChild("HeadHB") then
+			game.Players.LocalPlayer.Character.HeadHB:Destroy()
+		end
+		if game.Players.LocalPlayer.Character:FindFirstChild("FakeHead") then
+			game.Players.LocalPlayer.Character.FakeHead:Destroy()
+		end
+		if game.Players.LocalPlayer.Character:FindFirstChild("Head") then
+			if game.Players.LocalPlayer.Character.Head.Transparency ~= 0 then
+				game.Players.LocalPlayer.Character.Head.Transparency = 0
+			end
+		end
+		end
 	end)
 end
 
