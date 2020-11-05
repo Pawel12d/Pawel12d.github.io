@@ -792,8 +792,7 @@ mt.__namecall = newcclosure(function(self, ...)
 		print("client kick detection")
         return wait(99e99)
 	elseif args[1] == game.Players.LocalPlayer.userId then
-		print("detect",args[1],args[2])
-		return
+		return wait(99e99)
 	elseif method == "SetPrimaryPartCFrame" then
 		if self.Name == "Arms" and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsEnabled == true then
 			args[1] = args[1] * CFrame.new(Vector3.new(math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetX-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetY-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ-180)))
@@ -817,6 +816,8 @@ mt.__namecall = newcclosure(function(self, ...)
 		end
 	elseif method == "FireServer" then
 		if string.len(self.Name) == 38 then
+			return wait(99e99)
+		elseif self.Name == "test" then
 			return wait(99e99)
 		elseif self.Name == "HitPart" then
 			args[8] = getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier or 1
