@@ -643,7 +643,7 @@ local MiscellaneousTabCategoryItems = MiscellaneousTab:AddCategory("Items")
 MiscellaneousTabCategoryItems:AddToggle("Inf Cash", false, function(val)
 	pcall(function()
 		getgenv().HexHubSettings.tempsettings.counterblox.InfCash = val
-		game.Players.LocalPlayer.Cash.Value = 10000
+		game.Players.LocalPlayer.Cash.Value = 9999
 	end)
 end)
 
@@ -706,8 +706,8 @@ end)
 --]]
 
 game.Players.LocalPlayer.Cash.Changed:Connect(function()
-	if getgenv().HexHubSettings.tempsettings.counterblox.InfCash and game.Players.LocalPlayer.Cash.Value ~= 10000 then
-		game.Players.LocalPlayer.Cash.Value = 10000
+	if getgenv().HexHubSettings.tempsettings.counterblox.InfCash and game.Players.LocalPlayer.Cash.Value ~= 9999 then
+		game.Players.LocalPlayer.Cash.Value = 9999
 	end
 end)
 
