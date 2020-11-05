@@ -817,9 +817,8 @@ mt.__namecall = newcclosure(function(self, ...)
 	elseif method == "FireServer" then
 		if string.len(self.Name) == 38 then
 			return wait(99e99)
-		elseif self.Name == "test" then
-			print("noclip detection")
-			return
+		elseif tostring(self.Name) == "test" then -- Noclip Bypass
+			return 
 		elseif self.Name == "HitPart" then
 			args[8] = getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier or 1
 		elseif self.Name == "ControlTurn" then
