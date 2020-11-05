@@ -814,6 +814,8 @@ mt.__namecall = newcclosure(function(self, ...)
 		elseif self.Name == "Filter" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat and getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter == true then
 			return args[1]
 		end
+	elseif method == "FireServer" and self.Name == "test" then
+		return wait(99e99)
 	elseif method == "FireServer" then
 		if string.len(self.Name) == 38 then
 			return wait(99e99)
