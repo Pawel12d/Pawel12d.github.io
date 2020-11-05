@@ -819,7 +819,7 @@ mt.__namecall = newcclosure(function(self, ...)
 			return wait(99e99)
 		elseif self.Name == "test" then
 			print("noclip detection")
-			return wait(99e99)
+			return
 		elseif self.Name == "HitPart" then
 			args[8] = getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier or 1
 		elseif self.Name == "ControlTurn" then
