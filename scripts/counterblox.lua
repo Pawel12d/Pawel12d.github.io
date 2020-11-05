@@ -705,7 +705,7 @@ cbfirebullethook = hookfunc(cbClient.firebullet, function(...)
 end)
 --]]
 
-game.Players.LocalPlayer.Cash.Chaged:Connect(function()
+game.Players.LocalPlayer.Cash.Changed:Connect(function()
 	if getgenv().HexHubSettings.tempsettings.counterblox.InfCash and game.Players.LocalPlayer.Cash.Value ~= 10000 then
 		game.Players.LocalPlayer.Cash.Value = 10000
 	end
