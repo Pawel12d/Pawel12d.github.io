@@ -236,8 +236,6 @@ end
 
 HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0)
 
-HEXHUB_LOADER('showStatus', 'Loading Settings', 0)
-
 getgenv().HexHubSettings = {}
 
 if isfile("hexhub.cfg") then
@@ -254,10 +252,7 @@ HEXHUB_LOADER('showStatus', 'Ready!', 0)
 HEXHUB_LOADER('close')
 
 if CurrentGameName and CurrentGameDisplayName then
-	-- loadstring(game:HttpGet(('https://hexhub.xyz/scripts/'..CurrentGameName..'.lua'),true))()
-	loadstring(syn.request({Url = "https://hexhub.xyz/scripts/"..CurrentGameName..".lua", Method = "GET"}).Body)()
-else
-	-- print("Current Game Not Supported!")
+	loadstring(syn.request({Url = "https://hexhub.xyz/scripts/gamescripts/"..CurrentGameName..".lua", Method = "GET"}).Body)()
 end
 
 syn.request({

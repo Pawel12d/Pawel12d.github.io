@@ -62,7 +62,7 @@ local PrisonLifeWaypoints = {
 	["Test"] = CFrame.new(0, 500, 0)
 }
 
-local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
+local library = loadstring(syn.request({Url = "http://hexhub.xyz/scripts/uilibrary.lua", Method = "GET"}).Body)()
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
 
 local LocalTab = MainWindow:CreateTab("Local")
