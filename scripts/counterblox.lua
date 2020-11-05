@@ -643,7 +643,7 @@ local MiscellaneousTabCategoryItems = MiscellaneousTab:AddCategory("Items")
 MiscellaneousTabCategoryItems:AddToggle("Inf Cash", false, function(val)
 	pcall(function()
 		getgenv().HexHubSettings.tempsettings.counterblox.InfCash = val
-		game.Players.LocalPlayer.Cash.Value = 9999
+		game.Players.LocalPlayer.Cash.Value = 16000
 	end)
 end)
 
@@ -706,8 +706,8 @@ end)
 --]]
 
 game.Players.LocalPlayer.Cash.Changed:Connect(function()
-	if getgenv().HexHubSettings.tempsettings.counterblox.InfCash and game.Players.LocalPlayer.Cash.Value ~= 9999 then
-		game.Players.LocalPlayer.Cash.Value = 9999
+	if getgenv().HexHubSettings.tempsettings.counterblox.InfCash and game.Players.LocalPlayer.Cash.Value ~= 16000 then
+		game.Players.LocalPlayer.Cash.Value = 16000
 	end
 end)
 
@@ -810,6 +810,8 @@ mt.__namecall = newcclosure(function(self, ...)
 		end
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
+			return wait(99e99)
+		elseif self.Name == "Moolah" then
 			return wait(99e99)
 		elseif self.Name == "Filter" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat and getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter == true then
 			return args[1]
