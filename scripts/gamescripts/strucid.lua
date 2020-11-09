@@ -14,14 +14,15 @@ local oldNamecall           = mt.__namecall
 local v2                    = Vector2.new
 local v3                    = Vector3.new
 local cf                    = CFrame.new
+
 local lib                   = loadstring(syn.request({Url='http://hexhub.xyz/scripts/uilibrary.lua',Method='GET'}).Body)()
 local mWnd                  = lib:CreateWindow(v2(500,500),v2(120, 120))
 local Ragebot               = mWnd:CreateTab('Ragebot')
 local Visuals               = mWnd:CreateTab('Visuals')
 local Miscellanous          = mWnd:CreateTab('Miscellanous')
-local miscellanousGunMods   = Miscellanous:addCategory('Gun Mods')
+local miscellanousGunMods   = Miscellanous:AddCategory('Gun Mods')
 local ragebotSilentAim      = Ragebot:AddCategory('Silent Aim')
-local ragebotOther          = Ragebot:addCategory('Other')
+local ragebotOther          = Ragebot:AddCategory('Other')
 local env                   = nil
 local doingaction           = false
 local selections            = {'Head', 'UpperTorso'}
@@ -37,7 +38,6 @@ end)
 miscellanousGunMods:AddToggle('Infinite Ammo',false,function(x)
     settings.infAmmo = x
 end)
-
 
 miscellanousGunMods:AddToggle('M Ammo',false,function(x)
     settings.infAmmo = x
