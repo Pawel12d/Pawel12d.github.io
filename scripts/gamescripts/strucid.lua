@@ -39,10 +39,6 @@ miscellanousGunMods:AddToggle('Infinite Ammo',false,function(x)
     settings.infAmmo = x
 end)
 
-miscellanousGunMods:AddToggle('M Ammo',false,function(x)
-    settings.infAmmo = x
-end)
-
 mt.__namecall = newcclosure(function(self, ...)
     local a = {...}
     if tostring(a[1]) == 1 and tostring(a[2]) == 21 or tostring(a[1]) == 'Recoil' or tostring(a[1]) == 'TooFast' or tostring(a[2]) == 'Environment Override' or tostring(a[1]) == 'Environment Override' or tostring(a[1]) == 'YOU SMELL' or type(a[1]) == 'table' and rawget(a[1], 'YOU SMELL') or type(a[1]) == 'table' and tostring(a[1][1]) == 'YOU SMELL' --[[ or tostring(args[1]) == 'LookDir' and tostring(args[2]) == 21]] then
