@@ -1123,7 +1123,6 @@ function library:CreateWindow(ctitle, csize, cpos)
 				
 				bind.button.InputBegan:connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
-						print(input)
 						bind.label.Text = "..."
 						bind.label.Size = UDim2.new(0,-bind.label.TextBounds.X-8,1,-4)
 					end
