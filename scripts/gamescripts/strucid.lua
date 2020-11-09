@@ -6,34 +6,42 @@ local ScriptContext     = game:GetService('ScriptContext')
 local Lighting          = game:GetService('Lighting')
 local UserInputService  = game:GetService('UserInputService')
 local Camera            = workspace.CurrentCamera
-local LocalPlayer       = Players.LocalPlayer
-local Mouse             = LocalPlayer:GetMouse()
-local mt                = getrawmetatable(game)setreadonly(mt,false)
-local oldInd            = mt.__index
-local oldNamecall       = mt.__namecall
-local v2                = Vector2.new
-local v3                = Vector3.new
-local cf                = CFrame.new
-local lib               = loadstring(syn.request({Url='http://hexhub.xyz/scripts/uilibrary.lua',Method='GET'}).Body)()
-local mWnd              = lib:CreateWindow(v2(500,500),v2(120, 120))
-local Ragebot           = mWnd:CreateTab('Ragebot')
-local silentAim         = Ragebot:AddCategory('Silent Aim')
-local env               = nil
-local doingaction       = false
-local selections        = {'Head', 'UpperTorso'}
-local settings          = {
-    silentAimEnabled = false,
-    silentAimFOV = 250
-}
+local LocalPlayer           = Players.LocalPlayer
+local Mouse                 = LocalPlayer:GetMouse()
+local mt                    = getrawmetatable(game)setreadonly(mt,false)
+local oldInd                = mt.__index
+local oldNamecall           = mt.__namecall
+local v2                    = Vector2.new
+local v3                    = Vector3.new
+local cf                    = CFrame.new
+local lib                   = loadstring(syn.request({Url='http://hexhub.xyz/scripts/uilibrary.lua',Method='GET'}).Body)()
+local mWnd                  = lib:CreateWindow(v2(500,500),v2(120, 120))
+local Ragebot               = mWnd:CreateTab('Ragebot')
+local Visuals               = mWnd:CreateTab('Visuals')
+local Miscellanous          = mWnd:CreateTab('Miscellanous')
+local miscellanousGunMods   = Miscellanous:addCategory('Gun Mods')
+local ragebotSilentAim      = Ragebot:AddCategory('Silent Aim')
+local ragebotOther          = Ragebot:addCategory('Other')
+local env                   = nil
+local doingaction           = false
+local selections            = {'Head', 'UpperTorso'}
+local settings              = {}
 
-silentAim:AddToggle('Enabled',false,function(x)
+ragebotSilentAim:AddToggle('Enabled',false,function(x)
     settings.silentAimEnabled = x
 end)
-
-silentAim:AddSlider('FOV',{0,1000,250},function(x)
+ragebotSilentAim:AddSlider('FOV',{0,1000,250},function(x)
     settings.silentAimFOV = x
 end)
 
+miscellanousGunMods:AddToggle('Infinite Ammo',false,function(x)
+    settings.infAmmo = x
+end)
+
+
+miscellanousGunMods:AddToggle('M Ammo',false,function(x)
+    settings.infAmmo = x
+end)
 
 mt.__namecall = newcclosure(function(self, ...)
     local a = {...}
@@ -43,6 +51,7 @@ mt.__namecall = newcclosure(function(self, ...)
 
     return oldNamecall(self, unpack(a))
 end)
+
 local SELF___
 coroutine.wrap(function()
     while true do
@@ -57,7 +66,7 @@ mt.__index = newcclosure(function(self, ...)
     if self == SELF___ and a[1] == 'Text' then
         return 1
     elseif self == Mouse and not doingaction and a[1] == 'Hit' and GET_CLOSEST_TARGET_TO_CROSSHAIR() ~= nil then
-        return GET_CLOSEST_TARGET_TO_CROSSHAIR().Character[selections[math.random(1,#selections)]].CFrame+v2(0,0,math.random(0.00000006, 0.10))
+        return GET_CLOSEST_TARGET_TO_CROSSHAIR().Character[selections[math.random(1,#selections)]].CFrame+v3(0,0,math.random(0.00000006, 0.10))
     elseif self == Mouse and a[1] == 'X' then
         return UserInputService:GetMouseLocation().X
     elseif self == Mouse and a[1] == 'Y' then
@@ -70,7 +79,6 @@ end)
 for _,v in next, getconnections(LogService.MessageOut) do
     v:Disable()
 end
-
 for _,v in next, getconnections(ScriptContext.Error) do
     v:Disable()
 end
@@ -102,7 +110,7 @@ function GET_CLOSEST_TARGET_TO_CROSSHAIR()
             local screenmiddle = Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2)
             local vec = Camera:WorldToScreenPoint(v.Character.Head.Position)
             local mag = (screenmiddle - Vector2.new(vec.X, vec.Y)).magnitude
-            if mag < n then
+            if mag < n and mag < settings.silentAimFOV then
                 t = v
                 n = mag
             end
