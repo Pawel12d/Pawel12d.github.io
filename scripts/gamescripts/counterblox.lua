@@ -799,8 +799,8 @@ workspace.Debris.ChildAdded:Connect(function(child)
 				child:Remove()
 			end
 		end
-		end)
 	end
+end)
 end)
 
 CurrentCamera.ChildAdded:Connect(function(child)
