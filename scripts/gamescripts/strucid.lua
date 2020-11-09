@@ -51,7 +51,6 @@ mt.__namecall = newcclosure(function(self, ...)
 
     return oldNamecall(self, unpack(a))
 end)
-
 local SELF___
 coroutine.wrap(function()
     while true do
