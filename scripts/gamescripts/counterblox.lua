@@ -1,7 +1,6 @@
 --[[
 game.ReplicatedStorage.Events.Vote:FireServer("ChinaVsUsaRap") -- votekick
 game.ReplicatedStorage.Remotes.RedeemCode:InvokeServer("Hello") -- redeem twitter code
-hugh
 --]]
 
 print("Counter Blox Script Loaded!")
@@ -153,6 +152,14 @@ function sFLY(toggle)
 
         FLY()
     end
+end
+
+local function SPAWN_ITEM(item, cframe, ammo, storedammo)
+    local selitem = game.ReplicatedStorage.Weapons[item]
+    cframe = cframe or game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    ammo = ammo or item.Ammo.Value
+    storedammo = storedammo or item.StoredAmmo.Value
+	game.ReplicatedStorage.Events.Drop:FireServer(item, cframe, ammo, storedammo, false, game.Players.LocalPlayer, false, false)
 end
 
 local function PLR_VISIBLE(plr)
@@ -409,7 +416,44 @@ RageTabCategoryMain:AddButton("Crash Server", function()
 		end)
 	end
 end)
+--[[
+local delay = 0
+local distance = 5
 
+local function grenade_fun(vec)
+	game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["HE Grenade"].Model, nil, 25, 35, vec, nil, nil)
+end
+
+local a = Instance.new("Sound")
+a.Volume = 10
+a.SoundId = "rbxassetid://1079802"
+a.Name = "Katon Goukakyuu no Jutsu"
+a.Parent = game.CoreGui
+a:Play()
+wait(5)
+a:Remove()
+
+for i=1,10 do
+	distance + distance
+    wait(delay)
+	grenade_fun(Vector3.new(distance, 100, 0))
+	wait(delay)
+	grenade_fun(Vector3.new(distance, 100, distance))
+	wait(delay)
+	grenade_fun(Vector3.new(0, 100, distance))
+	wait(delay)
+	grenade_fun(Vector3.new(-distance, 100, distance))
+	wait(delay)
+	grenade_fun(Vector3.new(-distance, 100, 0))
+	wait(delay)
+	grenade_fun(Vector3.new(-distance, 100, -distance))
+	wait(delay)
+	grenade_fun(Vector3.new(0, 100, -distance))
+	wait(delay)
+	grenade_fun(Vector3.new(distance, 100, -distance))
+	wait(0.5)
+end
+--]]
 local RageTabCategoryAntiAimbot = RageTab:AddCategory("Anti Aimbot")
 
 RageTabCategoryAntiAimbot:AddToggle("Enabled", false, function(val)
@@ -534,6 +578,24 @@ VisualsTabCategoryViewmodelChams:AddSlider(" | Weapons Transparency", {0, 100, 0
 	getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsTransparency = val/100
 end)
 
+local VisualsTabCategoryPerformance = VisualsTab:AddCategory("Performance")
+
+VisualsTabCategoryPerformance:AddToggle("Enabled", false, function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.PerformanceEnabled = val
+end)
+
+VisualsTabCategoryPerformance:AddToggle("No Ragdolls", false, function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.PerformanceNoRagdolls = val
+end)
+
+VisualsTabCategoryPerformance:AddToggle("No Bullet Holes", false, function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.PerformanceNoBulletHoles = val
+end)
+
+VisualsTabCategoryPerformance:AddToggle("No Blood", false, function(val)
+	getgenv().HexHubSettings.tempsettings.counterblox.PerformanceNoBlood = val
+end)
+
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
 
 MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
@@ -647,6 +709,11 @@ MiscellaneousTabCategoryItems:AddToggle("Inf Cash", false, function(val)
 	end)
 end)
 
+MiscellaneousTabCategoryItems:AddButton("Give C4", function()
+	SPAWN_ITEM(item, cframe, ammo, storedammo)
+end)
+
+
 local MiscellaneousTabCategoryMovement = MiscellaneousTab:AddCategory("Movement")
 
 MiscellaneousTabCategoryMovement:AddToggle("Allow Reset Character", false, function(val)
@@ -708,6 +775,31 @@ end)
 game.Players.LocalPlayer.Cash.Changed:Connect(function()
 	if getgenv().HexHubSettings.tempsettings.counterblox.InfCash and game.Players.LocalPlayer.Cash.Value ~= 16000 then
 		game.Players.LocalPlayer.Cash.Value = 16000
+	end
+end)
+
+workspace.Debris.ChildAdded:Connect(function(child)
+	spawn(function()
+	if getgenv().HexHubSettings.tempsettings.counterblox.PerformanceEnabled == true then
+		if child:IsA("Model") and game:GetService("Players"):FindFirstChild(child.Name) and getgenv().HexHubSettings.tempsettings.counterblox.PerformanceNoRagdolls == true then 
+			wait()
+			child:Remove() -- Ragdoll
+		elseif child:IsA("BasePart") and game.ReplicatedStorage.Weapons:FindFirstChild(child.Name) and child:FindFirstChild("StoredAmmo") then
+			print("Dropped weapon") -- Dropped weapon
+		elseif child:IsA("MeshPart") and child.Name == "Model" then
+			print("Thrown grenade") -- Thrown grenade
+		elseif child:IsA("SurfaceGui") then
+			if child.Name == "SurfaceGui" and getgenv().HexHubSettings.tempsettings.counterblox.PerformanceNoBlood == true then
+				-- blood?
+				wait()
+				child:Remove()
+			elseif child.Name == "Bullet" and getgenv().HexHubSettings.tempsettings.counterblox.PerformanceNoBulletHoles == true then
+				-- bullet hole?
+				wait()
+				child:Remove()
+			end
+		end
+		end)
 	end
 end)
 

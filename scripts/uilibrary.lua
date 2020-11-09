@@ -1479,18 +1479,9 @@ end)
 return library
 --[[
 
--- local library = loadstring(game:HttpGet(('http://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
+local library = loadstring(syn.request({Url = "http://hexhub.xyz/scripts/uilibrary.lua", Method = "GET"}).Body)() -- UI Library
 
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
-
-spawn(function()
-while true do
-	for i=1,3 do
-		wait(1)
-		library.pointer.Parent.TextButton.FooterLabel.Text = i
-	end
-end
-end)
 
 local MainTab = MainWindow:CreateTab("Tab")
 

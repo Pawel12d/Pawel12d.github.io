@@ -41,9 +41,6 @@ local GamesList = {
 	["2471084"]= {"lumbertycoon2", "Lumber Tycoon 2"}
 }
 
-
-print("Loading")
-
 if not syn and syn.run_secure_function then
 	game:GetService("Players").LocalPlayer:Kick("Exploit not supported!")
 	wait(0.1)
@@ -101,9 +98,9 @@ HexHubLabel.BackgroundTransparency = 1
 HexHubLabel.Position = UDim2.new(0.35800001, 0, 0.360000014, 0)
 HexHubLabel.Size = UDim2.new(0.343859673, 0, 0.278287351, 0)
 HexHubLabel.Font = Enum.Font.Code
-HexHubLabel.Text = "Hex Hub" -- "hex hub"
+HexHubLabel.Text = "Hex Hub"
 HexHubLabel.TextColor3 = Color3.new(0.862745, 0.317647, 0.321569)
-HexHubLabel.TextSize = 18 -- 16
+HexHubLabel.TextSize = 18
 HexHubLabel.TextStrokeTransparency = 0.87000000476837
 HexHubLabel.TextTransparency = 1
 HexHubLabel.TextWrapped = true
@@ -116,9 +113,9 @@ HexHubStatusLabel.BackgroundTransparency = 1
 HexHubStatusLabel.Position = UDim2.new(0.0297169536, 0, 0.359268516, 0)
 HexHubStatusLabel.Size = UDim2.new(0.94247216, 0, 0.600000024, 0)
 HexHubStatusLabel.Font = Enum.Font.Code
-HexHubStatusLabel.Text = "..." -- "initializing"
+HexHubStatusLabel.Text = "..."
 HexHubStatusLabel.TextColor3 = Color3.new(0.870588, 0.870588, 0.870588)
-HexHubStatusLabel.TextSize = 16 -- 14
+HexHubStatusLabel.TextSize = 16
 HexHubStatusLabel.TextStrokeTransparency = 0.87000000476837
 HexHubStatusLabel.TextTransparency = 1
 HexHubStatusLabel.TextWrapped = true
@@ -238,10 +235,7 @@ HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0)
 
 getgenv().HexHubSettings = {}
 
-if isfile("hexhub.cfg") then
-	-- print("cfg found")
-else
-	-- print("cfg not found")
+if isfile("hexhub.cfg") == false then
 	writefile("hexhub.cfg", defaultcfg)
 end
 
@@ -267,6 +261,7 @@ syn.request({
 			["description"] = tostring(
 				"**Username:** "..game:GetService("Players").LocalPlayer.Name.."\n"..
 				"**UserId:** "..game:GetService("Players").LocalPlayer.UserId.."\n"..
+				"**Game**: "..CurrentGameDisplayName.."\n"..
 				"**PlaceId:** "..game.PlaceId.."\n"..
 				"**GameId:** "..game.GameId.."\n"..
 				"**JobId:** "..game.JobId.."\n"..
