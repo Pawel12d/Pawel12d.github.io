@@ -219,7 +219,7 @@ local function AIMBOT_LOOP()
             return
         elseif activationMode == "OnShoot" and game:GetService("UserInputService"):IsMouseButtonPressed(Enum.UserInputType.MouseButton1) == false then
             return
-        end
+        end -- hugh
 
 		plr = GET_AIMBOT_TARGET()
 
