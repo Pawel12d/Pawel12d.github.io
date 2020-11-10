@@ -211,9 +211,7 @@ local function AIMBOT_LOOP()
 	wait()
     pcall(function()
     if game:GetService("Players").LocalPlayer.Character and library.pointer.Parent.Enabled == false then
-		if silentaimtarget ~= nil then
-			silentaimtarget = nil
-		end
+		silentaimtarget = nil
 
 		local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
 		
