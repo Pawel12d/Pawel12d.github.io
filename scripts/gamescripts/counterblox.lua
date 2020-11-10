@@ -311,6 +311,7 @@ end
 
 local AimbotTab = MainWindow:CreateTab("Aimbot")
 local RageTab = MainWindow:CreateTab("Rage")
+local GunModsTab = MainWindow:CreateTab("Gun Mods")
 local VisualsTab = MainWindow:CreateTab("Visuals")
 local MiscellaneousTab = MainWindow:CreateTab("Miscellaneous")
 local SettingsTab = MainWindow:CreateTab("Settings")
@@ -470,6 +471,16 @@ RageTabCategoryAntiAimbot:AddToggle("Enabled", false, function(val)
 		game.Players.LocalPlayer.Character.Humanoid.AutoRotate = true
 	end
 	end)
+end)
+
+local GunModsTabCategoryMain = GunModsTab:AddCategory("Main")
+
+GunModsTabCategoryMain:AddDropdown("Plant Mods", {"Normal", "Instant", "Anywhere"}, "Normal", function(val)
+
+end)
+
+GunModsTabCategoryMain:AddDropdown("Defuse Mods", {"Normal", "Instant", "Anywhere"}, "Normal", function(val)
+	
 end)
 
 local VisualsTabCategoryViewmodel = VisualsTab:AddCategory("Viewmodel")
