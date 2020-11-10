@@ -242,10 +242,10 @@ local function AIMBOT_LOOP()
 				elseif currentMode == "RayHook" then
 					print("setting silent aimbot target to plr")
 					silentaimtarget = plr
-				else
-					print("setting silent aimbot target to nil")
-					silentaimtarget = nil
-                end
+				end
+			else
+				print("setting silent aimbot target to nil")
+				silentaimtarget = nil
 			end
         end
     else
