@@ -211,8 +211,12 @@ local function AIMBOT_LOOP()
 	wait()
     pcall(function()
     if game:GetService("Players").LocalPlayer.Character and library.pointer.Parent.Enabled == false then
-        local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
+		if silentaimtarget ~= nil then
+			silentaimtarget = nil
+		end
 
+		local activationMode = getgenv().HexHubSettings.permsettings.aimbotbase.ActivationMode
+		
         if activationMode == "OnKey" and game:GetService("UserInputService"):IsKeyDown(getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind) == false then
             return
         elseif activationMode == "OnShoot" and game:GetService("UserInputService"):IsMouseButtonPressed(Enum.UserInputType.MouseButton1) == false then
@@ -220,7 +224,6 @@ local function AIMBOT_LOOP()
         end
 
 		plr = GET_AIMBOT_TARGET()
-		silentaimtarget = nil
 
 		if plr then
             local WorldPoint = plr.Character[getgenv().HexHubSettings.permsettings.aimbotbase.AimPart].Position
