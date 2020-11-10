@@ -220,6 +220,7 @@ local function AIMBOT_LOOP()
         end
 
 		plr = GET_AIMBOT_TARGET()
+		silentaimtarget = nil
 
 		if plr then
             local WorldPoint = plr.Character[getgenv().HexHubSettings.permsettings.aimbotbase.AimPart].Position
@@ -243,9 +244,6 @@ local function AIMBOT_LOOP()
 					print("setting silent aimbot target to plr")
 					silentaimtarget = plr
 				end
-			else
-				print("setting silent aimbot target to nil")
-				silentaimtarget = nil
 			end
         end
     else
