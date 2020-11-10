@@ -7,13 +7,26 @@ for i,v in pairs(getgc(true)) do
 	if type(v) == "table" then
 		if rawget(v, "network") then
 			Network = v
-			print("Client found!")
 		elseif rawget(v, "setsprintdisable") then
 			GameLogic = v
 			-- GameLogic.gammo = 1e5
 		end
 	end
 end
+
+--[[
+for i,v in pairs(getgc(true)) do
+	if type(v) == "table" then
+		if rawget(v, "network") then
+			Network = v
+		elseif rawget(v, "setsprintdisable") then
+			GameLogic = v
+		end
+	end
+end
+
+
+--]]
 
 if not Network or not GameLogic then
 	return game.Players.LocalPlayer:Kick("Scanning failed!")
@@ -25,6 +38,22 @@ game:GetService("RunService"):BindToRenderStep("CharFix", 100, function()
             game.Players[i.Name].Character = v.head.Parent
         end
     end
+end)
+
+networksendhook = hookfunc(Network.network.module.send, function(self, ...)
+    local args = {...}
+    --[[
+    print("Network send:")
+    for i,v in pairs(args) do
+        print(i,v)
+    end
+    --]]
+
+    if args[1] == "falldamage" and phantomforcessettings.NoFallDamage == true then
+        return
+    end
+
+    return networksendhook(unpack(args))
 end)
 
 grenadehook = hookfunc(Network.char.module.loadgrenade, function(self, ...)
@@ -42,11 +71,14 @@ grenadehook = hookfunc(Network.char.module.loadgrenade, function(self, ...)
     --]]
 	return grenadehook(self, unpack(args))
 end)
-
-loadgunhook = hookfunc(Network.char.module.loadarms, function(self, ...)
+--[[
+loadgunhook = hookfunc(Network.char.module.loadchar, function(self, ...)
 	local args = {...}
 	print("Gun load detected!")
-	if phantomforcessettings.GunModsEnabled == true then
+    if phantomforcessettings.GunModsEnabled == true then
+        for i,v in pairs(args) do
+            print(i,v)
+        end
         for i,v in pairs(getgc(true)) do
             if typeof(v) == "table" and rawget(v, "camkickmax") then
                 v.camkickmin = Vector3.new()
@@ -80,7 +112,7 @@ loadgunhook = hookfunc(Network.char.module.loadarms, function(self, ...)
 	end
 	return loadgunhook(self, unpack(args))
 end)
-
+--]]
 local library = loadstring(syn.request({Url = "http://hexhub.xyz/scripts/uilibrary.lua", Method = "GET"}).Body)()
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
 
@@ -89,6 +121,12 @@ local RageTab = MainWindow:CreateTab("Rage")
 local VisualsTab = MainWindow:CreateTab("Visuals")
 local MiscellaneousTab = MainWindow:CreateTab("Miscellaneous")
 local SettingsTab = MainWindow:CreateTab("Settings")
+
+local MiscellaneousTabCategoryMain = AimbotTab:AddCategory("Main")
+
+MiscellaneousTabCategoryMain:AddToggle("No Fall Damage", false, function(val)
+	phantomforcessettings.NoFallDamage = val
+end)
 
 local MiscellaneousTabCategoryGunMods = AimbotTab:AddCategory("Gun Mods")
 

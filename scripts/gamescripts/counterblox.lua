@@ -201,7 +201,8 @@ local function GET_AIMBOT_TARGET()
     end)
     if selected ~= false then
         return selected
-    end
+	end
+	return nil
 end
 
 local function AIMBOT_LOOP()
@@ -218,7 +219,7 @@ local function AIMBOT_LOOP()
 
 		plr = GET_AIMBOT_TARGET()
 		
-		if plr then
+		if plr ~= nil then
             local WorldPoint = plr.Character[getgenv().HexHubSettings.permsettings.aimbotbase.AimPart].Position
             local vector, onScreen = CurrentCamera:WorldToScreenPoint(WorldPoint)
             local maxFOV = (Vector2.new(mouse.X, mouse.Y) - Vector2.new(vector.X, vector.Y)).magnitude
@@ -237,17 +238,15 @@ local function AIMBOT_LOOP()
                     workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.p, WorldPoint)
                     -- CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CFrame.new(CurrentCamera.CFrame.p, WorldPoint), 5)
                 elseif currentMode == "RayHook" then
-					spawn(function()
-						silentaimtarget = plr
-						wait(0.1)
-						silentaimtarget = nil
-					end)
+					silentaimtarget = plr
                 end
-            end
+			end
+		else
+			silentaimtarget = nil
         end
     else
         wait(0.1)
-    end
+	end
     end)
 end
 
