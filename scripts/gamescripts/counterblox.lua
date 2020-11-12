@@ -12,8 +12,8 @@ local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client
 local cbDisplayChat = getsenv(game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat)
 local cbGetIcon = require(game.ReplicatedStorage.GetIcon)
 
--- local library = loadstring(game:HttpGet(('https://https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua'),true))() -- UI Library
-local library = loadstring(syn.request({Url = "https://https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua", Method = "GET"}).Body)()
+-- local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua'),true))() -- UI Library
+local library = loadstring(syn.request({Url = "https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua", Method = "GET"}).Body)()
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
 
 local LaunchTick = tick()
