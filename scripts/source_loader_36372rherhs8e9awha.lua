@@ -1,5 +1,5 @@
 --[[
-loadstring(game:HttpGet(('https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/loader.lua'),true))() -- Loader
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/loader.lua'),true))() -- Loader
 loadstring(game:HttpGet(('https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua'),true))() -- UI Library
 
 Add:
@@ -246,7 +246,7 @@ HEXHUB_LOADER('showStatus', 'Ready!', 0)
 HEXHUB_LOADER('close')
 
 if CurrentGameName and CurrentGameDisplayName then
-	loadstring(syn.request({Url = "https://https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/gamescripts/"..CurrentGameName..".lua", Method = "GET"}).Body)()
+	loadstring(syn.request({Url = "https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/gamescripts/"..CurrentGameName..".lua", Method = "GET"}).Body)()
 end
 
 syn.request({
