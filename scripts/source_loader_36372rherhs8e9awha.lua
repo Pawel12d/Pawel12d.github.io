@@ -1,6 +1,6 @@
 --[[
-loadstring(game:HttpGet(('https://hexhub.xyz/scripts/loader.lua'),true))() -- Loader
-loadstring(game:HttpGet(('https://hexhub.xyz/scripts/uilibrary.lua'),true))() -- UI Library
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/loader.lua'),true))() -- Loader
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua'),true))() -- UI Library
 
 Add:
 Islands
