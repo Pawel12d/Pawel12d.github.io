@@ -113,7 +113,7 @@ loadgunhook = hookfunc(Network.char.module.loadchar, function(self, ...)
 	return loadgunhook(self, unpack(args))
 end)
 --]]
-local library = loadstring(syn.request({Url = "http://hexhub.xyz/scripts/uilibrary.lua", Method = "GET"}).Body)()
+local library = loadstring(syn.request({Url = "http://https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua", Method = "GET"}).Body)()
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
 
 local AimbotTab = MainWindow:CreateTab("Aimbot")

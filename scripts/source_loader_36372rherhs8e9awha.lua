@@ -33,7 +33,7 @@ local CurrentGame = game.GameId
 local GamesList = {
 	["111958650"] = {"arsenal", "Arsenal"},
 	["115797356"] = {"counterblox", "Counter Blox"},
-	["833423526"] = {"strucid", "Strucid"},
+--	["833423526"] = {"strucid", "Strucid"},
 	["113491250"] = {"phantomforces", "Phantom Forces"},
 	["185655149"] = {"bloxburg", "Welcome to Bloxburg"},
 	["606849621"] = {"jailbreak", "Jailbreak"},
@@ -246,7 +246,7 @@ HEXHUB_LOADER('showStatus', 'Ready!', 0)
 HEXHUB_LOADER('close')
 
 if CurrentGameName and CurrentGameDisplayName then
-	loadstring(syn.request({Url = "https://hexhub.xyz/scripts/gamescripts/"..CurrentGameName..".lua", Method = "GET"}).Body)()
+	loadstring(syn.request({Url = "https://https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/gamescripts/"..CurrentGameName..".lua", Method = "GET"}).Body)()
 end
 
 syn.request({
