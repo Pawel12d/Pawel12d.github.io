@@ -46,8 +46,8 @@ MainTabCategoryMain:AddButton("Gun Mods", function()
 end)
 
 MainTabCategoryMain:AddToggle("Inf Radars", false, function(val)
-    local valz = val
-	while valz == true do
+    if val == true then ok = true else ok = false end
+	while ok do
         wait()
         Client.States[game.Players.LocalPlayer.Name].AvailableItems["1"] = 99
         --Client.States[game.Players.LocalPlayer.Name].AvailableItems["2"] = 99
@@ -56,23 +56,22 @@ MainTabCategoryMain:AddToggle("Inf Radars", false, function(val)
     end
 end)
 
-
---[[
-while true do
-for i,v in pairs(game.Players:GetPlayers()) do
-    if v ~= game.Players.LocalPlayer then
-        if v.Character and v.Character:FindFirstChild("Humanoid") then
-            local data1 = math.random(1,1)
-            local data2 = v.Character.HumanoidRootPart.Position
-            local data3 = false
-            local data4 = math.random(2,2)
-            local Client = require(game.ReplicatedStorage.Framework.Library)
-            Client.Network.Fire("New Projectile", 1, 1, math.floor(workspace.DistributedGameTime))
-            workspace.__THINGS.__REMOTES["do damage"]:FireServer({{v.Character.Humanoid, data1, data1, data2, data3, data3, data3}, {data3,data3,data3,data3,data3,data4,data4}})
-            wait()
+MainTabCategoryMain:AddToggle("Inf Radars", false, function(val)
+    if val == true then ok = true else ok = false end
+	while ok do
+        wait()
+        for i,v in pairs(game.Players:GetPlayers()) do
+            if v ~= game.Players.LocalPlayer then
+                if v.Character and v.Character:FindFirstChild("Humanoid") then
+                    local data1 = math.random(1,1)
+                    local data2 = v.Character.HumanoidRootPart.Position
+                    local data3 = false
+                    local data4 = math.random(2,2)
+                    local Client = require(game.ReplicatedStorage.Framework.Library)
+                    Client.Network.Fire("New Projectile", 1, 1, math.floor(workspace.DistributedGameTime))
+                    workspace.__THINGS.__REMOTES["do damage"]:FireServer({{v.Character.Humanoid, data1, data1, data2, data3, data3, data3}, {data3,data3,data3,data3,data3,data4,data4}})
+                end
+            end
         end
     end
-end
-wait(0.1)
-end
---]]
+end)
