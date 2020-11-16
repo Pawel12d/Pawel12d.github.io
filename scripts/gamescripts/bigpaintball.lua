@@ -56,7 +56,7 @@ MainTabCategoryMain:AddToggle("Inf Radars", false, function(val)
     end
 end)
 
-MainTabCategoryMain:AddToggle("Inf Radars", false, function(val)
+MainTabCategoryMain:AddToggle("Kill All [buggy]", false, function(val)
     if val == true then ok = true else ok = false end
 	while ok do
         wait()
@@ -74,4 +74,41 @@ MainTabCategoryMain:AddToggle("Inf Radars", false, function(val)
             end
         end
     end
+end)
+
+local MainTabCategoryViewmodel = MainTab:AddCategory("Viewmodel")
+
+MainTabCategoryViewmodel:AddToggle("Enabled", false, function(val)
+    bigpaintballsettings.ViewmodelEnabled = val
+end)
+
+MainTabCategoryViewmodel:AddSlider("Viewmodel X", {0, 360, 180}, function(val)
+    bigpaintballsettings.ViewmodelX = val
+end)
+
+MainTabCategoryViewmodel:AddSlider("Viewmodel Y", {0, 360, 180}, function(val)
+    bigpaintballsettings.ViewmodelY = val
+end)
+
+MainTabCategoryViewmodel:AddSlider("Viewmodel Z", {0, 360, 180}, function(val)
+    bigpaintballsettings.ViewmodelZ = val
+end)
+
+
+local mt = getrawmetatable(game)
+local oldNamecall = mt.__namecall
+
+if setreadonly then setreadonly(mt, false) else make_writeable(mt, true) end
+
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    local callingscript = getcallingscript()
+    local args = {...}
+
+    if method == "SetPrimaryPartCFrame" and callingscript == game.Players.LocalPlayer.PlayerScripts.Scripts.Core.Controller and bigpaintballsettings.ViewmodelEnabled == true then
+        -- print(self.Name, callingscript)
+        args[1] = args[1] * CFrame.new(Vector3.new(math.rad(bigpaintballsettings.ViewmodelX-180), math.rad(bigpaintballsettings.ViewmodelY-180), math.rad(bigpaintballsettings.ViewmodelZ-180)))
+    end
+
+    return oldNamecall(self, unpack(args))
 end)
