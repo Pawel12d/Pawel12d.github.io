@@ -913,6 +913,7 @@ end)
 CurrentCamera.ChildAdded:Connect(function(child)
 	spawn(function()
 	if child.Name == "Arms" and getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsEnabled == true then -- Arms Added
+		workspace.CurrentCamera.Arms.HumanoidRootPart.Transparency = 1
 		for i,v in pairs(child:GetChildren()) do
 			if v:IsA("Model") and v:FindFirstChild("Left Arm") and v:FindFirstChild("Right Arm") then
 				-- Arms Pointer
