@@ -912,66 +912,68 @@ end)
 
 CurrentCamera.ChildAdded:Connect(function(child)
 	spawn(function()
-	if child.Name == "Arms" and getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsEnabled == true then -- Arms Added
-		workspace.CurrentCamera.Arms.HumanoidRootPart.Transparency = 1
-		for i,v in pairs(child:GetChildren()) do
-			if v:IsA("Model") and v:FindFirstChild("Left Arm") and v:FindFirstChild("Right Arm") then
-				-- Arms Pointer
-				local RightArm = v["Right Arm"]
-				local LeftArm = v["Left Arm"]
-				-- Gloves Pointer
-				local RightGlove = RightArm:FindFirstChild("Glove") or RightArm:FindFirstChild("RGlove") or nil
-				local LeftGlove = LeftArm:FindFirstChild("Glove") or LeftArm:FindFirstChild("LGlove") or nil
-				-- Sleeves Pointer
-				local RightSleeve = RightArm:FindFirstChild("Sleeve") or nil
-				local LeftSleeve = LeftArm:FindFirstChild("Sleeve") or nil
-				
-				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsEnabled == true then
-					if RightArm then
-						RightArm.Mesh.TextureId = ""
-						RightArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
-						RightArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+	if child.Name == "Arms" then
+		child:WaitForChild("HumanoidRootPart").Transparency = 1
+		if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsEnabled == true then -- Arms Added
+			for i,v in pairs(child:GetChildren()) do
+				if v:IsA("Model") and v:FindFirstChild("Left Arm") and v:FindFirstChild("Right Arm") then
+					-- Arms Pointer
+					local RightArm = v["Right Arm"]
+					local LeftArm = v["Left Arm"]
+					-- Gloves Pointer
+					local RightGlove = RightArm:FindFirstChild("Glove") or RightArm:FindFirstChild("RGlove") or nil
+					local LeftGlove = LeftArm:FindFirstChild("Glove") or LeftArm:FindFirstChild("LGlove") or nil
+					-- Sleeves Pointer
+					local RightSleeve = RightArm:FindFirstChild("Sleeve") or nil
+					local LeftSleeve = LeftArm:FindFirstChild("Sleeve") or nil
+					
+					if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsEnabled == true then
+						if RightArm then
+							RightArm.Mesh.TextureId = ""
+							RightArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
+							RightArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+						end
+						if LeftArm then
+							LeftArm.Mesh.TextureId = ""
+							LeftArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
+							LeftArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+						end
 					end
-					if LeftArm then
-						LeftArm.Mesh.TextureId = ""
-						LeftArm.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsTransparency
-						LeftArm.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsArmsColor
+
+					if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesEnabled == true then
+						if RightGlove then
+							RightGlove.Mesh.TextureId = ""
+							RightGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
+							RightGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
+						end
+						if LeftGlove then
+							LeftGlove.Mesh.TextureId = ""
+							LeftGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
+							LeftGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
+						end
 					end
+
+					if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesEnabled == true then
+						if RightSleeve then
+							RightSleeve.Mesh.TextureId = ""
+							RightSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
+							RightSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
+						end
+						if LeftSleeve then
+							LeftSleeve.Mesh.TextureId = ""
+							LeftSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
+							LeftSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
+						end
+					end
+				elseif getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsEnabled == true and v:IsA("BasePart") and v.Name ~= ("Right Arm" or "Left Arm" or "Flash") and v.Transparency ~= 1 then -- Weapons Pointer
+
+					if v:IsA("MeshPart") then v.TextureID = "" end
+					if v:FindFirstChildOfClass("SpecialMesh") then v:FindFirstChildOfClass("SpecialMesh").TextureId = "" end
+
+					v.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsTransparency
+					v.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsColor
+					v.Material = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsMaterial
 				end
-
-				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesEnabled == true then
-					if RightGlove then
-						RightGlove.Mesh.TextureId = ""
-						RightGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
-						RightGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
-					end
-					if LeftGlove then
-						LeftGlove.Mesh.TextureId = ""
-						LeftGlove.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesTransparency
-						LeftGlove.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsGlovesColor
-					end
-				end
-
-				if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesEnabled == true then
-					if RightSleeve then
-						RightSleeve.Mesh.TextureId = ""
-						RightSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
-						RightSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
-					end
-					if LeftSleeve then
-						LeftSleeve.Mesh.TextureId = ""
-						LeftSleeve.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesTransparency
-						LeftSleeve.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsSleevesColor
-					end
-				end
-			elseif getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsEnabled == true and v:IsA("BasePart") and v.Name ~= ("Right Arm" or "Left Arm" or "Flash") and v.Transparency ~= 1 then -- Weapons Pointer
-
-				if v:IsA("MeshPart") then v.TextureID = "" end
-				if v:FindFirstChildOfClass("SpecialMesh") then v:FindFirstChildOfClass("SpecialMesh").TextureId = "" end
-
-				v.Transparency = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsTransparency
-				v.Color = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsColor
-				v.Material = getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsWeaponsMaterial
 			end
 		end
 	end
