@@ -33,7 +33,6 @@ if not Network or not GameLogic then
 	return game.Players.LocalPlayer:Kick("Scanning failed!")
 end
 
-spawn(function()
 game:GetService("RunService"):BindToRenderStep("CharFix", 100, function()
     for i,v in pairs(debug.getupvalue(Network.replication.module.getbodyparts, 1)) do
         if game.Players[i.Name] and game.Players[i.Name].Character == nil then
@@ -55,7 +54,7 @@ networksendhook = hookfunc(Network.network.module.send, function(self, ...)
         return
     end
 
-    return networksendhook(unpack(args))
+    return networksendhook(self, unpack(args))
 end)
 
 grenadehook = hookfunc(Network.char.module.loadgrenade, function(self, ...)
@@ -83,7 +82,7 @@ gunhook = hookfunc(Network.char.module.loadgun, function(self, ...)
 
     return gunhook(self, unpack(args))
 end)
-end)
+
 --[[
 loadgunhook = hookfunc(Network.char.module.loadchar, function(self, ...)
 	local args = {...}
@@ -126,10 +125,10 @@ loadgunhook = hookfunc(Network.char.module.loadchar, function(self, ...)
 	return loadgunhook(self, unpack(args))
 end)
 --]]
-print'a'
+
 local library = loadstring(syn.request({Url = "https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua", Method = "GET"}).Body)()
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
-print'b'
+
 local AimbotTab = MainWindow:CreateTab("Aimbot")
 local RageTab = MainWindow:CreateTab("Rage")
 local VisualsTab = MainWindow:CreateTab("Visuals")
