@@ -1425,10 +1425,8 @@ function library:CreateWindow(ctitle, csize, cpos)
 	return window
 end
 
-kb = getgenv().HexHubSettings.permsettings.global.GUIkeybind or Enum.KeyCode.X
-
 game:GetService("UserInputService").InputBegan:Connect(function(key, isFocused)
-	if key.KeyCode == kb then
+	if key.KeyCode == getgenv().HexHubSettings.permsettings.global.GUIkeybind then
 		if not isFocused then
 			library.pointer.Parent.Enabled = not library.pointer.Parent.Enabled
 		end

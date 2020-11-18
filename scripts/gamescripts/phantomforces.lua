@@ -1,5 +1,6 @@
 print("Phantom Forces Script Loaded!")
 
+local LaunchTick = tick()
 local phantomforcessettings = {}
 local aimbotbasesettings = {}
 
@@ -32,6 +33,7 @@ if not Network or not GameLogic then
 	return game.Players.LocalPlayer:Kick("Scanning failed!")
 end
 
+spawn(function()
 game:GetService("RunService"):BindToRenderStep("CharFix", 100, function()
     for i,v in pairs(debug.getupvalue(Network.replication.module.getbodyparts, 1)) do
         if game.Players[i.Name] and game.Players[i.Name].Character == nil then
@@ -70,6 +72,17 @@ grenadehook = hookfunc(Network.char.module.loadgrenade, function(self, ...)
     end
     --]]
 	return grenadehook(self, unpack(args))
+end)
+
+gunhook = hookfunc(Network.char.module.loadgun, function(self, ...)
+    local args = {...}
+
+    for i,v in pairs(args[1]) do
+        print(i,v)
+    end
+
+    return gunhook(self, unpack(args))
+end)
 end)
 --[[
 loadgunhook = hookfunc(Network.char.module.loadchar, function(self, ...)
@@ -113,9 +126,10 @@ loadgunhook = hookfunc(Network.char.module.loadchar, function(self, ...)
 	return loadgunhook(self, unpack(args))
 end)
 --]]
-local library = loadstring(syn.request({Url = "http://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua", Method = "GET"}).Body)()
+print'a'
+local library = loadstring(syn.request({Url = "https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua", Method = "GET"}).Body)()
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
-
+print'b'
 local AimbotTab = MainWindow:CreateTab("Aimbot")
 local RageTab = MainWindow:CreateTab("Rage")
 local VisualsTab = MainWindow:CreateTab("Visuals")
@@ -137,8 +151,6 @@ end)
 MiscellaneousTabCategoryGunMods:AddToggle("No Recoil", false, function(val)
 	phantomforcessettings.GunModsNoRecoil = val
 end)
-
-local LaunchTick = tick()
 
 MainWindow.close = false
 

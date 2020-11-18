@@ -239,9 +239,19 @@ local function AIMBOT_LOOP()
                     mousemoverel(-smoothnessX, -smoothnessY)
                 elseif currentMode == "CameraHook" then
                     workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.p, WorldPoint)
-                    -- CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CFrame.new(CurrentCamera.CFrame.p, WorldPoint), 5)
+					-- CurrentCamera.CFrame = CurrentCamera.CFrame:Lerp(CFrame.new(CurrentCamera.CFrame.p, WorldPoint), 5)
+--[[
+game:GetService("TweenService"):Create(
+	workspace.CurrentCamera,
+	TweenInfo.new(5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+	{
+		CFrame = CFrame.new(0, 10, 100),
+		Focus = CFrame.new(0, 0, 100)
+	}
+):Play()
+
+--]]
 				elseif currentMode == "RayHook" then
-					print("setting silent aimbot target to plr")
 					silentaimtarget = plr
 				end
 			end
@@ -342,7 +352,6 @@ AimbotTabCategoryMain:AddDropdown("Aim Part", {"Head", "HumanoidRootPart", "Uppe
 end)
 
 AimbotTabCategoryMain:AddKeybind("Aimbot Keybind", Enum.KeyCode.X, function(val)
-	print(val)
 	getgenv().HexHubSettings.permsettings.aimbotbase.KeyBind = val
 end)
 
@@ -550,6 +559,30 @@ spawn(function()
     end
 end)
 
+local function GET_SITE()
+	if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant.Position).magnitude > (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant2.Position).magnitude then
+		return "A"
+	else
+		return "B"
+	end
+end
+
+if game.Workspace.Map.Gamemode.Value == "defusal" then
+	local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+	local oldgrav = workspace.Gravity
+	game.Workspace.CurrentCamera.CameraType = "Fixed"
+	workspace.Gravity = 0
+	repeat
+		wait()
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.SpawnPoints.C4Plant.CFrame
+		game.ReplicatedStorage.Events.PlantC4:FireServer((oldpos + Vector3.new(0, -2.75, 0)) * CFrame.Angles(math.rad(90), 0, math.rad(180)), GET_SITE())
+	until workspace:FindFirstChild("C4") or not game.Players.LocalPlayer.Character
+	wait()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
+	game.Workspace.CurrentCamera.CameraType = "Custom"
+	workspace.Gravity = oldgrav
+	print("Planted!")
+end
 --]]
 local RageTabCategoryAntiAimbot = RageTab:AddCategory("Anti Aimbot")
 
@@ -568,6 +601,33 @@ RageTabCategoryAntiAimbot:AddToggle("Enabled", false, function(val)
 end)
 
 local GunModsTabCategoryMain = GunModsTab:AddCategory("Main")
+
+GunModsTabCategoryMain:AddButton("Plant C4", function()
+	local function GET_SITE()
+		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant.Position).magnitude > (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant2.Position).magnitude then
+			return "A"
+		else
+			return "B"
+		end
+	end
+
+	if game.Workspace.Map.Gamemode.Value == "defusal" then
+		local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+		local oldgrav = workspace.Gravity
+		game.Workspace.CurrentCamera.CameraType = "Fixed"
+		workspace.Gravity = 0
+		repeat
+			wait()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.SpawnPoints.C4Plant.CFrame
+			game.ReplicatedStorage.Events.PlantC4:FireServer((oldpos + Vector3.new(0, -2.75, 0)) * CFrame.Angles(math.rad(90), 0, math.rad(180)), GET_SITE())
+		until workspace:FindFirstChild("C4") or not game.Players.LocalPlayer.Character
+		wait()
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
+		game.Workspace.CurrentCamera.CameraType = "Custom"
+		workspace.Gravity = oldgrav
+		print("Planted!")
+	end
+end)
 
 GunModsTabCategoryMain:AddDropdown("Plant Mods", {"Normal", "Instant", "Anywhere"}, "Normal", function(val)
 
