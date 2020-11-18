@@ -44,7 +44,7 @@ end)
 networksendhook = hookfunc(Network.network.module.send, function(self, ...)
     local args = {...}
     --[[
-    print("Network send:")
+    print("Network send: ")
     for i,v in pairs(args) do
         print(i,v)
     end
