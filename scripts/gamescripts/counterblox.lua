@@ -153,6 +153,62 @@ function sFLY(toggle)
     end
 end
 
+local function PLR_ALIVE(plr)
+	if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health > 0 then
+		return true
+	end
+	return false
+end
+
+local function PLANTC4()
+	local function GET_SITE()
+		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant.Position).magnitude > (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant2.Position).magnitude then
+			return "A"
+		else
+			return "B"
+		end
+	end
+
+	if PLR_ALIVE(game.Players.LocalPlayer) and workspace.Map.Gamemode.Value == "defusal" then
+		local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+		local oldgrav = workspace.Gravity
+		workspace.CurrentCamera.CameraType = "Fixed"
+		workspace.Gravity = 0
+		repeat
+			wait()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.SpawnPoints.C4Plant.CFrame
+			game.ReplicatedStorage.Events.PlantC4:FireServer((oldpos + Vector3.new(0, -2.75, 0)) * CFrame.Angles(math.rad(90), 0, math.rad(180)), GET_SITE())
+		until workspace:FindFirstChild("C4") or not game.Players.LocalPlayer.Character
+		wait()
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
+		game.Workspace.CurrentCamera.CameraType = "Custom"
+		workspace.Gravity = oldgrav
+		print("Planted!")
+	end
+end
+
+local function DEFUSEC4()
+	if PLR_ALIVE(game.Players.LocalPlayer) and workspace:FindFirstChild("C4") and workspace.Map.Gamemode.Value == "defusal" then
+		local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+		local oldgrav = workspace.Gravity
+		workspace.CurrentCamera.CameraType = "Fixed"
+		workspace.Gravity = 0
+		repeat
+			wait()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.SpawnPoints.C4Plant.CFrame
+			game.Players.LocalPlayer.Backpack.PressDefuse:FireServer(workspace.C4)
+		until workspace:FindFirstChild("C4").Defusing.Value == game.Players.LocalPlayer or not game.Players.LocalPlayer.Character
+		if workspace:FindFirstChild("C4").Defusing.Value == game.Players.LocalPlayer then
+			game.Players.LocalPlayer.Backpack.Defuse:FireServer(workspace.C4)
+		end
+		wait()
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
+		game.Workspace.CurrentCamera.CameraType = "Custom"
+		workspace.Gravity = oldgrav
+		print("Defused!")
+	end
+end
+
 local function SPAWN_ITEM(item, cframe, ammo, storedammo)
     local selitem = game.ReplicatedStorage.Weapons[item]
     cframe = cframe or game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -603,30 +659,7 @@ end)
 local GunModsTabCategoryMain = GunModsTab:AddCategory("Main")
 
 GunModsTabCategoryMain:AddButton("Plant C4", function()
-	local function GET_SITE()
-		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant.Position).magnitude > (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant2.Position).magnitude then
-			return "A"
-		else
-			return "B"
-		end
-	end
-
-	if game.Workspace.Map.Gamemode.Value == "defusal" then
-		local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-		local oldgrav = workspace.Gravity
-		game.Workspace.CurrentCamera.CameraType = "Fixed"
-		workspace.Gravity = 0
-		repeat
-			wait()
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.SpawnPoints.C4Plant.CFrame
-			game.ReplicatedStorage.Events.PlantC4:FireServer((oldpos + Vector3.new(0, -2.75, 0)) * CFrame.Angles(math.rad(90), 0, math.rad(180)), GET_SITE())
-		until workspace:FindFirstChild("C4") or not game.Players.LocalPlayer.Character
-		wait()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
-		game.Workspace.CurrentCamera.CameraType = "Custom"
-		workspace.Gravity = oldgrav
-		print("Planted!")
-	end
+	PLANTC4()
 end)
 
 GunModsTabCategoryMain:AddDropdown("Plant Mods", {"Normal", "Instant", "Anywhere"}, "Normal", function(val)
@@ -1039,19 +1072,19 @@ CurrentCamera.ChildAdded:Connect(function(child)
 	end
 	end)
 end)
-				--[[
+
 game:GetService("UserInputService").InputBegan:Connect(function(key)
-	if key.UserInputType == Enum.UserInputType.MouseButton1 and PlantAnywhere then
+	if key.UserInputType == Enum.UserInputType.MouseButton1 then
 		if PLR_ALIVE(game.Players.LocalPlayer) and game.Players.LocalPlayer.Character.EquippedTool.Value == "C4" then
 			PlantC4()
 		end
-    elseif key.KeyCode == Enum.KeyCode.E and DefuseAnywhere then
+    elseif key.KeyCode == Enum.KeyCode.E then
 		if PLR_ALIVE(game.Players.LocalPlayer) and game.Workspace:FindFirstChild("C4") then
 			DefuseC4()
 		end
     end
 end)
---]]
+
 
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall

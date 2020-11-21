@@ -1,5 +1,5 @@
 print("Phantom Forces Script Loaded!")
-
+-- https://raw.githubusercontent.com/synllc/SynapseX/master/Synapse%20Scripts/PFHaxx.lua
 local LaunchTick = tick()
 local phantomforcessettings = {}
 local aimbotbasesettings = {}
