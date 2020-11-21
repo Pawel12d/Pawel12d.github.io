@@ -202,8 +202,8 @@ local function DEFUSEC4()
 		until workspace.C4:FindFirstChild("Defusing") and workspace.C4.Defusing.Value == game.Players.LocalPlayer
 
 		if workspace:FindFirstChild("C4").Defusing.Value == game.Players.LocalPlayer then
-			print("c3")
 			game.Players.LocalPlayer.Backpack.Defuse:FireServer(workspace.C4)
+			wait(0.1)
 		end
 		print("c4")
 		wait()
