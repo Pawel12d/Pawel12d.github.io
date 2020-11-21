@@ -643,7 +643,7 @@ GunModsTabCategoryMain:AddButton("Plant C4", function()
 	PLANTC4()
 end)
 
-GunModsTabCategoryMain:AddButton("Defuse C4", function()
+GunModsTabCategoryMain:AddButton("Defuse C4 [BAN RISK]", function()
 	DEFUSEC4()
 end)
 
