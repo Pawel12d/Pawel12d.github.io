@@ -193,15 +193,21 @@ local function DEFUSEC4()
 		local oldgrav = workspace.Gravity
 		workspace.CurrentCamera.CameraType = "Fixed"
 		workspace.Gravity = 0
+		print("c1")
 		repeat
-			wait()
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Map.SpawnPoints.C4Plant.CFrame
+			wait(0.1)
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.C4.Handle.CFrame + Vector3.new(0, 3, 0)
 			game.Players.LocalPlayer.Backpack.PressDefuse:FireServer(workspace.C4)
-		until workspace:FindFirstChild("C4").Defusing.Value == game.Players.LocalPlayer or not game.Players.LocalPlayer.Character
+			print("c2")
+		until workspace.C4:FindFirstChild("Defusing") and workspace.C4.Defusing.Value == game.Players.LocalPlayer
+
 		if workspace:FindFirstChild("C4").Defusing.Value == game.Players.LocalPlayer then
+			print("c3")
 			game.Players.LocalPlayer.Backpack.Defuse:FireServer(workspace.C4)
 		end
+		print("c4")
 		wait()
+		game.Players.LocalPlayer.Backpack.ReleaseDefuse:FireServer()
 		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
 		game.Workspace.CurrentCamera.CameraType = "Custom"
 		workspace.Gravity = oldgrav
@@ -614,31 +620,6 @@ spawn(function()
     end)
     end
 end)
-
-local function GET_SITE()
-	if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant.Position).magnitude > (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant2.Position).magnitude then
-		return "A"
-	else
-		return "B"
-	end
-end
-
-if game.Workspace.Map.Gamemode.Value == "defusal" then
-	local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-	local oldgrav = workspace.Gravity
-	game.Workspace.CurrentCamera.CameraType = "Fixed"
-	workspace.Gravity = 0
-	repeat
-		wait()
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Map.SpawnPoints.C4Plant.CFrame
-		game.ReplicatedStorage.Events.PlantC4:FireServer((oldpos + Vector3.new(0, -2.75, 0)) * CFrame.Angles(math.rad(90), 0, math.rad(180)), GET_SITE())
-	until workspace:FindFirstChild("C4") or not game.Players.LocalPlayer.Character
-	wait()
-	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = oldpos
-	game.Workspace.CurrentCamera.CameraType = "Custom"
-	workspace.Gravity = oldgrav
-	print("Planted!")
-end
 --]]
 local RageTabCategoryAntiAimbot = RageTab:AddCategory("Anti Aimbot")
 
@@ -660,6 +641,10 @@ local GunModsTabCategoryMain = GunModsTab:AddCategory("Main")
 
 GunModsTabCategoryMain:AddButton("Plant C4", function()
 	PLANTC4()
+end)
+
+GunModsTabCategoryMain:AddButton("Defuse C4", function()
+	DEFUSEC4()
 end)
 
 GunModsTabCategoryMain:AddDropdown("Plant Mods", {"Normal", "Instant", "Anywhere"}, "Normal", function(val)
