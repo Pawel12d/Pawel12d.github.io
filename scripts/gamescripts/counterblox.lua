@@ -1061,11 +1061,11 @@ end)
 game:GetService("UserInputService").InputBegan:Connect(function(key)
 	if key.UserInputType == Enum.UserInputType.MouseButton1 then
 		if PLR_ALIVE(game.Players.LocalPlayer) and game.Players.LocalPlayer.Character.EquippedTool.Value == "C4" then
-			PlantC4()
+			PLANTC4()
 		end
     elseif key.KeyCode == Enum.KeyCode.E then
-		if PLR_ALIVE(game.Players.LocalPlayer) and game.Workspace:FindFirstChild("C4") then
-			DefuseC4()
+		if PLR_ALIVE(game.Players.LocalPlayer) and workspace:FindFirstChild("C4") then
+			DEFUSEC4()
 		end
     end
 end)
