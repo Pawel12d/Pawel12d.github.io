@@ -1060,12 +1060,20 @@ end)
 
 game:GetService("UserInputService").InputBegan:Connect(function(key)
 	if key.UserInputType == Enum.UserInputType.MouseButton1 then
-		if PLR_ALIVE(game.Players.LocalPlayer) and game.Players.LocalPlayer.Character.EquippedTool.Value == "C4" ands getgenv().HexHubSettings.tempsettings.counterblox.gunmods.PlantMode == "Anywhere" then
-			PLANTC4()
+		if PLR_ALIVE(game.Players.LocalPlayer) and game.Players.LocalPlayer.Character.EquippedTool.Value == "C4" then
+			if getgenv().HexHubSettings.tempsettings.counterblox.gunmods.PlantMode == "Anywhere" then
+				PLANTC4()
+			elseif getgenv().HexHubSettings.tempsettings.counterblox.gunmods.PlantMode == "Instant" then
+				print("plant instant")
+			end
 		end
     elseif key.KeyCode == Enum.KeyCode.E then
-		if PLR_ALIVE(game.Players.LocalPlayer) and workspace:FindFirstChild("C4") and getgenv().HexHubSettings.tempsettings.counterblox.gunmods.DefuseMode == "Anywhere" then
-			DEFUSEC4()
+		if PLR_ALIVE(game.Players.LocalPlayer) and workspace:FindFirstChild("C4") then
+			if getgenv().HexHubSettings.tempsettings.counterblox.gunmods.DefuseMode == "Anywhere" then
+				DEFUSEC4()
+			elseif getgenv().HexHubSettings.tempsettings.counterblox.gunmods.DefuseMode == "Instant" then
+				print("defuse instant")
+			end
 		end
     end
 end)
