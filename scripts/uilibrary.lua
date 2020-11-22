@@ -1425,6 +1425,17 @@ function library:CreateWindow(ctitle, csize, cpos)
 	return window
 end
 
+function library:LoadConfiguration(cfg)
+	
+end
+
+function library:SaveConfiguration(cfg)
+	local table = {
+		
+	}
+	return table
+end
+
 game:GetService("UserInputService").InputBegan:Connect(function(key, isFocused)
 	if key.KeyCode == getgenv().HexHubSettings.permsettings.global.GUIkeybind then
 		if not isFocused then
