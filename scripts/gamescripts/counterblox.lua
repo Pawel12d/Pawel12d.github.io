@@ -187,7 +187,7 @@ local function PLANTC4()
 	end
 end
 
-local function DEFUSEC4()
+local function DEFUSEC4() -- WARNING: if tries defusing and bomb is already defused then bans player.
 	if PLR_ALIVE(game.Players.LocalPlayer) and workspace:FindFirstChild("C4") and workspace.Map.Gamemode.Value == "defusal" then
 		local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 		local oldgrav = workspace.Gravity
@@ -1064,7 +1064,7 @@ game:GetService("UserInputService").InputBegan:Connect(function(key)
 			if getgenv().HexHubSettings.tempsettings.counterblox.PlantMode == "Anywhere" then
 				PLANTC4()
 			elseif getgenv().HexHubSettings.tempsettings.counterblox.PlantMode == "Instant" then
-				print("plant instant")
+				game.ReplicatedStorage.Events.PlantC4:FireServer((game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -2.75, 0)) * CFrame.Angles(math.rad(90), 0, math.rad(180)), GET_SITE())
 			end
 		end
     elseif key.KeyCode == Enum.KeyCode.E then
@@ -1073,6 +1073,9 @@ game:GetService("UserInputService").InputBegan:Connect(function(key)
 				DEFUSEC4()
 			elseif getgenv().HexHubSettings.tempsettings.counterblox.DefuseMode == "Instant" then
 				print("defuse instant")
+				if mouse.Target.Parent.Name == "C4" then
+					print("defuse c4 selected")
+				end
 			end
 		end
     end
