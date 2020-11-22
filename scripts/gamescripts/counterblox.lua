@@ -648,11 +648,11 @@ GunModsTabCategoryMain:AddButton("Defuse C4 [BAN RISK]", function()
 end)
 
 GunModsTabCategoryMain:AddDropdown("Plant Mods", {"Normal", "Instant", "Anywhere"}, "Normal", function(val)
-	getgenv().HexHubSettings.tempsettings.counterblox.gunmods.PlantMode = val
+	getgenv().HexHubSettings.tempsettings.counterblox.PlantMode = val
 end)
 
 GunModsTabCategoryMain:AddDropdown("Defuse Mods", {"Normal", "Instant", "Anywhere"}, "Normal", function(val)
-	getgenv().HexHubSettings.tempsettings.counterblox.gunmods.DefuseMode = val
+	getgenv().HexHubSettings.tempsettings.counterblox.DefuseMode = val
 end)
 
 local VisualsTabCategoryViewmodel = VisualsTab:AddCategory("Viewmodel")
@@ -1061,17 +1061,17 @@ end)
 game:GetService("UserInputService").InputBegan:Connect(function(key)
 	if key.UserInputType == Enum.UserInputType.MouseButton1 then
 		if PLR_ALIVE(game.Players.LocalPlayer) and game.Players.LocalPlayer.Character.EquippedTool.Value == "C4" then
-			if getgenv().HexHubSettings.tempsettings.counterblox.gunmods.PlantMode == "Anywhere" then
+			if getgenv().HexHubSettings.tempsettings.counterblox.PlantMode == "Anywhere" then
 				PLANTC4()
-			elseif getgenv().HexHubSettings.tempsettings.counterblox.gunmods.PlantMode == "Instant" then
+			elseif getgenv().HexHubSettings.tempsettings.counterblox.PlantMode == "Instant" then
 				print("plant instant")
 			end
 		end
     elseif key.KeyCode == Enum.KeyCode.E then
 		if PLR_ALIVE(game.Players.LocalPlayer) and workspace:FindFirstChild("C4") then
-			if getgenv().HexHubSettings.tempsettings.counterblox.gunmods.DefuseMode == "Anywhere" then
+			if getgenv().HexHubSettings.tempsettings.counterblox.DefuseMode == "Anywhere" then
 				DEFUSEC4()
-			elseif getgenv().HexHubSettings.tempsettings.counterblox.gunmods.DefuseMode == "Instant" then
+			elseif getgenv().HexHubSettings.tempsettings.counterblox.DefuseMode == "Instant" then
 				print("defuse instant")
 			end
 		end
