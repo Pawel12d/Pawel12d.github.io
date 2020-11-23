@@ -926,6 +926,10 @@ SettingsTabCategoryMain:AddButton("Copy Discord Invite", function()
 	setclipboard("https://discord.gg/47YH2Ay")
 end)
 
+SettingsTabCategoryMain:AddButton("Server Finder [beta]", function()
+	loadstring(game:HttpGet(('https://pastebin.com/raw/cKGdQPVz'),true))()
+end)
+
 SettingsTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
 	pcall(function()
 		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = val
