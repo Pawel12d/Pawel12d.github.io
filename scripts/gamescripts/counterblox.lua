@@ -569,17 +569,6 @@ RageTabCategoryMain:AddSlider("Damage Multiplier [Percentage]", {0, 100000, 100}
 	getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier = val/100
 end)
 
-RageTabCategoryMain:AddButton("Crash Server", function()
-	if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
-		game:GetService("RunService").RenderStepped:Connect(function() wait(0.1)
-			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Molotov"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
-			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["HE Grenade"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
-			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Decoy Grenade"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
-			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Smoke Grenade"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
-			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Flashbang"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
-		end)
-	end
-end)
 --[[
 local delay = 0
 local distance = 5
@@ -780,26 +769,6 @@ end)
 
 local MiscellaneousTabCategoryMain = MiscellaneousTab:AddCategory("Main")
 
-MiscellaneousTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
-	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
-	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
-	local selected = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
-
-	if typeof(selected) == "table" then
-		cbClient.CurrentInventory = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
-	elseif tostring(val) == "Default" then
-		cbClient.CurrentInventory = oldinv
-	elseif tostring(val) == "All" then
-		cbClient.CurrentInventory = AllSkinsTable
-	end
-
-	local InventoryLoadout = game.Players.LocalPlayer.PlayerGui.GUI["Inventory&Loadout"]
-	if InventoryLoadout.Visible == true then
-		InventoryLoadout.Visible = false
-		InventoryLoadout.Visible = true
-	end
-end)
-
 MiscellaneousTabCategoryMain:AddDropdown("Open Case", AllCasesTable, "", function(val)
 	if game.ReplicatedStorage.Cases:FindFirstChild(val) then
 		game.ReplicatedStorage.Events.DataEvent:FireServer({"BuyCase", val})
@@ -876,17 +845,6 @@ MiscellaneousTabCategoryMain:AddDropdown("Clips", {"Normal", "Visible", "Remove"
 	end)
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
-	pcall(function()
-		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = val
-	end)
-end)
-
-MiscellaneousTabCategoryMain:AddToggle("Spectators List", false, function(val)
-	SPECTATORS_BASE.Enabled = val
-end)
-
-
 local MiscellaneousTabCategoryItems = MiscellaneousTab:AddCategory("Items")
 
 MiscellaneousTabCategoryItems:AddToggle("Inf Cash", false, function(val)
@@ -899,7 +857,6 @@ end)
 MiscellaneousTabCategoryItems:AddButton("Give C4", function()
 	SPAWN_ITEM(item, cframe, ammo, storedammo)
 end)
-
 
 local MiscellaneousTabCategoryMovement = MiscellaneousTab:AddCategory("Movement")
 
@@ -945,6 +902,72 @@ MiscellaneousTabCategoryBypasses:AddToggle("No Smoke Effect", false, function(va
 	pcall(function()
 		getgenv().HexHubSettings.tempsettings.counterblox.NoSmokeEffect = val
 	end)
+end)
+
+local SettingsTabCategoryMain = SettingsTab:AddCategory("Main")
+
+SettingsTabCategoryMain:AddButton("Rejoin Server", function()
+	game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId, game.JobId, game:GetService("Players").LocalPlayer)
+end)
+
+SettingsTabCategoryMain:AddButton("Crash Server", function()
+	if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0 then
+		game:GetService("RunService").RenderStepped:Connect(function() wait(0.1)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Molotov"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["HE Grenade"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Decoy Grenade"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Smoke Grenade"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+			game:GetService("ReplicatedStorage").Events.ThrowGrenade:FireServer(game:GetService("ReplicatedStorage").Weapons["Flashbang"].Model, nil, 25, 35, Vector3.new(0,-100,0), nil, nil)
+		end)
+	end
+end)
+
+SettingsTabCategoryMain:AddButton("Copy Discord Invite", function()
+	setclipboard("https://discord.gg/uySBpqD")
+end)
+
+SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
+	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
+	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
+	local selected = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
+	local InventoryLoadout = game.Players.LocalPlayer.PlayerGui.GUI["Inventory&Loadout"]
+	
+	if typeof(selected) == "table" then
+		cbClient.CurrentInventory = getgenv().HexHubSettings.permsettings.counterblox.InventoryTables[val]
+	elseif tostring(val) == "Default" then
+		cbClient.CurrentInventory = oldinv
+	elseif tostring(val) == "All" then
+		cbClient.CurrentInventory = AllSkinsTable
+	end
+
+	if InventoryLoadout.Visible == true then
+		InventoryLoadout.Visible = false
+		InventoryLoadout.Visible = true
+	end
+end)
+
+MiscellaneousTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
+	pcall(function()
+		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = val
+	end)
+end)
+
+MiscellaneousTabCategoryMain:AddToggle("Spectators List", false, function(val)
+	SPECTATORS_BASE.Enabled = not val
+end)
+
+local SettingsTabCategoryConfiguration = SettingsTab:AddCategory("Configuration")
+
+SettingsTabCategoryConfiguration:AddTextBox("Config Name", "", function(val)
+	print("not implemented yet", val)
+end)
+
+SettingsTabCategoryConfiguration:AddButton("Save", function()
+	print("not implemented yet")
+end)
+
+SettingsTabCategoryConfiguration:AddButton("Load", function()
+	print("not implemented yet")
 end)
 
 --[[
