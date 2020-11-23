@@ -160,15 +160,15 @@ local function PLR_ALIVE(plr)
 	return false
 end
 
-local function PLANTC4()
-	local function GET_SITE()
-		if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant.Position).magnitude > (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant2.Position).magnitude then
-			return "A"
-		else
-			return "B"
-		end
+local function GET_SITE()
+	if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant.Position).magnitude > (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - workspace.Map.SpawnPoints.C4Plant2.Position).magnitude then
+		return "A"
+	else
+		return "B"
 	end
+end
 
+local function PLANTC4()
 	if PLR_ALIVE(game.Players.LocalPlayer) and workspace.Map.Gamemode.Value == "defusal" then
 		local oldpos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 		local oldgrav = workspace.Gravity
@@ -526,100 +526,6 @@ for i=1,10 do
 	grenade_fun(Vector3.new(distance, 100, -distance))
 	wait(0.5)
 end
-
-
--- Spectators List
-
-local ScreenGui = Instance.new("ScreenGui")
-local SPECTATORS_LIST = Instance.new("Frame")
-local UIListLayout = Instance.new("UIListLayout")
-local TOP_BAR = Instance.new("TextLabel")
-local PLR_NIL = Instance.new("TextLabel")
-local PLR_NIL_2 = Instance.new("TextLabel")
-local PLR_NIL_3 = Instance.new("TextLabel")
-local BOTTOM_BAR = Instance.new("TextLabel")
-local UICorner = Instance.new("UICorner")
-local UICorner_2 = Instance.new("UICorner")
-
-ScreenGui.Parent = game:WaitForChild("CoreGui")
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-SPECTATORS_LIST.Name = "SPECTATORS_LIST"
-SPECTATORS_LIST.Parent = ScreenGui
-SPECTATORS_LIST.BackgroundColor3 = Color3.new(0.235294, 0.235294, 0.235294)
-SPECTATORS_LIST.BackgroundTransparency = 1
-SPECTATORS_LIST.BorderSizePixel = 0
-SPECTATORS_LIST.Position = UDim2.new(0.74062252, 0, 0.665847659, 0)
-SPECTATORS_LIST.Size = UDim2.new(0, 200, 0, 30)
-SPECTATORS_LIST.Active = true
-SPECTATORS_LIST.Selectable = true
-SPECTATORS_LIST.Draggable = true
-
-UIListLayout.Parent = SPECTATORS_LIST
-UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-
-TOP_BAR.Name = "TOP_BAR"
-TOP_BAR.Parent = SPECTATORS_LIST
-TOP_BAR.BackgroundColor3 = Color3.new(0.862745, 0.184314, 0.0470588)
-TOP_BAR.BorderSizePixel = 0
-TOP_BAR.Size = UDim2.new(1, 0, 0, 25)
-TOP_BAR.Font = Enum.Font.SourceSansBold
-TOP_BAR.Text = "   Spectators list"
-TOP_BAR.TextColor3 = Color3.new(1, 1, 1)
-TOP_BAR.TextSize = 16
-TOP_BAR.TextXAlignment = Enum.TextXAlignment.Left
-
-UICorner.CornerRadius = UDim.new(0.2, 0.2)
-UICorner.Parent = TOP_BAR
-
-UICorner_2.CornerRadius = UDim.new(0.2, 0.2)
-UICorner_2.Parent = BOTTOM_BAR
-
-spawn(function()
-    while true do
-        pcall(function()
-        wait(0.5)
-        if SPECTATORS_LIST.Visible == true then
-            for i,v in pairs(SPECTATORS_LIST:GetChildren()) do
-                if v:IsA("TextLabel") and v.Name ~= "TOP_BAR" then
-                    v:Remove()
-                end
-            end
-
-            for i,v in pairs(game.Players:GetPlayers()) do
-                if v and v ~= game.Players.LocalPlayer and not v.Character and v:FindFirstChild("CameraCF") then
-                    local distance = math.floor((v.CameraCF.Value.p - workspace.CurrentCamera.CFrame.p).magnitude)
-                    if distance < 10 then
-                        local PLR_TEXT = Instance.new("TextLabel")
-                        PLR_TEXT.Name = "PLR_TEXT"
-                        PLR_TEXT.Parent = SPECTATORS_LIST
-                        PLR_TEXT.BackgroundColor3 = Color3.new(0.235294, 0.235294, 0.235294)
-                        PLR_TEXT.BorderSizePixel = 0
-                        PLR_TEXT.Size = UDim2.new(0, 200, 0, 20)
-                        PLR_TEXT.Font = Enum.Font.SourceSansBold
-                        PLR_TEXT.Text = tostring("          "..v.Name.." | ".. (distance <= 1 and "First Person" or distance >= 1 and "Third Person"))
-                        PLR_TEXT.TextColor3 = Color3.new(1, 1, 1)
-                        PLR_TEXT.TextSize = 14
-                        PLR_TEXT.TextXAlignment = Enum.TextXAlignment.Left
-                        PLR_TEXT.Parent = SPECTATORS_LIST
-                    end
-                end
-            end
-            
-            BOTTOM_BAR.Name = "BOTTOM_BAR"
-            BOTTOM_BAR.Parent = SPECTATORS_LIST
-            BOTTOM_BAR.BackgroundColor3 = Color3.new(0.862745, 0.184314, 0.0470588)
-            BOTTOM_BAR.BorderSizePixel = 0
-            BOTTOM_BAR.Size = UDim2.new(1, 0, 0, 5)
-            BOTTOM_BAR.Font = Enum.Font.SourceSansBold
-            BOTTOM_BAR.Text = ""
-            BOTTOM_BAR.TextColor3 = Color3.new(1, 1, 1)
-            BOTTOM_BAR.TextSize = 16
-            BOTTOM_BAR.TextXAlignment = Enum.TextXAlignment.Left
-        end
-    end)
-    end
-end)
 --]]
 local RageTabCategoryAntiAimbot = RageTab:AddCategory("Anti Aimbot")
 
@@ -885,6 +791,13 @@ MiscellaneousTabCategoryMain:AddToggle("Disable Chat Filter", false, function(va
 	end)
 end)
 
+MiscellaneousTabCategoryMain:AddToggle("Spectators List", false, function(val)
+	pcall(function()
+		SPECTATORS_LIST.Visible = not val
+	end)
+end)
+
+
 local MiscellaneousTabCategoryItems = MiscellaneousTab:AddCategory("Items")
 
 MiscellaneousTabCategoryItems:AddToggle("Inf Cash", false, function(val)
@@ -1081,6 +994,96 @@ game:GetService("UserInputService").InputBegan:Connect(function(key)
     end
 end)
 
+local ScreenGui = Instance.new("ScreenGui")
+local SPECTATORS_LIST = Instance.new("Frame")
+local UIListLayout = Instance.new("UIListLayout")
+local TOP_BAR = Instance.new("TextLabel")
+local PLR_NIL = Instance.new("TextLabel")
+local PLR_NIL_2 = Instance.new("TextLabel")
+local PLR_NIL_3 = Instance.new("TextLabel")
+local BOTTOM_BAR = Instance.new("TextLabel")
+local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+
+ScreenGui.Parent = game:WaitForChild("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+SPECTATORS_LIST.Name = "SPECTATORS_LIST"
+SPECTATORS_LIST.Parent = ScreenGui
+SPECTATORS_LIST.BackgroundColor3 = Color3.new(0.235294, 0.235294, 0.235294)
+SPECTATORS_LIST.BackgroundTransparency = 1
+SPECTATORS_LIST.BorderSizePixel = 0
+SPECTATORS_LIST.Position = UDim2.new(0.74062252, 0, 0.665847659, 0)
+SPECTATORS_LIST.Size = UDim2.new(0, 200, 0, 30)
+SPECTATORS_LIST.Active = true
+SPECTATORS_LIST.Selectable = true
+SPECTATORS_LIST.Draggable = true
+
+UIListLayout.Parent = SPECTATORS_LIST
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+TOP_BAR.Name = "TOP_BAR"
+TOP_BAR.Parent = SPECTATORS_LIST
+TOP_BAR.BackgroundColor3 = Color3.new(0.862745, 0.184314, 0.0470588)
+TOP_BAR.BorderSizePixel = 0
+TOP_BAR.Size = UDim2.new(1, 0, 0, 25)
+TOP_BAR.Font = Enum.Font.SourceSansBold
+TOP_BAR.Text = "   Spectators list"
+TOP_BAR.TextColor3 = Color3.new(1, 1, 1)
+TOP_BAR.TextSize = 16
+TOP_BAR.TextXAlignment = Enum.TextXAlignment.Left
+
+UICorner.CornerRadius = UDim.new(0.2, 0.2)
+UICorner.Parent = TOP_BAR
+
+UICorner_2.CornerRadius = UDim.new(0.2, 0.2)
+UICorner_2.Parent = BOTTOM_BAR
+
+spawn(function()
+    while true do
+        pcall(function()
+        wait(0.5)
+        if SPECTATORS_LIST.Visible == true then
+            for i,v in pairs(SPECTATORS_LIST:GetChildren()) do
+                if v:IsA("TextLabel") and v.Name ~= "TOP_BAR" then
+                    v:Remove()
+                end
+            end
+
+            for i,v in pairs(game.Players:GetPlayers()) do
+                if v and v ~= game.Players.LocalPlayer and not v.Character and v:FindFirstChild("CameraCF") then
+                    local distance = math.floor((v.CameraCF.Value.p - workspace.CurrentCamera.CFrame.p).magnitude)
+                    if distance < 10 then
+                        local PLR_TEXT = Instance.new("TextLabel")
+                        PLR_TEXT.Name = "PLR_TEXT"
+                        PLR_TEXT.Parent = SPECTATORS_LIST
+                        PLR_TEXT.BackgroundColor3 = Color3.new(0.235294, 0.235294, 0.235294)
+                        PLR_TEXT.BorderSizePixel = 0
+                        PLR_TEXT.Size = UDim2.new(0, 200, 0, 20)
+                        PLR_TEXT.Font = Enum.Font.SourceSansBold
+                        PLR_TEXT.Text = tostring("          "..v.Name.." | ".. (distance <= 1 and "First Person" or distance >= 1 and "Third Person"))
+                        PLR_TEXT.TextColor3 = Color3.new(1, 1, 1)
+                        PLR_TEXT.TextSize = 14
+                        PLR_TEXT.TextXAlignment = Enum.TextXAlignment.Left
+                        PLR_TEXT.Parent = SPECTATORS_LIST
+                    end
+                end
+            end
+            
+            BOTTOM_BAR.Name = "BOTTOM_BAR"
+            BOTTOM_BAR.Parent = SPECTATORS_LIST
+            BOTTOM_BAR.BackgroundColor3 = Color3.new(0.862745, 0.184314, 0.0470588)
+            BOTTOM_BAR.BorderSizePixel = 0
+            BOTTOM_BAR.Size = UDim2.new(1, 0, 0, 5)
+            BOTTOM_BAR.Font = Enum.Font.SourceSansBold
+            BOTTOM_BAR.Text = ""
+            BOTTOM_BAR.TextColor3 = Color3.new(1, 1, 1)
+            BOTTOM_BAR.TextSize = 16
+            BOTTOM_BAR.TextXAlignment = Enum.TextXAlignment.Left
+        end
+    end)
+    end
+end)
 
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
