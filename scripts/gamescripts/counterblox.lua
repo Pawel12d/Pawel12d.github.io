@@ -855,7 +855,7 @@ MiscellaneousTabCategoryItems:AddToggle("Inf Cash", false, function(val)
 end)
 
 MiscellaneousTabCategoryItems:AddButton("Give C4", function()
-	SPAWN_ITEM(item, cframe, ammo, storedammo)
+	SPAWN_ITEM("C4")
 end)
 
 local MiscellaneousTabCategoryMovement = MiscellaneousTab:AddCategory("Movement")
@@ -876,6 +876,14 @@ MiscellaneousTabCategoryMovement:AddToggle("Noclip", false, function(val)
 			sFLY(false)
 		end
 	end)
+end)
+
+MiscellaneousTabCategoryMovement:AddButton("Inf HP", function()
+	game.ReplicatedStorage.Events.FallDamage:FireServer(0/0)
+end)
+
+MiscellaneousTabCategoryMovement:AddButton("FE God", function()
+	
 end)
 
 local MiscellaneousTabCategoryBypasses = MiscellaneousTab:AddCategory("Bypasses")

@@ -1452,6 +1452,13 @@ UserInputService.InputChanged:connect(function(input)
 end)
 --]]
 local Services = setmetatable({},{__index = function(self,req) return game:GetService(req) end});
+local MOTDS = {
+	"neexiu is a SPECIAL skid",
+	"cheese",
+	"apple"
+}
+
+local SELECTED_MOTD = MOTDS[math.random(#MOTDS)]
 
 function zigzag(X) 
     return math.acos(math.cos(X*math.pi))/math.pi;
@@ -1481,7 +1488,7 @@ library.colors = {
 
 spawn(function()
 	while true do
-		library.pointer.Parent.TextButton.FooterLabel.Text = "UID: "..game:GetService("Players").LocalPlayer.UserId.." | "..os.date('%X', os.time()).." | https://hexhub.xyz"
+		library.pointer.Parent.TextButton.FooterLabel.Text = tostring("UID: "..game:GetService("Players").LocalPlayer.UserId.." | "..os.date('%X', os.time()).." | https://hexhub.xyz | "..SELECTED_MOTD)
 		wait(1)
 	end
 end)
