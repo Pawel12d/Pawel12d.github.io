@@ -926,6 +926,16 @@ SettingsTabCategoryMain:AddButton("Copy Discord Invite", function()
 	setclipboard("https://discord.gg/47YH2Ay")
 end)
 
+SettingsTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
+	pcall(function()
+		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = val
+	end)
+end)
+
+SettingsTabCategoryMain:AddToggle("Spectators List", false, function(val)
+	SPECTATORS_BASE.Enabled = not val
+end)
+
 SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
 	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
 	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
@@ -944,16 +954,6 @@ SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Defau
 		InventoryLoadout.Visible = false
 		InventoryLoadout.Visible = true
 	end
-end)
-
-SettingsTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
-	pcall(function()
-		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = val
-	end)
-end)
-
-SettingsTabCategoryMain:AddToggle("Spectators List", false, function(val)
-	SPECTATORS_BASE.Enabled = not val
 end)
 
 local SettingsTabCategoryConfiguration = SettingsTab:AddCategory("Configuration")
