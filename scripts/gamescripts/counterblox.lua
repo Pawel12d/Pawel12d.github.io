@@ -946,13 +946,13 @@ SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Defau
 	end
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
+SettingsTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
 	pcall(function()
 		getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter = val
 	end)
 end)
 
-MiscellaneousTabCategoryMain:AddToggle("Spectators List", false, function(val)
+SettingsTabCategoryMain:AddToggle("Spectators List", false, function(val)
 	SPECTATORS_BASE.Enabled = not val
 end)
 
