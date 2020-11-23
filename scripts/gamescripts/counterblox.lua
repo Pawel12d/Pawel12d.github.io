@@ -198,7 +198,7 @@ local function DEFUSEC4() -- WARNING: if tries defusing and bomb is already defu
 			wait(0.1)
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.C4.Handle.CFrame + Vector3.new(0, 3, 0)
 			game.Players.LocalPlayer.Backpack.PressDefuse:FireServer(workspace.C4)
-			if workspace:FindFirstChild("C4").Defusing.Value == game.Players.LocalPlayer then
+			if workspace:FindFirstChild("C4").Defusing and workspace:FindFirstChild("C4").Defusing.Value == game.Players.LocalPlayer then
 				if (workspace.C4.Handle.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude < 10 then
 					game.Players.LocalPlayer.Backpack.Defuse:FireServer(workspace.C4)
 					wait(0.1)
