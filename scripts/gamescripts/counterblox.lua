@@ -380,8 +380,7 @@ local function KILL_LOOP(plrs)
 	end)
 end
 
-
-local ScreenGui = Instance.new("ScreenGui")
+local ScreenGui = library.base
 local SPECTATORS_LIST = Instance.new("Frame")
 local UIListLayout = Instance.new("UIListLayout")
 local TOP_BAR = Instance.new("TextLabel")
@@ -391,9 +390,6 @@ local PLR_NIL_3 = Instance.new("TextLabel")
 local BOTTOM_BAR = Instance.new("TextLabel")
 local UICorner = Instance.new("UICorner")
 local UICorner_2 = Instance.new("UICorner")
-
-ScreenGui.Parent = game:WaitForChild("CoreGui")
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 SPECTATORS_LIST.Name = "SPECTATORS_LIST"
 SPECTATORS_LIST.Parent = ScreenGui
@@ -471,7 +467,6 @@ spawn(function()
     end)
     end
 end)
-
 
 local AimbotTab = MainWindow:CreateTab("Aimbot")
 local RageTab = MainWindow:CreateTab("Rage")
@@ -885,9 +880,7 @@ MiscellaneousTabCategoryMain:AddToggle("Disable Chat Filter", false, function(va
 end)
 
 MiscellaneousTabCategoryMain:AddToggle("Spectators List", false, function(val)
-	pcall(function()
-		SPECTATORS_LIST.Visible = not val
-	end)
+	SPECTATORS_LIST.Visible = not val
 end)
 
 
