@@ -923,7 +923,7 @@ SettingsTabCategoryMain:AddButton("Crash Server", function()
 end)
 
 SettingsTabCategoryMain:AddButton("Copy Discord Invite", function()
-	setclipboard("https://discord.gg/uySBpqD")
+	setclipboard("https://discord.gg/47YH2Ay")
 end)
 
 SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
