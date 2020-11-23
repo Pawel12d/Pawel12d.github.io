@@ -883,7 +883,10 @@ MiscellaneousTabCategoryMovement:AddButton("Inf HP", function()
 end)
 
 MiscellaneousTabCategoryMovement:AddButton("FE God", function()
-	
+	pcall(function()
+		game.Players.LocalPlayer.Character.Humanoid:Remove()
+		Instance.new("Humanoid", game.Players.LocalPlayer.Character)
+	end)
 end)
 
 local MiscellaneousTabCategoryBypasses = MiscellaneousTab:AddCategory("Bypasses")
