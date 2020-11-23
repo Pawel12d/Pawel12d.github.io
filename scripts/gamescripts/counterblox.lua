@@ -380,7 +380,7 @@ local function KILL_LOOP(plrs)
 	end)
 end
 
-local ScreenGui = library.base
+local SPECTATORS_BASE = Instance.new("ScreenGui")
 local SPECTATORS_LIST = Instance.new("Frame")
 local UIListLayout = Instance.new("UIListLayout")
 local TOP_BAR = Instance.new("TextLabel")
@@ -390,6 +390,9 @@ local PLR_NIL_3 = Instance.new("TextLabel")
 local BOTTOM_BAR = Instance.new("TextLabel")
 local UICorner = Instance.new("UICorner")
 local UICorner_2 = Instance.new("UICorner")
+
+SPECTATORS_BASE.Name = "SPECTATORS_BASE"
+SPECTATORS_BASE.Parent = game:WaitForChild("CoreGui")
 
 SPECTATORS_LIST.Name = "SPECTATORS_LIST"
 SPECTATORS_LIST.Parent = ScreenGui
@@ -426,7 +429,7 @@ spawn(function()
     while true do
         pcall(function()
         wait(0.5)
-        if SPECTATORS_LIST.Visible == true then
+        if SPECTATORS_BASE.Enabled == true then
             for i,v in pairs(SPECTATORS_LIST:GetChildren()) do
                 if v:IsA("TextLabel") and v.Name ~= "TOP_BAR" then
                     v:Remove()
@@ -880,7 +883,7 @@ MiscellaneousTabCategoryMain:AddToggle("Disable Chat Filter", false, function(va
 end)
 
 MiscellaneousTabCategoryMain:AddToggle("Spectators List", false, function(val)
-	SPECTATORS_LIST.Visible = not val
+	SPECTATORS_BASE.Enabled = val
 end)
 
 
@@ -940,7 +943,7 @@ end)
 
 MiscellaneousTabCategoryBypasses:AddToggle("No Smoke Effect", false, function(val)
 	pcall(function()
-	getgenv().HexHubSettings.tempsettings.counterblox.NoSmokeEffect = val
+		getgenv().HexHubSettings.tempsettings.counterblox.NoSmokeEffect = val
 	end)
 end)
 
