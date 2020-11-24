@@ -1157,7 +1157,7 @@ mt.__namecall = newcclosure(function(self, ...)
 			obj.Size = Vector3.new(0.2, 0.2, 0.2)
 			obj.Anchored = true
 			obj.Parent = workspace
-			obj.Position = workspace:FindPartOnRay(args[1], (silentaimtarget.Character[tostring(getgenv().HexHubSettings.permsettings.aimbotbase.AimPart)].Position, true, true)
+			obj.Position = workspace:FindPartOnRay(args[1], true, true)
 		end
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
