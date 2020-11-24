@@ -1153,6 +1153,11 @@ mt.__namecall = newcclosure(function(self, ...)
 			if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and silentaimtarget ~= nil and silentaimtarget.Character then
 				args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (silentaimtarget.Character[tostring(getgenv().HexHubSettings.permsettings.aimbotbase.AimPart)].Position - workspace.CurrentCamera.CFrame.Position).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
 			end
+			local obj = Instance.new("Part")
+			obj.Size = Vector3.new(0.2, 0.2, 0.2)
+			obj.Anchored = true
+			obj.Parent = workspace
+			obj.Position = workspace:FindPartOnRay(args[1], (silentaimtarget.Character[tostring(getgenv().HexHubSettings.permsettings.aimbotbase.AimPart)].Position, true, true)
 		end
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
