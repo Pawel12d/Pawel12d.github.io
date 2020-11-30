@@ -1179,8 +1179,8 @@ mt.__namecall = newcclosure(function(self, ...)
 				BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -BulletTracers.Size.Z / 2)
 				BulletTracers.Name = "BulletTracers"
 				BulletTracers.Parent = workspace
-				wait(3)
-				BulletTracers.Parent = nil
+				wait(5)
+				BulletTracers:Remove()
 			end)
 			spawn(function() -- bullet impacts
 				BulletImpacts = Instance.new("Part")
@@ -1192,8 +1192,8 @@ mt.__namecall = newcclosure(function(self, ...)
 				BulletImpacts.CFrame = CFrame.new(args[2])
 				BulletImpacts.Name = "BulletImpacts"
 				BulletImpacts.Parent = workspace
-				wait(3)
-				BulletImpacts.Parent = nil
+				wait(5)
+				BulletImpacts:Remove()
 			end)
 		elseif self.Name == "ControlTurn" then
 			if getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled == true and callingscript == game.Players.LocalPlayer.PlayerGui.Client then
