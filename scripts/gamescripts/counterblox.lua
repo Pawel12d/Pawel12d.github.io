@@ -1178,9 +1178,9 @@ mt.__namecall = newcclosure(function(self, ...)
 				BulletTracers.Size = Vector3.new(0.1, 0.1, (game.Players.LocalPlayer.Character.Head.CFrame.p - args[2]).magnitude)
 				BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -BulletTracers.Size.Z / 2)
 				BulletTracers.Name = "BulletTracers"
-				BulletTracers.Parent = nil
+				BulletTracers.Parent = workspace
 				wait(3)
-				BulletTracers:Remove()
+				BulletTracers.Parent = nil
 			end)
 			spawn(function() -- bullet impacts
 				BulletImpacts = Instance.new("Part")
