@@ -1179,9 +1179,9 @@ mt.__namecall = newcclosure(function(self, ...)
 				BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -BulletTracers.Size.Z / 2)
 				BulletTracers.Name = "BulletTracers"
 				BulletTracers.Parent = workspace
-				for i= 1,60*3 do
+				for i=1,100 do
 					wait()
-					BulletTracers.Transparency = i / (60 * 3)
+					BulletTracers.Transparency = i/100
 				end
 				BulletTracers:Destroy()
 			end)
