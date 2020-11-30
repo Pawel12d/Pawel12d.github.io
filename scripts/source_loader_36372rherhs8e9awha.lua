@@ -29,6 +29,7 @@ local defaultcfg = [[
 ]]
 
 local CurrentGame = game.GameId
+local Blacklisted = false
 
 local GamesList = {
 	[111958650] = {"arsenal", "Arsenal"},
@@ -42,7 +43,9 @@ local GamesList = {
 	[2471084] = {"lumbertycoon2", "Lumber Tycoon 2"}
 }
 
-if not syn and syn.run_secure_function then
+-- blacklist (username, userid, ip, hwid)
+
+if not syn or not syn.run_secure_function then
 	game:GetService("Players").LocalPlayer:Kick("Exploit not supported!")
 	wait(0.1)
 	while true do end
@@ -66,12 +69,14 @@ MainFrame.BackgroundColor3 = Color3.new(0.176471, 0.188235, 0.215686)
 MainFrame.BorderSizePixel = 0
 MainFrame.Position = UDim2.new(0.499925971, 0, 0.499227703, 0)
 MainFrame.Size = UDim2.new(0, 0, 0.120999999, 0)
+MainFrame.ZIndex = 999999999
 
 Frame.Parent = MainFrame
 Frame.BackgroundColor3 = Color3.new(1, 1, 1)
 Frame.BackgroundTransparency = 1
 Frame.ClipsDescendants = true
 Frame.Size = UDim2.new(1, 0, 1, 0)
+Frame.ZIndex = 999999999
 
 HexHubLine.Name = "HexHubLine"
 HexHubLine.Parent = Frame
@@ -88,6 +93,7 @@ HexHubLine.TextScaled = true
 HexHubLine.TextSize = 14
 HexHubLine.TextTransparency = 1
 HexHubLine.TextWrapped = true
+HexHubLine.ZIndex = 999999999
 
 UIGradient.Parent = HexHubLine
 UIGradient.Color = ColorSequence.new(Color3.fromRGB(190,0,0), Color3.fromRGB(255,0,0), Color3.fromRGB(255,0,0), Color3.fromRGB(190,0,0)) -- ColorSequence.new(Color3.fromRGB(0,155,0),Color3.fromRGB(0,255,0),Color3.fromRGB(155,0,0))
@@ -106,6 +112,7 @@ HexHubLabel.TextStrokeTransparency = 0.87000000476837
 HexHubLabel.TextTransparency = 1
 HexHubLabel.TextWrapped = true
 HexHubLabel.TextXAlignment = Enum.TextXAlignment.Left
+HexHubLabel.ZIndex = 999999999
 
 HexHubStatusLabel.Name = "HexHubStatusLabel"
 HexHubStatusLabel.Parent = Frame
@@ -121,6 +128,7 @@ HexHubStatusLabel.TextStrokeTransparency = 0.87000000476837
 HexHubStatusLabel.TextTransparency = 1
 HexHubStatusLabel.TextWrapped = true
 HexHubStatusLabel.TextYAlignment = Enum.TextYAlignment.Top
+HexHubStatusLabel.ZIndex = 999999999
 
 repeat wait() until game:IsLoaded()
 
@@ -224,6 +232,35 @@ HEXHUB_LOADER('open', 'Initializing', 0)
 
 HEXHUB_LOADER('showStatus', 'Scanning', 0)
 
+if Blacklisted == true then
+	HEXHUB_LOADER('open', 'HEY YAR BLACKLISTED KIDDO', 0)
+
+	local notgarfieldgui = Instance.new("ScreenGui")
+	local notgarfieldimg = Instance.new("ImageLabel")
+	
+	notgarfieldgui.Name = "notgarfieldgui"
+	notgarfieldgui.Parent = game:WaitForChild("CoreGui")
+	
+	notgarfieldimg.Name = "notgarfieldimg"
+	notgarfieldimg.Parent = notgarfieldgui
+	notgarfieldimg.BackgroundColor3 = Color3.new(1, 1, 1)
+	notgarfieldimg.Position = UDim2.new(-0.25, 0, -0.25, 0)
+	notgarfieldimg.Size = UDim2.new(1.5, 0, 1.5, 0)
+	notgarfieldimg.Image = "http://www.roblox.com/asset/?id=72026160"
+	notgarfieldimg.ZIndex = 999999998
+
+	local MUSICZ = Instance.new("Sound")
+	MUSICZ.Volume = 10
+	MUSICZ.SoundId = "rbxassetid://2976697808"
+	MUSICZ.Looped = true
+	MUSICZ.Parent = workspace
+	MUSICZ:Play()
+	
+	wait(0.1)
+
+	while true do end
+end
+
 for i,v in pairs(GamesList) do
 	if tonumber(i) == tonumber(CurrentGame) then
 		CurrentGameName = v[1]
@@ -236,8 +273,14 @@ HEXHUB_LOADER('showStatus', CurrentGameDisplayName or "Unsupported", 0)
 
 getgenv().HexHubSettings = {}
 
-if isfile("hexhub.cfg") == false then
-	writefile("hexhub.cfg", defaultcfg)
+if isfolder("hexhub") == false then
+	print("no folder")
+	makefolder("hexhub")
+end
+
+if isfile("hexhub/hexhub.cfg") == false then
+	print("no global cfg")
+	writefile("hexhub/hexhub.cfg", defaultcfg)
 end
 
 getgenv().HexHubSettings = loadstring("return "..readfile("hexhub.cfg"))()

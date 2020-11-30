@@ -62,7 +62,7 @@ local PrisonLifeWaypoints = {
 	["Test"] = CFrame.new(0, 500, 0)
 }
 
-local library = loadstring(syn.request({Url = "http://hexhub.xyz/scripts/uilibrary.lua", Method = "GET"}).Body)()
+local library = loadstring(syn.request({Url = "https://raw.githubusercontent.com/Pawel12d/hexhub.github.io/master/scripts/uilibrary.lua", Method = "GET"}).Body)()
 local MainWindow = library:CreateWindow(Vector2.new(500, 500), Vector2.new(120, 120))
 
 local LocalTab = MainWindow:CreateTab("Local")
@@ -387,8 +387,8 @@ MiscellaneousTabCategoryTrolling:AddButton("Lift the weight", function()
 	if a == 1 then cool = 2552.93018 else cool = 2536.93018 end
 	
 	game.Players.LocalPlayer.Character.Humanoid.Sit = true
-	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(768.998718, 98.1000595, cool, -4.37113883e-08, -1, 4.37113883e-08, -4.37113918e-08, -4.37113847e-08, -1, 1, -4.37113918e-08, -4.37113883e-08)
+	game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 	print("done1")
 	repeat wait() until (game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.Space) and game:GetService("UserInputService"):GetFocusedTextBox() == nil)
 	print("done2")
