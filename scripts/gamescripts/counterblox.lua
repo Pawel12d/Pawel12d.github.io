@@ -1169,7 +1169,7 @@ mt.__namecall = newcclosure(function(self, ...)
 			return wait(99e99)
 		elseif self.Name == "HitPart" then
 			args[8] = getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier or 1
-			spawn(function()
+			spawn(function() -- bullet tracers
 				BulletTracers = Instance.new("Part")
 				BulletTracers.Anchored = true
 				BulletTracers.CanCollide = false
@@ -1181,8 +1181,21 @@ mt.__namecall = newcclosure(function(self, ...)
 				BulletTracers.Parent = workspace
 				wait(3)
 				BulletTracers:Destroy()
-				print("FINISH HIM")
+				print("Tracer Removed")
 			end)
+			spawn(function()
+				BulletImpacts = Instance.new("Part")
+				BulletImpacts.Anchored = true
+				BulletImpacts.CanCollide = false
+				BulletImpacts.Material = "ForceField"
+				BulletImpacts.Color = Color3.new(1, 0, 0)
+				BulletImpacts.Size = Vector3.new(0.25, 0.25, 0.25)
+				BulletImpacts.CFrame = CFrame.new(args[2])
+				BulletImpacts.Name = "BulletImpacts"
+				BulletImpacts.Parent = workspace
+				wait(3)
+				BulletImpacts:Remove()
+				print("Impact Removed")
 		elseif self.Name == "ControlTurn" then
 			if getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled == true and callingscript == game.Players.LocalPlayer.PlayerGui.Client then
 				return
