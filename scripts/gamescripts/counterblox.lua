@@ -1179,11 +1179,12 @@ mt.__namecall = newcclosure(function(self, ...)
 				BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -BulletTracers.Size.Z / 2)
 				BulletTracers.Name = "BulletTracers"
 				BulletTracers.Parent = workspace
-				for i=1,100 do
-					wait()
-					BulletTracers.Transparency = i/100
+				for i=0.01,1,0.01 do
+					wait(0.01)
+					BulletTracers.Transparency = i
 				end
 				BulletTracers:Destroy()
+				print("FINISH HIM")
 			end)
 		elseif self.Name == "ControlTurn" then
 			if getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled == true and callingscript == game.Players.LocalPlayer.PlayerGui.Client then
