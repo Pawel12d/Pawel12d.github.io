@@ -1170,14 +1170,15 @@ mt.__namecall = newcclosure(function(self, ...)
 		elseif self.Name == "HitPart" then
 			args[8] = getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier or 1
 			spawn(function()
-				local BulletTracers = Instance.new("Part", workspace)
+				local BulletTracers = Instance.new("Part")
 				BulletTracers.Anchored = true
 				BulletTracers.CanCollide = false
 				BulletTracers.Material = "ForceField"
 				BulletTracers.Color = Color3.fromRGB(0, 0, 255)
 				BulletTracers.Size = Vector3.new(0.1, 0.1, (game.Players.LocalPlayer.Character.Head.CFrame.p - args[2]).magnitude)
-				BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -beam.Size.Z / 2)
+				BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -BulletTracers.Size.Z / 2)
 				BulletTracers.Name = "BulletTracers"
+				BulletTracers.Parent = workspace
 
 				for i = 1, 60 * 3 do
 					wait()
