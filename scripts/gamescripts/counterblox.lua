@@ -1182,7 +1182,7 @@ mt.__namecall = newcclosure(function(self, ...)
 				wait(3)
 				BulletTracers:Remove()
 			end)
-			spawn(function()
+			spawn(function() -- bullet impacts
 				BulletImpacts = Instance.new("Part")
 				BulletImpacts.Anchored = true
 				BulletImpacts.CanCollide = false
