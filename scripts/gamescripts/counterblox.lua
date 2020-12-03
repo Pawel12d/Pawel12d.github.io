@@ -948,11 +948,13 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 				newvalue.Value = v
 				newvalue.Parent = newfolder
 			end
-	
-			newvalue1 = Instance.new("StringValue")
-			newvalue1.Name = tbl.skinname
-			newvalue1.Value = tbl.skinimage
-			newvalue1.Parent = game.Players.LocalPlayer.PlayerGui.Client.Images[tbl.weaponname]
+			
+			if tbl.skinimage ~= nil then
+				newvalue1 = Instance.new("StringValue")
+				newvalue1.Name = tbl.skinname
+				newvalue1.Value = tbl.skinimage
+				newvalue1.Parent = game.Players.LocalPlayer.PlayerGui.Client.Images[tbl.weaponname]
+			end
 			
 			if tbl.skinrarity ~= nil then
 				newvalue2 = Instance.new("StringValue")
