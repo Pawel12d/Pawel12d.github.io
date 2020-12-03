@@ -929,7 +929,7 @@ SettingsTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
 end)
 
 SettingsTabCategoryMain:AddToggle("Spectators List", false, function(val)
-	SPECTATORS_BASE.Enabled = val
+	game.CoreGui["SPECTATORS_BASE"].Enabled = val
 end)
 
 SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
