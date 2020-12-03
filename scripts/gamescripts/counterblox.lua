@@ -376,7 +376,7 @@ SPECTATORS_BASE.Name = "SPECTATORS_BASE"
 SPECTATORS_BASE.Parent = game:WaitForChild("CoreGui")
 
 SPECTATORS_LIST.Name = "SPECTATORS_LIST"
-SPECTATORS_LIST.Parent = ScreenGui
+SPECTATORS_LIST.Parent = SPECTATORS_BASE
 SPECTATORS_LIST.BackgroundColor3 = Color3.new(0.235294, 0.235294, 0.235294)
 SPECTATORS_LIST.BackgroundTransparency = 1
 SPECTATORS_LIST.BorderSizePixel = 0
@@ -929,7 +929,7 @@ SettingsTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
 end)
 
 SettingsTabCategoryMain:AddToggle("Spectators List", false, function(val)
-	game.CoreGui["SPECTATORS_BASE"].Enabled = val
+	SPECTATORS_BASE.Enabled = val
 end)
 
 SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
