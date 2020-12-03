@@ -955,7 +955,7 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 				newvalue1.Value = tbl.skinimage
 				newvalue1.Parent = game.Players.LocalPlayer.PlayerGui.Client.Images[tbl.weaponname]
 			end
-			
+
 			if tbl.skinrarity ~= nil then
 				newvalue2 = Instance.new("StringValue")
 				newvalue2.Name = "Quality"
@@ -1249,7 +1249,7 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithWhitelist" then
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
-		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and rawget(args[2], workspace.Debris) and game.Players.LocalPlayer.Character then
+		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and args[2][1].Name == "Debris" and game.Players.LocalPlayer.Character then
 			print("yos", unpack(args[2]))
 
 			if getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
