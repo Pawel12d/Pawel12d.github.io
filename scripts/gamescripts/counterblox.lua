@@ -28,7 +28,7 @@ for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTabl
 for i,v in pairs(game.ReplicatedStorage.Cases:GetChildren()) do table.insert(AllCasesTable, v.Name) end
 for i,v in pairs(workspace.Sounds:GetChildren()) do table.insert(AllSoundsTable, v.Name) end
 for i,v in pairs(Enum.Material:GetEnumItems()) do table.insert(AllMaterialsTable, v.Name) end
-
+--[[
 for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
 	if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
 		for i,c in pairs(v:GetChildren()) do
@@ -50,7 +50,7 @@ for i,v in pairs(game.ReplicatedStorage.Gloves:GetChildren()) do
 		end
 	end
 end
-
+--]]
 local mouse = game:GetService("Players").LocalPlayer:GetMouse()
 local CurrentCamera = workspace.CurrentCamera
 
@@ -989,7 +989,7 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 		weaponname = "AWP",
 		skinname = "TestSkin",
 		skinimage = "http://www.roblox.com/asset/?id=227114292",
-		skinrarity = "Red", -- "Red" "Pink" "Purple" "Blue" "Knife" "Finite" "Contraband"
+		skinrarity = "Red", -- "Blue" "Purple" "Pink" "Red" "Knife" "Finite" "Contraband"
 		model = {
 			["Handle"] = "http://www.roblox.com/asset/?id=1888432391",
 			["Mag"] = "http://www.roblox.com/asset/?id=1888432391",
