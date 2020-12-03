@@ -929,7 +929,7 @@ SettingsTabCategoryMain:AddToggle("Disable Chat Filter", false, function(val)
 end)
 
 SettingsTabCategoryMain:AddToggle("Spectators List", false, function(val)
-	SPECTATORS_BASE.Enabled = not val
+	SPECTATORS_BASE.Enabled = val
 end)
 
 SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
@@ -1383,64 +1383,16 @@ spawn(function()
 	end
 end)
 
--- Custom Skins?
+local HexHubVisualEffects = Instance.new("Folder")
+HexHubVisualEffects.Name = "HexHubVisualEffects"
+HexHubVisualEffects.Parent = game.Lighting
 
-local TestSkin = Instance.new("Folder")
-TestSkin.Name = "TestSkin"
-TestSkin.Parent = game.ReplicatedStorage.Skins.AWP
+local HHVEColorCorrectionEffect = Instance.new("ColorCorrectionEffect")
+HHVEColorCorrectionEffect.TintColor = Color3.fromRGB(255, 0, 255)
+HHVEColorCorrectionEffect.Enabled = true
+HHVEColorCorrectionEffect.Parent = HexHubVisualEffects
 
-local TestSkinWorldModel = Instance.new("Folder")
-TestSkinWorldModel.Name = "WorldModel"
-TestSkinWorldModel.Parent = TestSkin
-
-local TestSkinHandle = Instance.new("StringValue")
-TestSkinHandle.Name = "Handle"
-TestSkinHandle.Value = "http://www.roblox.com/asset/?id=1888432391"
-TestSkinHandle.Parent = TestSkin
-
-local TestSkinMag = Instance.new("StringValue")
-TestSkinMag.Name = "Mag"
-TestSkinMag.Value = "http://www.roblox.com/asset/?id=1888432391"
-TestSkinMag.Parent = TestSkin
-
-local TestSkinPart = Instance.new("StringValue")
-TestSkinPart.Name = "Part"
-TestSkinPart.Value = "http://www.roblox.com/asset/?id=1888432391"
-TestSkinPart.Parent = TestSkin
-
-local TestSkinScope = Instance.new("StringValue")
-TestSkinScope.Name = "Scope"
-TestSkinScope.Value = "http://www.roblox.com/asset/?id=1888432391"
-TestSkinScope.Parent = TestSkin
-
-local TestSkinSlide = Instance.new("StringValue")
-TestSkinSlide.Name = "Slide"
-TestSkinSlide.Value = "http://www.roblox.com/asset/?id=1888432391"
-TestSkinSlide.Parent = TestSkin
-
-local TestSkinSlide2 = Instance.new("StringValue")
-TestSkinSlide2.Name = "Slide 2"
-TestSkinSlide2.Value = "http://www.roblox.com/asset/?id=1888432391"
-TestSkinSlide2.Parent = TestSkin
-
-
-
-local TestSkinImage = Instance.new("StringValue")
-TestSkinImage.Name = "TestSkin"
-TestSkinImage.Value = "http://www.roblox.com/asset/?id=227114292"
-TestSkinImage.Parent = game.Players.LocalPlayer.PlayerGui.Client.Images.AWP
-
-local TestSkinImageQuality = Instance.new("StringValue")
-TestSkinImageQuality.Value = "Red"
-TestSkinImageQuality.Name = "Quality"
-TestSkinImageQuality.Parent = TestSkinImage
-
-
-
-local TestSkinQuality = Instance.new("StringValue")
-TestSkinQuality.Value = "Red"
-TestSkinQuality.Name = "AWP_TestSkin"
-TestSkinQuality.Parent = game.Players.LocalPlayer.PlayerGui.Client.Rarities
+game.Lighting
 --]]
 MainWindow.close = false
 
