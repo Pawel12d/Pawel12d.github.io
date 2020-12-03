@@ -20,7 +20,6 @@ local LaunchTick = tick()
 -- tables & stuff
 local oldinv = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client")).CurrentInventory
 local SkinsTableNames = {}; 
-local AllSkinsTable = {}
 local AllCasesTable = {}
 local AllSoundsTable = {}
 local AllMaterialsTable = {}
@@ -955,6 +954,75 @@ SettingsTabCategoryMain:AddToggle("Spectators List", false, function(val)
 	SPECTATORS_BASE.Enabled = not val
 end)
 
+SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
+	local function ADD_CUSTOM_SKIN(tbl)
+		if tbl and tbl.weaponname and tbl.skinname and tbl.model then
+			newfolder = Instance.new("Folder")
+			newfolder.Name = tbl.skinname
+			newfolder.Parent = game.ReplicatedStorage.Skins[tbl.weaponname]
+	
+			for i,v in pairs(tbl.model) do
+				newvalue = Instance.new("StringValue")
+				newvalue.Name = i
+				newvalue.Value = v
+				newvalue.Parent = newfolder
+			end
+	
+			newvalue1 = Instance.new("StringValue")
+			newvalue1.Name = tbl.skinname
+			newvalue1.Value = tbl.skinimage
+			newvalue1.Parent = game.Players.LocalPlayer.PlayerGui.Client.Images[tbl.weaponname]
+	
+			newvalue2 = Instance.new("StringValue")
+			newvalue2.Name = "Quality"
+			newvalue2.Value = tbl.skinrarity
+			newvalue2.Parent = newvalue1
+	
+			newvalue3 = Instance.new("StringValue")
+			newvalue3.Name = tostring(tbl.weaponname.."_"..tbl.skinname)
+			newvalue3.Value = tbl.skinrarity
+			newvalue3.Parent = game.Players.LocalPlayer.PlayerGui.Client.Rarities
+		end
+	end
+	
+	ADD_CUSTOM_SKIN({
+		weaponname = "AWP",
+		skinname = "TestSkin",
+		skinimage = "http://www.roblox.com/asset/?id=227114292",
+		skinrarity = "Red", -- "Red" "Pink" "Purple" "Blue" "Knife" "Finite" "Contraband"
+		model = {
+			["Handle"] = "http://www.roblox.com/asset/?id=1888432391",
+			["Mag"] = "http://www.roblox.com/asset/?id=1888432391",
+			["Part"] = "http://www.roblox.com/asset/?id=1888432391",
+			["Scope"] = "http://www.roblox.com/asset/?id=1888432391",
+			["Slide"] = "http://www.roblox.com/asset/?id=1888432391",
+			["Slide 2"] = "http://www.roblox.com/asset/?id=1888432391"
+		}
+	})
+	
+	ADD_CUSTOM_SKIN({
+		weaponname = "AK47",
+		skinname = "Weeb",
+		skinimage = "http://www.roblox.com/asset/?id=5645176510",
+		skinrarity = "Red",
+		model = {
+			["Mag"] = "http://www.roblox.com/asset/?id=5645176510",
+			["Handle"] = "http://www.roblox.com/asset/?id=5645176510",
+			["Bolt"] = "http://www.roblox.com/asset/?id=5645176510"
+		}
+	})
+
+	ADD_CUSTOM_SKIN({
+		weaponname = "Bayonet",
+		skinname = "Fade",
+		skinimage = "http://www.roblox.com/asset/?id=227114292",
+		skinrarity = "Red",
+		model = {
+			["Handle"] = "http://www.roblox.com/asset/?id=5638182181"
+		}
+	})
+end)
+
 SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
 	local oldSkinsCT = game.Players.LocalPlayer.SkinFolder.CTFolder:Clone()
 	local oldSkinsT = game.Players.LocalPlayer.SkinFolder.TFolder:Clone()
@@ -966,6 +1034,30 @@ SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Defau
 	elseif tostring(val) == "Default" then
 		cbClient.CurrentInventory = oldinv
 	elseif tostring(val) == "All" then
+		AllSkinsTable = {}
+
+		for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
+			if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
+				for i,c in pairs(v:GetChildren()) do
+					table.insert(AllSkinsTable, {v.Name.."_"..c.Name})
+				end
+			end
+		end
+		
+		for i,v in pairs(game.ReplicatedStorage.Gloves:GetChildren()) do
+			if v:FindFirstChild("Type") then
+				local GloveType = 
+					(v.Type.Value == "Straps" and "Strapped Glove") or
+					(v.Type.Value == "Wraps" and "Handwraps") or
+					(v.Type.Value == "Sports" and "Sports Glove") or
+					(v.Type.Value == "Fingerless" and "Fingerless Glove")
+					
+				if GloveType then
+					table.insert(AllSkinsTable, {GloveType.."_"..v.Name})
+				end
+			end
+		end
+
 		cbClient.CurrentInventory = AllSkinsTable
 	end
 
@@ -1277,6 +1369,65 @@ spawn(function()
 		end
 	end
 end)
+
+-- Custom Skins?
+
+local TestSkin = Instance.new("Folder")
+TestSkin.Name = "TestSkin"
+TestSkin.Parent = game.ReplicatedStorage.Skins.AWP
+
+local TestSkinWorldModel = Instance.new("Folder")
+TestSkinWorldModel.Name = "WorldModel"
+TestSkinWorldModel.Parent = TestSkin
+
+local TestSkinHandle = Instance.new("StringValue")
+TestSkinHandle.Name = "Handle"
+TestSkinHandle.Value = "http://www.roblox.com/asset/?id=1888432391"
+TestSkinHandle.Parent = TestSkin
+
+local TestSkinMag = Instance.new("StringValue")
+TestSkinMag.Name = "Mag"
+TestSkinMag.Value = "http://www.roblox.com/asset/?id=1888432391"
+TestSkinMag.Parent = TestSkin
+
+local TestSkinPart = Instance.new("StringValue")
+TestSkinPart.Name = "Part"
+TestSkinPart.Value = "http://www.roblox.com/asset/?id=1888432391"
+TestSkinPart.Parent = TestSkin
+
+local TestSkinScope = Instance.new("StringValue")
+TestSkinScope.Name = "Scope"
+TestSkinScope.Value = "http://www.roblox.com/asset/?id=1888432391"
+TestSkinScope.Parent = TestSkin
+
+local TestSkinSlide = Instance.new("StringValue")
+TestSkinSlide.Name = "Slide"
+TestSkinSlide.Value = "http://www.roblox.com/asset/?id=1888432391"
+TestSkinSlide.Parent = TestSkin
+
+local TestSkinSlide2 = Instance.new("StringValue")
+TestSkinSlide2.Name = "Slide 2"
+TestSkinSlide2.Value = "http://www.roblox.com/asset/?id=1888432391"
+TestSkinSlide2.Parent = TestSkin
+
+
+
+local TestSkinImage = Instance.new("StringValue")
+TestSkinImage.Name = "TestSkin"
+TestSkinImage.Value = "http://www.roblox.com/asset/?id=227114292"
+TestSkinImage.Parent = game.Players.LocalPlayer.PlayerGui.Client.Images.AWP
+
+local TestSkinImageQuality = Instance.new("StringValue")
+TestSkinImageQuality.Value = "Red"
+TestSkinImageQuality.Name = "Quality"
+TestSkinImageQuality.Parent = TestSkinImage
+
+
+
+local TestSkinQuality = Instance.new("StringValue")
+TestSkinQuality.Value = "Red"
+TestSkinQuality.Name = "AWP_TestSkin"
+TestSkinQuality.Parent = game.Players.LocalPlayer.PlayerGui.Client.Rarities
 --]]
 MainWindow.close = false
 
