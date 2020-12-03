@@ -953,26 +953,42 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 			newvalue1.Name = tbl.skinname
 			newvalue1.Value = tbl.skinimage
 			newvalue1.Parent = game.Players.LocalPlayer.PlayerGui.Client.Images[tbl.weaponname]
-	
-			newvalue2 = Instance.new("StringValue")
-			newvalue2.Name = "Quality"
-			newvalue2.Value = tbl.skinrarity
-			newvalue2.Parent = newvalue1
-	
-			newvalue3 = Instance.new("StringValue")
-			newvalue3.Name = tostring(tbl.weaponname.."_"..tbl.skinname)
-			newvalue3.Value = tbl.skinrarity
-			newvalue3.Parent = game.Players.LocalPlayer.PlayerGui.Client.Rarities
+			
+			if skinrarity ~= nil then
+				newvalue2 = Instance.new("StringValue")
+				newvalue2.Name = "Quality"
+				newvalue2.Value = tbl.skinrarity
+				newvalue2.Parent = newvalue1
+
+				newvalue3 = Instance.new("StringValue")
+				newvalue3.Name = tostring(tbl.weaponname.."_"..tbl.skinname)
+				newvalue3.Value = tbl.skinrarity
+				newvalue3.Parent = game.Players.LocalPlayer.PlayerGui.Client.Rarities
+			end
 
 			table.insert(nocw, tostring(tbl.weaponname.."_"..tbl.skinname))
 		end
 	end
 	
+	--[[
+	-- "Blue" "Purple" "Pink" "Red" "Knife" "Finite" "Contraband" "Bundle" "Retired"
+	"Blue" - Blue
+	"Purple" - Purple
+	"Pink" - Pink
+	"Red" - Red
+	"Knife" - Gold
+	"Finite"
+	"Contraband" - Green
+	"Bundle" - Black
+	"Retired" - Orange
+	nil - White
+	--]]
+
 	ADD_CUSTOM_SKIN({
 		weaponname = "AWP",
 		skinname = "TestSkin",
 		skinimage = "http://www.roblox.com/asset/?id=227114292",
-		skinrarity = "Red", -- "Blue" "Purple" "Pink" "Red" "Knife" "Finite" "Contraband"
+		skinrarity = "Red",
 		model = {
 			["Handle"] = "http://www.roblox.com/asset/?id=1888432391",
 			["Mag"] = "http://www.roblox.com/asset/?id=1888432391",
@@ -1231,13 +1247,16 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithWhitelist" then
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
-		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and game.Players.LocalPlayer.Character and table.find(args[2], workspace.Debris) then
+		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and game.Players.LocalPlayer.Character and rawget(args[2], workspace.Debris) then
+			print("yos")
 			if getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
 				table.insert(args[2], workspace.Map)
 			end
 			if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and silentaimtarget ~= nil and silentaimtarget.Character then
 				args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (silentaimtarget.Character[tostring(getgenv().HexHubSettings.permsettings.aimbotbase.AimPart)].Position - workspace.CurrentCamera.CFrame.Position).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
 			end
+		else
+			print("nou")
 		end
 	elseif method == "InvokeServer" then
 		if self.Name == "Hugh" then
