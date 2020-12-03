@@ -1203,7 +1203,7 @@ end)
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
 
-setreadonly(mt, false)
+setreadonly(mt, false) -- a
 
 mt.__namecall = newcclosure(function(self, ...)
     local method = tostring(getnamecallmethod())
