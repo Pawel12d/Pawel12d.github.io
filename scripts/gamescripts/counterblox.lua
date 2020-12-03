@@ -1247,7 +1247,7 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithWhitelist" then
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
-		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and game.Players.LocalPlayer.Character and rawget(args[2], workspace.Debris) then
+		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and game.Players.LocalPlayer.Character and table.find(args[2], workspace.Debris) == true then
 			print("yos")
 			if getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
 				table.insert(args[2], workspace.Map)
