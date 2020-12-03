@@ -1004,6 +1004,16 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 			["Handle"] = "http://www.roblox.com/asset/?id=5638182181"
 		}
 	})
+
+	ADD_CUSTOM_SKIN({
+		weaponname = "Banana",
+		skinname = "Kielbasa",
+		skinimage = "http://www.roblox.com/asset/?id=24650385",
+		skinrarity = "Contraband",
+		model = {
+			["Handle"] = "http://www.roblox.com/asset/?id=661123557"
+		}
+	})
 end)
 
 SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
