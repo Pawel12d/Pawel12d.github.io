@@ -28,29 +28,7 @@ for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTabl
 for i,v in pairs(game.ReplicatedStorage.Cases:GetChildren()) do table.insert(AllCasesTable, v.Name) end
 for i,v in pairs(workspace.Sounds:GetChildren()) do table.insert(AllSoundsTable, v.Name) end
 for i,v in pairs(Enum.Material:GetEnumItems()) do table.insert(AllMaterialsTable, v.Name) end
---[[
-for i,v in pairs(game.ReplicatedStorage.Skins:GetChildren()) do
-	if v:IsA("Folder") and game.ReplicatedStorage.Weapons:FindFirstChild(v.Name) then
-		for i,c in pairs(v:GetChildren()) do
-			table.insert(AllSkinsTable, {v.Name.."_"..c.Name})
-		end
-	end
-end
 
-for i,v in pairs(game.ReplicatedStorage.Gloves:GetChildren()) do
-	if v:FindFirstChild("Type") then
-		local GloveType = 
-			(v.Type.Value == "Straps" and "Strapped Glove") or
-			(v.Type.Value == "Wraps" and "Handwraps") or
-			(v.Type.Value == "Sports" and "Sports Glove") or
-			(v.Type.Value == "Fingerless" and "Fingerless Glove")
-			
-		if GloveType then
-			table.insert(AllSkinsTable, {GloveType.."_"..v.Name})
-		end
-	end
-end
---]]
 local mouse = game:GetService("Players").LocalPlayer:GetMouse()
 local CurrentCamera = workspace.CurrentCamera
 
@@ -955,6 +933,9 @@ SettingsTabCategoryMain:AddToggle("Spectators List", false, function(val)
 end)
 
 SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
+	if getgenv().nocw then return end
+	getgenv().nocw = {}
+
 	local function ADD_CUSTOM_SKIN(tbl)
 		if tbl and tbl.weaponname and tbl.skinname and tbl.model then
 			newfolder = Instance.new("Folder")
@@ -982,6 +963,8 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 			newvalue3.Name = tostring(tbl.weaponname.."_"..tbl.skinname)
 			newvalue3.Value = tbl.skinrarity
 			newvalue3.Parent = game.Players.LocalPlayer.PlayerGui.Client.Rarities
+
+			table.insert(nocw, tostring(tbl.weaponname.."_"..tbl.skinname))
 		end
 	end
 	
@@ -1238,7 +1221,7 @@ mt.__namecall = newcclosure(function(self, ...)
     elseif method == "FindPartOnRayWithWhitelist" then
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
-		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and game.Players.LocalPlayer.Character then
+		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and game.Players.LocalPlayer.Character and table.find(args[2], workspace.Debris) then
 			if getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
 				table.insert(args[2], workspace.Map)
 			end
