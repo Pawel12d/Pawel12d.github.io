@@ -361,6 +361,8 @@ local function KILL_LOOP(plrs)
 	end)
 end
 
+-- spectators list
+
 local SPECTATORS_BASE = Instance.new("ScreenGui")
 local SPECTATORS_LIST = Instance.new("Frame")
 local UIListLayout = Instance.new("UIListLayout")
