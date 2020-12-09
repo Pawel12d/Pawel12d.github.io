@@ -1367,7 +1367,7 @@ mt.__newindex = newcclosure(function(self, idx, val)
     local method = getnamecallmethod()
     local callingscript = getcallingscript()
 
-    if callingscript == game.Players.LocalPlayer.PlayerGui.Client and self == game.Players.LocalPlayer.Character.Humanoid then
+    if callingscript == game.Players.LocalPlayer.PlayerGui.Client then
 		if idx == "WalkSpeed" then
 			val = 50
 		elseif idx == "JumpPower" then
