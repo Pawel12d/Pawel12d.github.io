@@ -1306,6 +1306,8 @@ mt.__namecall = newcclosure(function(self, ...)
 			if getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled == true and callingscript == game.Players.LocalPlayer.PlayerGui.Client then
 				return
 			end
+		elseif self.Name == "ReplicateCamera" then
+			args[1] = game.Players.LocalPlayer.Character.Head.CFrame
 		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 			local MainTable = args[1]
 			local ItemTable = args[1][4]
@@ -1358,6 +1360,24 @@ mt.__namecall = newcclosure(function(self, ...)
 	
 	return oldNamecall(self, unpack(args))
 end)
+
+local oldIndex = mt.__newindex
+
+mt.__newindex = newcclosure(function(self, idx, val)
+    local method = getnamecallmethod()
+    local callingscript = getcallingscript()
+
+    if callingscript == game.Players.LocalPlayer.PlayerGui.Client and self == game.Players.LocalPlayer.Character.Humanoid then
+		if idx == "WalkSpeed" then
+			val = 50
+		elseif idx == "JumpPower" then
+			val = 100
+		end
+	end
+
+    return oldIndex(self, idx, val)
+end)
+
 --[[
 spawn(function()
 	for i,v in pairs(getgc(true)) do

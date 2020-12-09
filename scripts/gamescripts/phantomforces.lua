@@ -26,7 +26,21 @@ for i,v in pairs(getgc(true)) do
 	end
 end
 
+-- invis
+local a = game.Players.LocalPlayer.Character
+local b = Instance.new("Seat", workspace)
+b.Size = Vector3.new(3, 1, 1)
 
+local c = Instance.new("Weld", b)
+local d = Instance.new("Weld", a.HumanoidRootPart)
+b.CFrame = CFrame.new(a.HumanoidRootPart.Position)
+c.Part0 = a.HumanoidRootPart
+c.Part1 = b
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(b.Position)
+d.Part0 = a.HumanoidRootPart
+d.Part1 = b
+b.Transparency = 1
 --]]
 
 if not Network or not GameLogic then
