@@ -1034,6 +1034,21 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 			["Handle"] = "http://www.roblox.com/asset/?id=661123557"
 		}
 	})
+
+	ADD_CUSTOM_SKIN({
+		weaponname = "AWP",
+		skinname = "Retribution",
+		skinimage = "http://www.roblox.com/asset/?id=227114292",
+		skinrarity = "Red",
+		model = {
+			["Handle"] = "http://www.roblox.com/asset/?id=430548989",
+			["Mag"] = "http://www.roblox.com/asset/?id=430548989",
+			["Part"] = "http://www.roblox.com/asset/?id=430548989",
+			["Scope"] = "http://www.roblox.com/asset/?id=430548989",
+			["Slide"] = "http://www.roblox.com/asset/?id=430548989",
+			["Slide 2"] = "http://www.roblox.com/asset/?id=430548989"
+		}
+	})
 end)
 
 SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
@@ -1252,7 +1267,7 @@ mt.__namecall = newcclosure(function(self, ...)
 
 	elseif method == "FindPartOnRayWithIgnoreList" then
 		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and args[2][1].Name == "Debris" and game.Players.LocalPlayer.Character then
-			print("yos", unpack(args[2]))
+			--print("yos", unpack(args[2]))
 
 			if getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
 				table.insert(args[2], workspace.Map)
@@ -1307,7 +1322,9 @@ mt.__namecall = newcclosure(function(self, ...)
 				return
 			end
 		elseif self.Name == "ReplicateCamera" then
-			args[1] = game.Players.LocalPlayer.Character.Head.CFrame
+			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Head") then
+				args[1] = game.Players.LocalPlayer.Character.Head.CFrame
+			end
 		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 			local MainTable = args[1]
 			local ItemTable = args[1][4]
@@ -1364,10 +1381,9 @@ end)
 local oldIndex = mt.__newindex
 
 mt.__newindex = newcclosure(function(self, idx, val)
-    local method = getnamecallmethod()
     local callingscript = getcallingscript()
 
-    if callingscript == game.Players.LocalPlayer.PlayerGui.Client and game.Players.LocalPlayer.Character then
+    if callingscript == game.Players.LocalPlayer.PlayerGui.Client and self.Parent = game.Players.LocalPlayer.Character then
 		if idx == "WalkSpeed" then
 			val = 50
 		elseif idx == "JumpPower" then
