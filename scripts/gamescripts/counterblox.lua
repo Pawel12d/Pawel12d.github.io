@@ -1056,12 +1056,16 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 		skinimage = "http://www.roblox.com/asset/?id=227114292",
 		skinrarity = "Red",
 		model = {
+			["Bolt"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Part3"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Bolt2"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Grip2"] = "http://www.roblox.com/asset/?id=2667880777",
 			["Handle"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Handle2"] = "http://www.roblox.com/asset/?id=2667880777",
 			["Mag"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Mag2"] = "http://www.roblox.com/asset/?id=2667880777",
 			["Part"] = "http://www.roblox.com/asset/?id=2667880777",
-			["Scope"] = "http://www.roblox.com/asset/?id=2667880777",
-			["Slide"] = "http://www.roblox.com/asset/?id=2667880777",
-			["Slide 2"] = "http://www.roblox.com/asset/?id=2667880777"
+			["Part2"] = "http://www.roblox.com/asset/?id=2667880777"
 		}
 	})
 end)
