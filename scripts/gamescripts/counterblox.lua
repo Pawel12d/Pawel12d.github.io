@@ -1398,7 +1398,7 @@ local oldIndex = mt.__newindex
 mt.__newindex = newcclosure(function(self, idx, val)
     local callingscript = getcallingscript()
 
-    if callingscript == game.Players.LocalPlayer.PlayerGui.Client and self.Parent = game.Players.LocalPlayer.Character then
+    if callingscript == game.Players.LocalPlayer.PlayerGui.Client and self.Parent == game.Players.LocalPlayer.Character then
 		if idx == "WalkSpeed" then
 			val = 50
 		elseif idx == "JumpPower" then
