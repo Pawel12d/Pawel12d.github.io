@@ -1049,6 +1049,21 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 			["Slide 2"] = "http://www.roblox.com/asset/?id=430548989"
 		}
 	})
+
+	ADD_CUSTOM_SKIN({
+		weaponname = "UMP",
+		skinname = "Retribution",
+		skinimage = "http://www.roblox.com/asset/?id=227114292",
+		skinrarity = "Red",
+		model = {
+			["Handle"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Mag"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Part"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Scope"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Slide"] = "http://www.roblox.com/asset/?id=2667880777",
+			["Slide 2"] = "http://www.roblox.com/asset/?id=2667880777"
+		}
+	})
 end)
 
 SettingsTabCategoryMain:AddDropdown("Inventory Changer", SkinsTableNames, "Default", function(val)
