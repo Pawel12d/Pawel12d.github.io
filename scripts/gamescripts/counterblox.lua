@@ -1436,9 +1436,9 @@ mt.__newindex = newcclosure(function(self, idx, val)
 	end
 
     return oldIndex(self, idx, val)
-end)
+end) 
 --]]
-
+ -- as
 --[[
 spawn(function()
 	for i,v in pairs(getgc(true)) do
