@@ -1052,7 +1052,7 @@ SettingsTabCategoryMain:AddButton("Inject Custom Skins", function()
 
 	ADD_CUSTOM_SKIN({
 		weaponname = "UMP",
-		skinname = "Retribution",
+		skinname = "Mistic",
 		skinimage = "http://www.roblox.com/asset/?id=227114292",
 		skinrarity = "Red",
 		model = {
@@ -1264,6 +1264,30 @@ game:GetService("UserInputService").InputBegan:Connect(function(key)
     end
 end)
 
+--[[
+local offset = {
+	["x"] = 160,
+	["y"] = 120,
+	["z"] = 60
+}
+local mt = getrawmetatable(game)
+local oldNamecall = mt.__namecall
+
+setreadonly(mt, false) -- a
+
+mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+	local callingscript = getcallingscript()
+	local args = {...}
+	
+	if method == "SetPrimaryPartCFrame" and self.Name == "Arms" then
+		args[1] = args[1] * CFrame.new(Vector3.new(math.rad(offset.x-180), math.rad(offset.y-180), math.rad(offset.z-180)))
+	end
+	
+	return oldNamecall(self, unpack(args))
+end)
+--]]
+
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
 
@@ -1396,7 +1420,8 @@ mt.__namecall = newcclosure(function(self, ...)
 	
 	return oldNamecall(self, unpack(args))
 end)
-
+--[[
+local mt = getrawmetatable(game)
 local oldIndex = mt.__newindex
 
 mt.__newindex = newcclosure(function(self, idx, val)
@@ -1412,6 +1437,7 @@ mt.__newindex = newcclosure(function(self, idx, val)
 
     return oldIndex(self, idx, val)
 end)
+--]]
 
 --[[
 spawn(function()
