@@ -360,7 +360,43 @@ local function KILL_LOOP(plrs)
 		end
 	end)
 end
+--[[
+for i,v in pairs(game.Players:GetChildren()) do
+	if v.Team ~= game.Players.LocalPlayer.Team and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+		game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
+			[1] = v.Character.Head,
+			[2] = v.Character.Head.Position,
+			[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
+			[4] = 100,
+			[5] = game.Players.LocalPlayer.Character.Gun,
+			[6] = nil,
+			[7] = nil,
+			[8] = -100, -- Damage Multiplier
+			[9] = nil, -- ?
+			[10] = false, -- Is Wallbang
+			[11] = Vector3.new(),
+			[12] = math.rad(1,100000),
+			[13] = Vector3.new()
+		}))
+	end
+end
 
+game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
+	[1] = game.Players.LocalPlayer.Character.Head,
+	[2] = game.Players.LocalPlayer.Character.Head.Position,
+	[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
+	[4] = 100,
+	[5] = game.Players.LocalPlayer.Character.Gun,
+	[6] = nil,
+	[7] = nil,
+	[8] = 0.01, -- Damage Multiplier
+	[9] = nil, -- ?
+	[10] = false, -- Is Wallbang
+	[11] = Vector3.new(),
+	[12] = math.rad(1,100000),
+	[13] = Vector3.new()
+}))
+--]]
 -- spectators list
 
 local SPECTATORS_BASE = Instance.new("ScreenGui")
@@ -647,6 +683,11 @@ end)
 VisualsTabCategoryViewmodel:AddSlider("Viewmodel Z", {0, 360, 180}, function(val)
     getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ = val
 end)
+
+VisualsTabCategoryViewmodel:AddSlider("Viewmodel Roll", {0, 360, 0}, function(val)
+    getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetRoll = val
+end)
+
 
 local VisualsTabCategoryThirdPerson = VisualsTab:AddCategory("Third Person")
 
@@ -1304,7 +1345,7 @@ mt.__namecall = newcclosure(function(self, ...)
 		return wait(99e99)
 	elseif method == "SetPrimaryPartCFrame" then
 		if self.Name == "Arms" and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsEnabled == true then
-			args[1] = args[1] * CFrame.new(Vector3.new(math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetX-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetY-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ-180)))
+			args[1] = args[1] * CFrame.new(Vector3.new(math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetX-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetY-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ-180))) * CFrame.Angles(math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ), 0, 0)
 		end
     elseif method == "FindPartOnRayWithWhitelist" then
 
