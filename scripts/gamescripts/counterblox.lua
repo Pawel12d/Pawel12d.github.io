@@ -1345,7 +1345,7 @@ mt.__namecall = newcclosure(function(self, ...)
 		return wait(99e99)
 	elseif method == "SetPrimaryPartCFrame" then
 		if self.Name == "Arms" and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsEnabled == true then
-			args[1] = args[1] * CFrame.new(Vector3.new(math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetX-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetY-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ-180))) * CFrame.Angles(0, 0, math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ))
+			args[1] = args[1] * CFrame.new(Vector3.new(math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetX-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetY-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ-180))) * CFrame.Angles(0, 0, math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetRoll))
 		end
     elseif method == "FindPartOnRayWithWhitelist" then
 
