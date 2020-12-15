@@ -1218,10 +1218,10 @@ CurrentCamera.ChildAdded:Connect(function(child)
 		child:WaitForChild("HumanoidRootPart").Transparency = 1
 		if getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelChamsEnabled == true then -- Arms Added
 			for i,v in pairs(child:GetChildren()) do
-				if v:IsA("Model") and v:FindFirstChild("Left Arm") and v:FindFirstChild("Right Arm") then
+				if v:IsA("Model") and v:FindFirstChild("Left Arm") or v:FindFirstChild("Right Arm") then
 					-- Arms Pointer
-					local RightArm = v["Right Arm"]
-					local LeftArm = v["Left Arm"]
+					local RightArm = v:FindFirstChild("Right Arm") or nil
+					local LeftArm = v:FindFirstChild("Left Arm") or nil
 					-- Gloves Pointer
 					local RightGlove = RightArm:FindFirstChild("Glove") or RightArm:FindFirstChild("RGlove") or nil
 					local LeftGlove = LeftArm:FindFirstChild("Glove") or LeftArm:FindFirstChild("LGlove") or nil
