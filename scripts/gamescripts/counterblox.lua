@@ -38,6 +38,17 @@ QEfly = false
 
 local mouse = game:GetService("Players").LocalPlayer:GetMouse()
 
+local function IsAlive(plr)
+	if plr.Status.Alive == true then
+		return true
+	end
+	return false
+end
+
+local function GetTeam(plr)
+	return plr.Status.Team
+end
+
 function sFLY(toggle)
 	repeat wait() until game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild('HumanoidRootPart') and game:GetService("Players").LocalPlayer.Character:FindFirstChild('Humanoid')
 	repeat wait() until mouse
@@ -606,8 +617,6 @@ wait(5)
 a:Remove()
 
 for i=1,10 do
-	distance + distance
-    wait(delay)
 	grenade_fun(Vector3.new(distance, 100, 0))
 	wait(delay)
 	grenade_fun(Vector3.new(distance, 100, distance))
@@ -1179,11 +1188,49 @@ cbfirebullethook = hookfunc(cbClient.firebullet, function(...)
     print("on shoot, "..#args)
     return cbfirebullethook(unpack(args))
 end)
+
+giveToolHook = hookfunc(getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client")).giveTool, function(...)
+	local args = {...}
+	print("givet", unpack(args))
+	return giveToolHook(unpack(args))
+end)
+
+FakeCrouchHook = hookfunc(getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client")).changeviewheight, function(...)
+	local args = {...}
+	if args[1] == -0.85 then
+		args[1] = 0.2
+	end
+	return FakeCrouchHook(unpack(args))
+end)
 --]]
 
 game.Players.LocalPlayer.Cash.Changed:Connect(function()
 	if getgenv().HexHubSettings.tempsettings.counterblox.InfCash and game.Players.LocalPlayer.Cash.Value ~= 16000 then
 		game.Players.LocalPlayer.Cash.Value = 16000
+	end
+end)
+
+game.Players.LocalPlayer.Additionals.TotalDamage.Changed:Connect(function()
+	if game.Players.LocalPlayer.Additionals.TotalDamage.Value ~= 0 then
+		spawn(function()
+			local marker = Instance.new("Sound")
+			marker.Parent = game:GetService("SoundService")
+			marker.SoundId = "rbxassetid://4817809188"
+			marker.Volume = 3
+			marker:Play()
+		end)
+	end
+end)
+
+game.Players.LocalPlayer.Status.Kills.Changed:Connect(function(val)
+	if val ~= 0 then
+		spawn(function()
+			local marker = Instance.new("Sound")
+			marker.Parent = game:GetService("SoundService")
+			marker.SoundId = "rbxassetid://784747919"
+			marker.Volume = 1
+			marker:Play()
+		end)
 	end
 end)
 
@@ -1487,9 +1534,10 @@ spawn(function()
 			a = v
 		end
 	end
+	local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
 	while true do
 		wait()
-		local GunStats = getfenv(a)
+		local GunStats = getfenv(cbClient)
 		GunStats.ammocount = 999 -- Primary Main
 		GunStats.primarystored = 9999 -- Primary Stored
 		GunStats.ammocount2 = 99999 -- Secondary Main
@@ -1500,10 +1548,7 @@ spawn(function()
 		GunStats.RecoilX = 0
 		GunStats.RecoilY = 0
 		GunStats.SpreadModifier = 0
-		GunStats.gun = "Glock"
-		for i,v in pairs(GunStats) do
-			print(i,v)
-		end
+		--GunStats.gun = "Glock"
 	end
 end)
 
