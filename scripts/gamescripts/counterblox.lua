@@ -22,7 +22,7 @@ local oldinv = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client")
 local SkinsTableNames = {}; 
 local AllCasesTable = {}
 local AllSoundsTable = {}
-local AllMaterialsTable = {} -- e
+local AllMaterialsTable = {}
 
 for i,v in pairs(getgenv().HexHubSettings.permsettings.counterblox.InventoryTables) do table.insert(SkinsTableNames, i) end
 for i,v in pairs(game.ReplicatedStorage.Cases:GetChildren()) do table.insert(AllCasesTable, v.Name) end
