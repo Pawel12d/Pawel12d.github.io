@@ -5,9 +5,6 @@ game.ReplicatedStorage.Remotes.RedeemCode:InvokeServer("Hello") -- redeem twitte
 
 print("Counter Blox Script Loaded!")
 
-getgenv().HexHubSettings.tempsettings.counterblox = {}
-getgenv().HexHubSettings.permsettings.aimbotbase = {}
-
 local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
 local cbDisplayChat = getsenv(game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat)
 local cbGetIcon = require(game.ReplicatedStorage.GetIcon)
