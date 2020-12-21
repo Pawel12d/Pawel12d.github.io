@@ -1270,8 +1270,8 @@ CurrentCamera.ChildAdded:Connect(function(child)
 					local RightArm = v:FindFirstChild("Right Arm") or nil
 					local LeftArm = v:FindFirstChild("Left Arm") or nil
 					-- Gloves Pointer
-					local RightGlove = (RightArm and RightArm:FindFirstChild("Glove") or RightArm:FindFirstChild("RGlove")) or nil
-					local LeftGlove = (LeftArm and LeftArm:FindFirstChild("Glove") or LeftArm:FindFirstChild("LGlove")) or nil
+					local RightGlove = (RightArm and (RightArm:FindFirstChild("Glove") or RightArm:FindFirstChild("RGlove"))) or nil
+					local LeftGlove = (LeftArm and (LeftArm:FindFirstChild("Glove") or LeftArm:FindFirstChild("LGlove"))) or nil
 					-- Sleeves Pointer
 					local RightSleeve = RightArm and RightArm:FindFirstChild("Sleeve") or nil
 					local LeftSleeve = LeftArm and LeftArm:FindFirstChild("Sleeve") or nil
