@@ -348,25 +348,27 @@ local function NOCLIP_LOOP()
     end
 end
 
-local function KILL_LOOP(plrs)
+local function KILL_LOOP()
 	pcall(function()
 		for i,v in pairs(game.Players:GetChildren()) do
 			if v.Team ~= game.Players.LocalPlayer.Team and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then -- table.find(plrs, v)
-				game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
-					[1] = v.Character.Head,
-					[2] = v.Character.Head.Position,
-					[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
-					[4] = 100,
-					[5] = game.Players.LocalPlayer.Character.Gun,
-					[6] = nil,
-					[7] = nil,
-					[8] = 100, -- Damage Multiplier
-					[9] = nil, -- ?
-					[10] = false, -- Is Wallbang
-					[11] = Vector3.new(),
-					[12] = math.rad(1,100000),
-					[13] = Vector3.new()
-				}))
+				for i=1,3 do
+					game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
+						[1] = v.Character.Head,
+						[2] = v.Character.Head.Position,
+						[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
+						[4] = 100,
+						[5] = game.Players.LocalPlayer.Character.Gun,
+						[6] = nil,
+						[7] = nil,
+						[8] = 100, -- Damage Multiplier
+						[9] = nil, -- ?
+						[10] = false, -- Is Wallbang
+						[11] = Vector3.new(),
+						[12] = math.rad(1,100000),
+						[13] = Vector3.new()
+					}))
+				end
 			end
 		end
 	end)
@@ -579,12 +581,15 @@ local RageTabCategoryMain = RageTab:AddCategory("Main")
 RageTabCategoryMain:AddToggle("Kill All", false, function(val)
 	pcall(function()
 		if val == true then
-			KILL_LOOP_SET = game:GetService("RunService").RenderStepped:connect(function()
-				wait()
-				KILL_LOOP(game.Players:GetPlayers())
-			end)
+			epic = true
 		else
-			if KILL_LOOP_SET then KILL_LOOP_SET:Disconnect() end
+			epic = false
+		end
+		while epic do
+			wait()
+			spawn(function()
+			KILL_LOOP(game.Players:GetPlayers())
+			end)
 		end
 	end)
 end)
