@@ -601,9 +601,7 @@ RageTabCategoryMain:AddToggle("Kill All", false, function(val)
 		end
 		while epic do
 			wait()
-			spawn(function()
-			KILL_LOOP(game.Players:GetPlayers())
-			end)
+			KILL_LOOP()
 		end
 	end)
 end)
