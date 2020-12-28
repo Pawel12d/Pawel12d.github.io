@@ -48,6 +48,18 @@ for i,v in pairs(Enum.Material:GetEnumItems()) do table.insert(AllMaterialsTable
 local mouse = game:GetService("Players").LocalPlayer:GetMouse()
 local CurrentCamera = workspace.CurrentCamera
 
+local HexHubFolder = Instance.new("Folder")
+HexHubFolder.Name = "HexHubData"
+HexHubFolder.Parent = workspace
+
+local HexHubFolderTracers = Instance.new("Folder")
+HexHubFolderTracers.Name = "Tracers"
+HexHubFolderTracers.Parent = HexHubFolder
+
+local HexHubFolderImpacts = Instance.new("Folder")
+HexHubFolderImpacts.Name = "Impacts"
+HexHubFolderImpacts.Parent = HexHubFolder
+
 FLYING = false
 flyspeed = 1
 QEfly = false
@@ -1417,8 +1429,7 @@ mt.__namecall = newcclosure(function(self, ...)
 
 		elseif method == "FindPartOnRayWithIgnoreList" then
 			if callingscript == game.Players.LocalPlayer.PlayerGui.Client and args[2][1].Name == "Debris" and game.Players.LocalPlayer.Character then
-				--print("yos", unpack(args[2]))
-
+				table.insert(args[2], HexHubFolder)
 				if getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
 					table.insert(args[2], workspace.Map)
 				end
@@ -1450,7 +1461,7 @@ mt.__namecall = newcclosure(function(self, ...)
 					BulletTracers.Size = Vector3.new(0.1, 0.1, (game.Players.LocalPlayer.Character.Head.CFrame.p - args[2]).magnitude)
 					BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -BulletTracers.Size.Z / 2)
 					BulletTracers.Name = "BulletTracers"
-					BulletTracers.Parent = workspace
+					BulletTracers.Parent = HexHubFolderTracers
 					wait(5)
 					BulletTracers:Destroy()
 				end)
@@ -1463,7 +1474,7 @@ mt.__namecall = newcclosure(function(self, ...)
 					BulletImpacts.Size = Vector3.new(0.25, 0.25, 0.25)
 					BulletImpacts.CFrame = CFrame.new(args[2])
 					BulletImpacts.Name = "BulletImpacts"
-					BulletImpacts.Parent = workspace
+					BulletImpacts.Parent = HexHubFolderImpacts
 					wait(5)
 					BulletImpacts:Destroy()
 				end)
@@ -1472,9 +1483,9 @@ mt.__namecall = newcclosure(function(self, ...)
 					return
 				end
 			elseif self.Name == "ReplicateCamera" then
-				if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Head") then
-					args[1] = game.Players.LocalPlayer.Character.Head.CFrame
-				end
+				--if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Head") then
+				--	args[1] = game.Players.LocalPlayer.Character.Head.CFrame
+				--end
 			elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
 				local MainTable = args[1]
 				local ItemTable = args[1][4]
