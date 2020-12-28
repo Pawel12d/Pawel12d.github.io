@@ -1,6 +1,22 @@
 --[[
 game.ReplicatedStorage.Events.Vote:FireServer("ChinaVsUsaRap") -- votekick
 game.ReplicatedStorage.Remotes.RedeemCode:InvokeServer("Hello") -- redeem twitter code
+
+NEW PLANS:
+
+Aimbot
+- Aimbot, Anti-Aimbot, Accuracy
+
+Visuals
+- Viewmodel Chams, Viewmodel Changer, Camera Offset etc.
+
+Miscellaneous
+- inf cash, no crouch cooldown, backtrack, remove effects etc.
+
+Gun Mods
+- c4 and weapons mods
+
+Settings
 --]]
 
 print("Counter Blox Script Loaded!")
