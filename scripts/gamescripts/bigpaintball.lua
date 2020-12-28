@@ -32,7 +32,7 @@ MainTabCategoryMain:AddButton("Unlock All", function()
 end)
 
 MainTabCategoryMain:AddButton("Gun Mods", function()
-    for i,v in pairs(getgc(true)) do -- gun mods
+    for i,v in pairs(getgc(true)) do
         if typeof(v) == "table" and rawget(v, "displayName") then
             -- v.displayName = "noob"
             -- v.description = "epik"

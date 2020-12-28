@@ -47,7 +47,7 @@ if not Network or not GameLogic then
 	return game.Players.LocalPlayer:Kick("Scanning failed!")
 end
 
-game:GetService("RunService"):BindToRenderStep("CharFix", 100, function()
+game:GetService("RunService"):BindToRenderStep("CharFix", 1, function()
     for i,v in pairs(debug.getupvalue(Network.replication.module.getbodyparts, 1)) do
         if game.Players[i.Name] and game.Players[i.Name].Character == nil then
             game.Players[i.Name].Character = v.head.Parent

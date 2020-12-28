@@ -368,23 +368,21 @@ local function KILL_LOOP()
 	pcall(function()
 		for i,v in pairs(game.Players:GetChildren()) do
 			if v.Team ~= game.Players.LocalPlayer.Team and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then -- table.find(plrs, v)
-				for i=1,3 do
-					game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
-						[1] = v.Character.Head,
-						[2] = v.Character.Head.Position,
-						[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
-						[4] = 100,
-						[5] = game.Players.LocalPlayer.Character.Gun,
-						[6] = nil,
-						[7] = nil,
-						[8] = 100, -- Damage Multiplier
-						[9] = nil, -- ?
-						[10] = false, -- Is Wallbang
-						[11] = Vector3.new(),
-						[12] = math.rad(1,100000),
-						[13] = Vector3.new()
-					}))
-				end
+				game.ReplicatedStorage.Events.HitPart:FireServer(unpack({
+					[1] = v.Character.Head,
+					[2] = v.Character.Head.Position,
+					[3] = "Banana", -- game.Players.LocalPlayer.Character.EquippedTool.Value,
+					[4] = 100,
+					[5] = game.Players.LocalPlayer.Character.Gun,
+					[6] = nil,
+					[7] = nil,
+					[8] = 100, -- Damage Multiplier
+					[9] = nil, -- ?
+					[10] = false, -- Is Wallbang
+					[11] = Vector3.new(),
+					[12] = math.rad(1,100000),
+					[13] = Vector3.new()
+				}))
 			end
 		end
 	end)
@@ -1403,129 +1401,132 @@ local oldNamecall = mt.__namecall
 setreadonly(mt, false) -- a
 
 mt.__namecall = newcclosure(function(self, ...)
-    local method = tostring(getnamecallmethod())
+	local is_exploit_closure = is_synapse_function or issentinelclosure or is_protosmasher_closure or is_sirhurt_closure or checkclosure or false
+    local method = getnamecallmethod()
 	local callingscript = getcallingscript()
     local args = {...}
 	
-    if method == "Kick" then
-        return wait(99e99)
-	elseif args[1] == game.Players.LocalPlayer.userId then
-		return wait(99e99)
-	elseif method == "SetPrimaryPartCFrame" then
-		if self.Name == "Arms" and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsEnabled == true then
-			args[1] = args[1] * CFrame.new(Vector3.new(math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetX-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetY-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ-180))) * CFrame.Angles(0, 0, math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetRoll))
-		end
-    elseif method == "FindPartOnRayWithWhitelist" then
+	if not is_exploit_closure then
+		if method == "Kick" then
+			return wait(99e99)
+		elseif args[1] == game.Players.LocalPlayer.userId then
+			return wait(99e99)
+		elseif method == "SetPrimaryPartCFrame" then
+			if self.Name == "Arms" and callingscript == game.Players.LocalPlayer.PlayerGui.Client and getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsEnabled == true then
+				args[1] = args[1] * CFrame.new(Vector3.new(math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetX-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetY-180), math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetZ-180))) * CFrame.Angles(0, 0, math.rad(getgenv().HexHubSettings.tempsettings.counterblox.ViewmodelModsOffsetRoll))
+			end
+		elseif method == "FindPartOnRayWithWhitelist" then
 
-	elseif method == "FindPartOnRayWithIgnoreList" then
-		if callingscript == game.Players.LocalPlayer.PlayerGui.Client and args[2][1].Name == "Debris" and game.Players.LocalPlayer.Character then
-			--print("yos", unpack(args[2]))
+		elseif method == "FindPartOnRayWithIgnoreList" then
+			if callingscript == game.Players.LocalPlayer.PlayerGui.Client and args[2][1].Name == "Debris" and game.Players.LocalPlayer.Character then
+				--print("yos", unpack(args[2]))
 
-			if getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
-				table.insert(args[2], workspace.Map)
-			end
-			if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and silentaimtarget ~= nil and silentaimtarget.Character then
-				args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (silentaimtarget.Character[tostring(getgenv().HexHubSettings.permsettings.aimbotbase.AimPart)].Position - workspace.CurrentCamera.CFrame.Position).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
-			end
-		end
-	elseif method == "InvokeServer" then
-		if self.Name == "Hugh" then
-			return wait(99e99)
-		elseif self.Name == "Moolah" then
-			return wait(99e99)
-		elseif self.Name == "Filter" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat and getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter == true then
-			return args[1]
-		end
-	elseif method == "FireServer" then
-		if string.len(self.Name) == 38 then
-			return wait(99e99)
-		elseif self.Name == "test" then
-			return wait(99e99)
-		elseif self.Name == "HitPart" then
-			args[8] = getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier or 1
-			spawn(function() -- bullet tracers
-				local BulletTracers = Instance.new("Part")
-				BulletTracers.Anchored = true
-				BulletTracers.CanCollide = false
-				BulletTracers.Material = "ForceField"
-				BulletTracers.Color = Color3.new(0, 0, 1)
-				BulletTracers.Size = Vector3.new(0.1, 0.1, (game.Players.LocalPlayer.Character.Head.CFrame.p - args[2]).magnitude)
-				BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -BulletTracers.Size.Z / 2)
-				BulletTracers.Name = "BulletTracers"
-				BulletTracers.Parent = workspace
-				wait(5)
-				BulletTracers:Destroy()
-			end)
-			spawn(function() -- bullet impacts
-				local BulletImpacts = Instance.new("Part")
-				BulletImpacts.Anchored = true
-				BulletImpacts.CanCollide = false
-				BulletImpacts.Material = "ForceField"
-				BulletImpacts.Color = Color3.new(1, 0, 0)
-				BulletImpacts.Size = Vector3.new(0.25, 0.25, 0.25)
-				BulletImpacts.CFrame = CFrame.new(args[2])
-				BulletImpacts.Name = "BulletImpacts"
-				BulletImpacts.Parent = workspace
-				wait(5)
-				BulletImpacts:Destroy()
-			end)
-		elseif self.Name == "ControlTurn" then
-			if getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled == true and callingscript == game.Players.LocalPlayer.PlayerGui.Client then
-				return
-			end
-		elseif self.Name == "ReplicateCamera" then
-			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Head") then
-				args[1] = game.Players.LocalPlayer.Character.Head.CFrame
-			end
-		elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
-			local MainTable = args[1]
-			local ItemTable = args[1][4]
-			local Skin = string.split(ItemTable[1], "_")[2]
-			
-			if MainTable[2] == "Both" then
-				game.Players.LocalPlayer.SkinFolder.TFolder[MainTable[3]]:ClearAllChildren()
-				game.Players.LocalPlayer.SkinFolder.TFolder[MainTable[3]].Value = Skin
-				game.Players.LocalPlayer.SkinFolder.CTFolder[MainTable[3]].Value = Skin
-				if ItemTable[2] == "StatTrak" then
-					local MarkerT = Instance.new("StringValue")
-					MarkerT.Name = "StatTrak"
-					MarkerT.Value = ItemTable[3]
-					MarkerT.Parent = game.Players.LocalPlayer.SkinFolder.TFolder[MainTable[3]]
-					local CountT = Instance.new("IntValue")
-					CountT.Name = "Count"
-					CountT.Value = ItemTable[4]
-					CountT.Parent = MarkerT
-					local MarkerCT = Instance.new("StringValue")
-					MarkerCT.Name = "StatTrak"
-					MarkerCT.Value = ItemTable[3]
-					MarkerCT.Parent = game.Players.LocalPlayer.SkinFolder.CTFolder[MainTable[3]]
-					local CountCT = Instance.new("IntValue")
-					CountCT.Name = "Count"
-					CountCT.Value = ItemTable[4]
-					CountCT.Parent = MarkerCT
+				if getgenv().HexHubSettings.permsettings.counterblox.Wallbang == true then
+					table.insert(args[2], workspace.Map)
 				end
-			else
-				game.Players.LocalPlayer.SkinFolder[MainTable[2].."Folder"][MainTable[3]]:ClearAllChildren()
-				game.Players.LocalPlayer.SkinFolder[MainTable[2].."Folder"][MainTable[3]].Value = Skin
-				if ItemTable[2] == "StatTrak" then
-					local Marker = Instance.new("StringValue")
-					Marker.Name = "StatTrak"
-					Marker.Value = ItemTable[3]
-					Marker.Parent = game.Players.LocalPlayer.SkinFolder[MainTable[2].."Folder"][MainTable[3]]
-					local Count = Instance.new("IntValue")
-					Count.Name = "Count"
-					Count.Value = ItemTable[4]
-					Count.Parent = Marker
+				if getgenv().HexHubSettings.permsettings.aimbotbase.Enabled == true and silentaimtarget ~= nil and silentaimtarget.Character then
+					args[1] = Ray.new(workspace.CurrentCamera.CFrame.Position, (silentaimtarget.Character[tostring(getgenv().HexHubSettings.permsettings.aimbotbase.AimPart)].Position - workspace.CurrentCamera.CFrame.Position).unit * 2048) -- game.ReplicatedStorage.Weapons[game.Players.LocalPlayer.Character.EquippedTool.Value].Range.Value
 				end
 			end
-		elseif self.Name == "FallDamage" and getgenv().HexHubSettings.tempsettings.counterblox.NoFallDamage == true then
-			return 
-		elseif self.Name == "BURNME" and getgenv().HexHubSettings.tempsettings.counterblox.NoFireDamage == true  then
-			return 
-		elseif self.Name == "Smoked" and getgenv().HexHubSettings.tempsettings.counterblox.NoSmokeEffect == true then
-			return 
+		elseif method == "InvokeServer" then
+			if self.Name == "Hugh" then
+				return wait(99e99)
+			elseif self.Name == "Moolah" then
+				return wait(99e99)
+			elseif self.Name == "Filter" and callingscript == game.Players.LocalPlayer.PlayerGui.GUI.Main.Chats.DisplayChat and getgenv().HexHubSettings.tempsettings.counterblox.DisableFilter == true then
+				return args[1]
+			end
+		elseif method == "FireServer" then
+			if string.len(self.Name) == 38 then
+				return wait(99e99)
+			elseif self.Name == "test" then
+				return wait(99e99)
+			elseif self.Name == "HitPart" then
+				args[8] = getgenv().HexHubSettings.permsettings.counterblox.DamageMultiplier or 1
+				spawn(function() -- bullet tracers
+					local BulletTracers = Instance.new("Part")
+					BulletTracers.Anchored = true
+					BulletTracers.CanCollide = false
+					BulletTracers.Material = "ForceField"
+					BulletTracers.Color = Color3.new(0, 0, 1)
+					BulletTracers.Size = Vector3.new(0.1, 0.1, (game.Players.LocalPlayer.Character.Head.CFrame.p - args[2]).magnitude)
+					BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -BulletTracers.Size.Z / 2)
+					BulletTracers.Name = "BulletTracers"
+					BulletTracers.Parent = workspace
+					wait(5)
+					BulletTracers:Destroy()
+				end)
+				spawn(function() -- bullet impacts
+					local BulletImpacts = Instance.new("Part")
+					BulletImpacts.Anchored = true
+					BulletImpacts.CanCollide = false
+					BulletImpacts.Material = "ForceField"
+					BulletImpacts.Color = Color3.new(1, 0, 0)
+					BulletImpacts.Size = Vector3.new(0.25, 0.25, 0.25)
+					BulletImpacts.CFrame = CFrame.new(args[2])
+					BulletImpacts.Name = "BulletImpacts"
+					BulletImpacts.Parent = workspace
+					wait(5)
+					BulletImpacts:Destroy()
+				end)
+			elseif self.Name == "ControlTurn" then
+				if getgenv().HexHubSettings.permsettings.counterblox.AntiAimEnabled == true and callingscript == game.Players.LocalPlayer.PlayerGui.Client then
+					return
+				end
+			elseif self.Name == "ReplicateCamera" then
+				if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Head") then
+					args[1] = game.Players.LocalPlayer.Character.Head.CFrame
+				end
+			elseif self.Name == "DataEvent" and args[1][1] == "EquipItem" then
+				local MainTable = args[1]
+				local ItemTable = args[1][4]
+				local Skin = string.split(ItemTable[1], "_")[2]
+				
+				if MainTable[2] == "Both" then
+					game.Players.LocalPlayer.SkinFolder.TFolder[MainTable[3]]:ClearAllChildren()
+					game.Players.LocalPlayer.SkinFolder.TFolder[MainTable[3]].Value = Skin
+					game.Players.LocalPlayer.SkinFolder.CTFolder[MainTable[3]].Value = Skin
+					if ItemTable[2] == "StatTrak" then
+						local MarkerT = Instance.new("StringValue")
+						MarkerT.Name = "StatTrak"
+						MarkerT.Value = ItemTable[3]
+						MarkerT.Parent = game.Players.LocalPlayer.SkinFolder.TFolder[MainTable[3]]
+						local CountT = Instance.new("IntValue")
+						CountT.Name = "Count"
+						CountT.Value = ItemTable[4]
+						CountT.Parent = MarkerT
+						local MarkerCT = Instance.new("StringValue")
+						MarkerCT.Name = "StatTrak"
+						MarkerCT.Value = ItemTable[3]
+						MarkerCT.Parent = game.Players.LocalPlayer.SkinFolder.CTFolder[MainTable[3]]
+						local CountCT = Instance.new("IntValue")
+						CountCT.Name = "Count"
+						CountCT.Value = ItemTable[4]
+						CountCT.Parent = MarkerCT
+					end
+				else
+					game.Players.LocalPlayer.SkinFolder[MainTable[2].."Folder"][MainTable[3]]:ClearAllChildren()
+					game.Players.LocalPlayer.SkinFolder[MainTable[2].."Folder"][MainTable[3]].Value = Skin
+					if ItemTable[2] == "StatTrak" then
+						local Marker = Instance.new("StringValue")
+						Marker.Name = "StatTrak"
+						Marker.Value = ItemTable[3]
+						Marker.Parent = game.Players.LocalPlayer.SkinFolder[MainTable[2].."Folder"][MainTable[3]]
+						local Count = Instance.new("IntValue")
+						Count.Name = "Count"
+						Count.Value = ItemTable[4]
+						Count.Parent = Marker
+					end
+				end
+			elseif self.Name == "FallDamage" and getgenv().HexHubSettings.tempsettings.counterblox.NoFallDamage == true then
+				return 
+			elseif self.Name == "BURNME" and getgenv().HexHubSettings.tempsettings.counterblox.NoFireDamage == true  then
+				return 
+			elseif self.Name == "Smoked" and getgenv().HexHubSettings.tempsettings.counterblox.NoSmokeEffect == true then
+				return 
+			end
 		end
-    end
+	end
 	
 	return oldNamecall(self, unpack(args))
 end)
