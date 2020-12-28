@@ -1401,12 +1401,12 @@ local oldNamecall = mt.__namecall
 setreadonly(mt, false) -- a
 
 mt.__namecall = newcclosure(function(self, ...)
-	local is_exploit_closure = is_synapse_function or issentinelclosure or is_protosmasher_closure or is_sirhurt_closure or checkclosure or false
+	local is_exploit_function = checkcaller()
     local method = getnamecallmethod()
 	local callingscript = getcallingscript()
     local args = {...}
 	
-	if not is_exploit_closure then
+	if not is_exploit_function then
 		if method == "Kick" then
 			return wait(99e99)
 		elseif args[1] == game.Players.LocalPlayer.userId then
