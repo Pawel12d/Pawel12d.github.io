@@ -1556,31 +1556,27 @@ mt.__newindex = newcclosure(function(self, idx, val)
 
     return oldIndex(self, idx, val)
 end) 
---]]
- -- as
---[[
+
 spawn(function()
-	for i,v in pairs(getgc(true)) do
-		if type(v) == "function" and debug.getinfo(v).name == "firebullet" then
-			a = v
-		end
-	end
 	local cbClient = getsenv(game.Players.LocalPlayer.PlayerGui:WaitForChild("Client"))
-	while true do
-		wait()
-		local GunStats = getfenv(cbClient)
-		GunStats.ammocount = 999 -- Primary Main
-		GunStats.primarystored = 9999 -- Primary Stored
-		GunStats.ammocount2 = 99999 -- Secondary Main
-		GunStats.secondarystored = 999999 -- Secondary Stored
-		GunStats.DISABLED = false -- Rapid Fire
-		GunStats.mode = "automatic"
-		GunStats.resetaccuracy()
-		GunStats.RecoilX = 0
-		GunStats.RecoilY = 0
-		GunStats.SpreadModifier = 0
-		--GunStats.gun = "Glock"
-	end
+	game:GetService("RunService"):BindToRenderStep("GunMods", 100, function()
+		cbClient.ammocount = math.huge -- Primary Main
+		cbClient.primarystored = math.huge -- Primary Stored
+		cbClient.ammocount2 = math.huge -- Secondary Main
+		cbClient.secondarystored = math.huge -- Secondary Stored
+		cbClient.reloadtime = 0.1
+		cbClient.DISABLED = true -- Rapid Fire
+		cbClient.mode = "automatic"
+		cbClient.resetaccuracy()
+		cbClient.RecoilX = 0
+		cbClient.RecoilY = 0
+		cbClient.SpreadModifier = 0
+		--cbClient.gun = "Glock"
+	end)
+end)
+
+table.foreach(game.Players:GetPlayers(), function(i,v)
+	game:GetService("ReplicatedStorage").Events.PlayerChatted:FireServer(tostring(v.Name.."'s age is", v.AccountAge), false, "Innocent", false, true)
 end)
 
 local HexHubVisualEffects = Instance.new("Folder")
@@ -1595,5 +1591,8 @@ HHVEColorCorrectionEffect.Parent = HexHubVisualEffects
 game.Lighting
 --]]
 MainWindow.close = false
+
+cbClient.notify("Hex Hub > All", 5)
+
 
 print("Ready! It took", tonumber(tick() - LaunchTick), "seconds to load!")
