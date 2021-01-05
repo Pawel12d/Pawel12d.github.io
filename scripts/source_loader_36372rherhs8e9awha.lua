@@ -29,7 +29,7 @@ local defaultcfg = [[
 ]]
 
 local CurrentGame = game.GameId
-local Blacklisted = false
+local Blacklisted = true
 
 local GamesList = {
 	[111958650] = {"arsenal", "Arsenal"},
