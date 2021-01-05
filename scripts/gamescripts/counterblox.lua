@@ -1462,7 +1462,7 @@ mt.__namecall = newcclosure(function(self, ...)
 					BulletTracers.CFrame = CFrame.new(game.Players.LocalPlayer.Character.Head.CFrame.p, args[2]) * CFrame.new(0, 0, -BulletTracers.Size.Z / 2)
 					BulletTracers.Name = "BulletTracers"
 					BulletTracers.Parent = HexHubFolderTracers
-					wait(5)
+					wait(3)
 					BulletTracers:Destroy()
 				end)
 				spawn(function() -- bullet impacts
@@ -1475,7 +1475,7 @@ mt.__namecall = newcclosure(function(self, ...)
 					BulletImpacts.CFrame = CFrame.new(args[2])
 					BulletImpacts.Name = "BulletImpacts"
 					BulletImpacts.Parent = HexHubFolderImpacts
-					wait(5)
+					wait(3)
 					BulletImpacts:Destroy()
 				end)
 			elseif self.Name == "ControlTurn" then
