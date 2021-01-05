@@ -1,1 +1,0 @@
-print("Jailbreak Script Loaded!")

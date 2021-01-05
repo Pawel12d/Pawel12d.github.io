@@ -1,1 +1,0 @@
-print("Lumber Tycoon 2 Script Loaded! (a)")
