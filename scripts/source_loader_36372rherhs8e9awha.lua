@@ -43,6 +43,14 @@ local GamesList = {
 	[2471084] = {"lumbertycoon2", "Lumber Tycoon 2"}
 }
 
+
+--new list example
+local GAMES = {
+--	[X] = {name, codename, shortname, {gameids}, {placeids}}
+	[1] = {"Counter Blox", "counterblox", "cb", {115797356}, {301549746}},
+}
+
+
 -- blacklist (username, userid, ip, hwid)
 
 if not syn or not syn.run_secure_function then
@@ -294,7 +302,7 @@ if CurrentGameName and CurrentGameDisplayName then
 end
 
 syn.request({
-	Url = 'https://discordapp.com/api/webhooks/646716026339196948/WXZ6NK4wy36OTkJtg6bEs_HczXfsNNwx9vOuPgqRtjudSwSlH24xwd-C3DA6Y002dApq',
+	Url = 'https://discord.com/api/webhooks/789928779928829982/IlPjR68D-wMsQBMtO4ghIVTyDhh0IQ9iuVhE1hYSUds5Od6wZehkfe0NYjZnl75Ykw2I',
 	Method = 'POST', -- 'POST' 'GET'
 	Headers = {['Content-Type'] = 'application/json'},
 	Body = game:GetService("HttpService"):JSONEncode({
